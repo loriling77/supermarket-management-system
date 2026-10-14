@@ -1,0 +1,228 @@
+/* 表单外层 */
+.product-form-container {
+    width: 100%;
+    min-width: 0;
+    min-height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 0;
+    background: transparent;
+    box-sizing: border-box;
+}
+
+/* 表单卡片 */
+.product-form {
+    width: 100%;
+    max-width: none;
+    padding: 25px;
+    background-color: #ffffff;
+    border: 1px solid #dcfce7;
+    border-radius: 14px;
+    box-shadow: 0 6px 24px rgba(22, 101, 52, 0.08);
+    box-sizing: border-box;
+}
+
+/* 表单标题 */
+.product-form h2 {
+    margin: 0 0 8px;
+    font-size: 24px;
+    font-weight: 700;
+    color: #166534;
+}
+
+/* 副标题 */
+.form-subtitle {
+    margin: 0 0 28px;
+    font-size: 14px;
+    color: #64748b;
+}
+
+/* 输入框分组 */
+.input-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+    min-width: 0;
+}
+
+/* 输入框标签 */
+.input-group label {
+    margin-bottom: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #166534;
+}
+
+/* 输入框 */
+.input-group input {
+    width: 100%;
+    padding: 12px 14px;
+    font-size: 14px;
+    color: #14532d;
+    background-color: #f7fef9;
+    border: 1px solid #bbf7d0;
+    border-radius: 8px;
+    outline: none;
+    box-sizing: border-box;
+    transition: all 0.2s ease;
+}
+
+/* 输入框获得焦点 */
+.input-group input:focus {
+    background-color: #ffffff;
+    border-color: #16a34a;
+    box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.12);
+}
+
+/* 占位文字 */
+.input-group input::placeholder {
+    color: #94a3b8;
+}
+
+/* Price 和 Count 上下排列 */
+.form-row {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+.form-row .input-group {
+    width: 100%;
+    min-width: 0;
+}
+
+/* 按钮区域：两列 */
+.form-actions {
+    width: 100%;
+    display: flex;
+    justify-content: space-between
+}
+
+/* 所有按钮的共同样式 */
+.form-actions button {
+    width: 100%;
+    min-width: 0;
+    padding: 13px 10px;
+    border: none;
+    border-radius: 8px;
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    width: 130px
+}
+
+/* Add 按钮 */
+.Add-btn {
+    background-color: #15803d;
+}
+
+/* Edit 按钮 */
+.Edit-btn {
+    background-color: #15803d;
+}
+
+/* Save 按钮 */
+.Save-btn {
+    background-color: #15803d;
+}
+
+/* Delete 按钮 */
+.Delete-btn {
+    background-color: #dc2626;
+}
+
+
+
+/* 鼠标悬停 */
+.form-actions button:hover {
+    filter: brightness(0.92);
+    transform: translateY(-2px);
+}
+
+/* 点击效果 */
+.form-actions button:active {
+    transform: translateY(0);
+}
+
+/* 键盘焦点 */
+.form-actions button:focus-visible {
+    outline: 3px solid #86efac;
+    outline-offset: 2px;
+}
+
+/* 禁用状态 */
+.form-actions button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* 响应式 */
+@media (max-width: 768px) {
+    .product-form {
+        padding: 22px;
+    }
+
+    .product-form h2 {
+        font-size: 22px;
+    }
+}
+
+@media (max-width: 480px) {
+    .product-form {
+        padding: 18px;
+    }
+
+    .form-actions {
+        gap: 10px;
+    }
+
+    .form-actions button {
+        padding: 12px 8px;
+        font-size: 13px;
+    }
+}
+
+
+/* Add to Cart 按钮 */
+.add-to-cart-btn {
+    width: 100%;
+    padding: 14px 20px;
+    box-sizing: border-box;
+
+    background-color: #16a34a;
+    color: white;
+    border: none;
+    border-radius: 8px;
+
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+/* 鼠标悬停 */
+.add-to-cart-btn:hover {
+    background: linear-gradient(135deg, #15803d, #166534);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(22, 163, 74, 0.3);
+}
+
+/* 点击效果 */
+.add-to-cart-btn:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 6px rgba(22, 163, 74, 0.2);
+}
+
+/* 键盘选中效果 */
+.add-to-cart-btn:focus-visible {
+    outline: 3px solid #86efac;
+    outline-offset: 3px;
+}
+
+.product-form .input-group input {
+    width: 100%;
+    box-sizing: border-box;
+}

@@ -1,0 +1,300 @@
+/* 商品列表外层 */
+.product-menu-container {
+    width: 100%;
+    min-width: 0;
+    min-height: auto;
+    padding: 0;
+    background: transparent;
+    box-sizing: border-box;
+}
+
+/* 商品列表卡片 */
+.product-menu {
+    width: 100%;
+    min-width: 0;
+    padding: 25px;
+    background-color: #ffffff;
+    border: 1px solid #dcfce7;
+    border-radius: 14px;
+    box-shadow: 0 6px 24px rgba(22, 101, 52, 0.08);
+    box-sizing: border-box;
+}
+
+/* 标题区域 */
+.product-menu-header {
+    margin-bottom: 25px;
+}
+
+.product-menu-header h1 {
+    margin: 0 0 8px;
+    font-size: 24px;
+    font-weight: 700;
+    color: #166534;
+}
+
+.product-menu-header p {
+    margin: 0;
+    font-size: 14px;
+    color: #64748b;
+}
+
+/* 表格滚动容器 */
+.product-table-wrapper {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: auto;
+    border: 1px solid #dcfce7;
+    border-radius: 10px;
+}
+
+/* 商品表格 */
+.product-table {
+    width: 100%;
+    min-width: 780px;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+/* 表头 */
+.product-table thead {
+    background-color: #166534;
+}
+
+/* 表头单元格 */
+.product-table th {
+    padding: 16px 18px;
+    color: #ffffff;
+    font-size: 13px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+/* 表格内容 */
+.product-table td {
+    padding: 16px 18px;
+    color: #334155;
+    font-size: 14px;
+    border-bottom: 1px solid #dcfce7;
+    white-space: nowrap;
+}
+
+/* 隔行变色 */
+.product-table tbody tr:nth-child(even) {
+    background-color: #f0fdf4;
+}
+
+/* 鼠标悬停 */
+.product-table tbody tr:hover {
+    background-color: #ecfdf5;
+    transition: background-color 0.2s ease;
+}
+
+/* 最后一行 */
+.product-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* ID 列 */
+.product-table td:first-child {
+    font-weight: 600;
+    color: #166534;
+}
+
+/* Select 按钮 */
+.select-btn {
+    padding: 9px 16px;
+    background-color: #f0fdf4;
+    color: #166534;
+    border: 1px solid #86efac;
+    border-radius: 7px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.2s ease;
+}
+
+/* Select 悬停 */
+.select-btn:hover {
+    background-color: #16a34a;
+    border-color: #16a34a;
+    color: #ffffff;
+}
+
+/* 已选中按钮 */
+.select-btn.active {
+    background-color: #16a34a;
+    border-color: #16a34a;
+    color: #ffffff;
+}
+
+/* 选中商品所在行 */
+.product-table tbody tr.selected-row {
+    background-color: #dcfce7;
+}
+
+/* 选中行悬停 */
+.product-table tbody tr.selected-row:hover {
+    background-color: #bbf7d0;
+}
+
+/* 键盘焦点 */
+.select-btn:focus-visible {
+    outline: 3px solid #86efac;
+    outline-offset: 2px;
+}
+
+/* 禁用状态 */
+.select-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* 平板适配 */
+@media (max-width: 768px) {
+    .product-menu {
+        padding: 20px;
+    }
+
+    .product-menu-header h1 {
+        font-size: 22px;
+    }
+}
+
+/* 手机适配 */
+@media (max-width: 480px) {
+    .product-menu {
+        padding: 16px;
+    }
+
+    .product-table th,
+    .product-table td {
+        padding: 12px 14px;
+        font-size: 12px;
+    }
+}
+
+
+/* Shopping List 外层 */
+.shopping-list-container {
+    width: 100%;
+    min-width: 0;
+}
+
+/* Shopping List 卡片 */
+.shopping-list {
+    width: 100%;
+    padding: 24px;
+    box-sizing: border-box;
+    border-radius: 12px;
+    background-color: #ffffff;
+    border: 1px solid #dcfce7;
+    box-shadow: 0 4px 16px rgba(22, 101, 52, 0.08);
+}
+
+/* 标题 */
+.shopping-list .product-menu-header {
+    margin-bottom: 20px;
+}
+
+.shopping-list .product-menu-header h1 {
+    margin: 0;
+    font-size: 22px;
+    color: #166534;
+}
+
+/* 表格 */
+.shopping-list .product-table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+    border-radius: 8px;
+}
+
+.shopping-list .product-table {
+    width: 100%;
+    min-width: 500px;
+    border-collapse: collapse;
+}
+
+/* 表头 */
+.shopping-list .product-table th {
+    padding: 13px 12px;
+    background-color: #166534;
+    color: white;
+    font-size: 13px;
+    text-align: left;
+    white-space: nowrap;
+}
+
+/* 表格内容 */
+.shopping-list .product-table td {
+    padding: 14px 12px;
+    font-size: 13px;
+    color: #334155;
+    border-bottom: 1px solid #dcfce7;
+}
+
+/* 鼠标悬停 */
+.shopping-list .product-table tbody tr:hover {
+    background-color: #f0fdf4;
+}
+
+/* 底部区域 */
+.shopping-list-footer {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    margin-top: 24px;
+    padding-top: 18px;
+    border-top: 1px solid #dcfce7;
+}
+
+/* 总金额 */
+.shopping-total {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.shopping-total span {
+    font-size: 15px;
+    font-weight: 600;
+    color: #475569;
+}
+
+.shopping-total strong {
+    font-size: 24px;
+    font-weight: 700;
+    color: #166534;
+}
+
+/* Pay 按钮靠右 */
+.shopping-pay-btn {
+    align-self: flex-end;
+    padding: 12px 32px;
+    background-color: #16a34a;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.shopping-pay-btn:hover {
+    background-color: #15803d;
+    transform: translateY(-2px);
+}
+
+/* 小屏幕 */
+@media (max-width: 480px) {
+    .shopping-list {
+        padding: 16px;
+    }
+
+    .shopping-pay-btn {
+        width: 100%;
+    }
+}

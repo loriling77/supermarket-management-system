@@ -1,0 +1,136 @@
+/* 整体页面 */
+.home-container {
+    display: flex;
+    width: 100%;
+    min-height: 100vh;
+    background-color: #f0fdf4;
+    box-sizing: border-box;
+}
+
+/* 左侧导航栏 */
+.home-sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 20%;
+    height: 100vh;
+    background-color: #14532d;
+    overflow-y: auto;
+    box-sizing: border-box;
+    z-index: 100;
+}
+
+/* 右侧主内容 */
+.home-main {
+    width: 80%;
+    min-width: 0;
+    min-height: 100vh;
+    margin-left: 20%;
+    padding: 35px;
+    box-sizing: border-box;
+}
+
+/* Dashboard 标题 */
+.home-header {
+    margin-bottom: 30px;
+}
+
+.home-header h1 {
+    margin: 0 0 8px;
+    font-size: 30px;
+    font-weight: 700;
+    color: #14532d;
+}
+
+.home-header p {
+    margin: 0;
+    font-size: 15px;
+    color: #64748b;
+}
+
+/* ProductForm 和 ProductMenu 左右布局 */
+.home-content {
+    display: grid;
+    grid-template-columns: minmax(0, 35fr) minmax(0, 65fr);
+    gap: 24px;
+    align-items: start;
+}
+
+/* 左侧 ProductForm */
+.home-form-section {
+    width: 100%;
+    min-width: 0;
+}
+
+/* 右侧 ProductMenu */
+.home-table-section {
+    width: 100%;
+    min-width: 0;
+}
+
+/* 中等屏幕：上下布局 */
+@media (max-width: 1100px) {
+    .home-content {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* 小屏幕 */
+@media (max-width: 768px) {
+    .home-sidebar {
+        width: 180px;
+    }
+
+    .home-main {
+        width: calc(100% - 180px);
+        margin-left: 180px;
+        padding: 20px;
+    }
+
+    .home-header h1 {
+        font-size: 24px;
+    }
+}
+
+/* 手机：导航栏改为顶部 */
+@media (max-width: 520px) {
+    .home-container {
+        flex-direction: column;
+    }
+
+    .home-sidebar {
+        position: relative;
+        width: 100%;
+        height: auto;
+    }
+
+    .home-main {
+        width: 100%;
+        margin-left: 0;
+        padding: 16px;
+    }
+
+    .home-content {
+        gap: 20px;
+    }
+}
+
+.home-left-column,
+.home-right-column {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    min-width: 0;
+}
+
+.home-left-column>section,
+.home-right-column>section {
+    width: 100%;
+    min-width: 0;
+}
+
+@media (max-width: 1100px) {
+    .home-content {
+        grid-template-columns: 1fr;
+    }
+}

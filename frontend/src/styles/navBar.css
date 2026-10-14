@@ -1,0 +1,145 @@
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    width: 100%;
+    height: 100%;
+    min-height: 100vh;
+
+    padding: 35px 15px;
+    box-sizing: border-box;
+
+    background-color: #14532d;
+    color: white;
+}
+
+/* Logo */
+.sidebar-logo {
+    margin-top: 10px;
+    margin-bottom: 45px;
+}
+
+.sidebar-logo img {
+    width: 100px;
+    height: auto;
+    object-fit: contain;
+}
+
+/* 导航菜单 */
+.sidebar-menu {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+/* 菜单文字 */
+.sidebar-menu h1 {
+    width: 100%;
+    margin: 0;
+    padding: 15px 18px;
+    border-radius: 8px;
+    box-sizing: border-box;
+
+    font-size: 17px;
+    font-weight: 500;
+    color: #dcfce7;
+
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+/* 鼠标悬停 */
+.sidebar-menu h1:hover {
+    background-color: #22c55e;
+    color: #ffffff;
+    transform: translateX(3px);
+}
+
+/* 选中菜单 */
+.sidebar-menu .active {
+    background-color: #16a34a;
+    color: #ffffff;
+    font-weight: 600;
+}
+
+/* 平板 */
+@media (max-width: 768px) {
+    .sidebar {
+        padding: 25px 10px;
+    }
+
+    .sidebar-logo img {
+        width: 75px;
+    }
+
+    .sidebar-menu h1 {
+        padding: 12px;
+        font-size: 14px;
+    }
+}
+
+/* 手机 */
+@media (max-width: 520px) {
+    .sidebar {
+        padding: 15px;
+    }
+
+    .sidebar-logo {
+        margin: 0 0 15px;
+    }
+
+    .sidebar-logo img {
+        width: 60px;
+    }
+
+    .sidebar-menu {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .sidebar-menu h1 {
+        width: auto;
+        padding: 8px 12px;
+        font-size: 13px;
+    }
+
+    .sidebar-menu h1:hover {
+        transform: none;
+    }
+}
+
+.sidebar a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.logout-btn {
+    margin-top: auto;
+    align-self: flex-end;
+    padding-top: 30px;
+}
+
+/* Logout 链接 */
+.logout-btn a {
+    display: inline-block;
+    padding: 12px 24px;
+
+    background-color: #dc2626;
+    color: white;
+    text-decoration: none;
+
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 600;
+
+    transition: all 0.2s ease;
+}
+
+/* 鼠标悬停 */
+.logout-btn a:hover {
+    background-color: #b91c1c;
+    transform: translateY(-2px);
+}
