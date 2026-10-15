@@ -1,10 +1,92 @@
 
 import "../styles/productForm.css";
+import type { Category } from '../types/types'
+import type { SubmitEventHandler } from 'react'
+import { useState, useEffect } from 'react'
 
-export default function CategoryForm() {
+interface CategoryFormProps {
+    onAddCategory: (category: Omit<Category, 'id'>) => void
+    selectCategory: Category | null
+    onSaveCategory: (category: Category) => void
+    onDeleteCategory: (id: number) => void
+}
+
+export default function CategoryForm({ onAddCategory, selectCategory, onSaveCategory, onDeleteCategory }: CategoryFormProps) {
+
+    const [categoryName, setCategoryName] = useState("")
+    const [detail, setDetail] = useState("")
+
+
+    const handleSubmit: SubmitEventHandler<HTMLElement> = (e) => {
+        e.preventDefault()
+
+        onAddCategory(
+            {
+                categoryName,
+                detail
+
+            }
+        )
+
+        setCategoryName("")
+        setDetail("")
+
+    }
+    const handleDelete = () => {
+        if (!selectCategory) {
+            alert("Please select a category")
+            return
+        }
+
+        const confirmed = window.confirm(
+            "Are you sure to delete this category?"
+
+
+        )
+        if (!confirmed) {
+            return
+        }
+
+        onDeleteCategory(selectCategory.id)
+
+        setCategoryName("")
+        setDetail("")
+
+
+    }
+
+    const handleSave = () => {
+        if (!selectCategory) {
+            alert("Please select a category first!")
+            return
+        }
+        if (!categoryName.trim() ||
+            !detail.trim()
+
+        ) {
+            alert('Please enter valid category information')
+            return
+        }
+
+        onSaveCategory({
+            id: selectCategory.id,
+            categoryName,
+            detail
+        })
+
+
+    }
+
+    useEffect(() => {
+        if (selectCategory) {
+            setCategoryName(selectCategory.categoryName);
+            setDetail(selectCategory.detail);
+        }
+    }, [selectCategory]);
+
     return (
         <div className="product-form-container">
-            <form className="product-form">
+            <form className="product-form" onSubmit={handleSubmit}>
                 <h2>Category Management</h2>
                 <p className="form-subtitle">
                     Manage your category information
@@ -15,8 +97,10 @@ export default function CategoryForm() {
                     <input
                         id="productname"
                         type="text"
+                        value={categoryName}
                         placeholder="Enter product name"
                         required
+                        onChange={(e) => setCategoryName(e.target.value)}
                     />
                 </div>
 
@@ -25,8 +109,10 @@ export default function CategoryForm() {
                     <input
                         id="manufacturename"
                         type="text"
+                        value={detail}
                         placeholder="Enter manufacturer name"
                         required
+                        onChange={(e) => setDetail(e.target.value)}
                     />
                 </div>
 
@@ -34,16 +120,16 @@ export default function CategoryForm() {
 
 
                 <div className="form-actions">
-                    <button type="button" className="Add-btn">
+                    <button type="submit" className="Add-btn">
                         Add
                     </button>
 
 
-                    <button type="submit" className="Save-btn">
+                    <button type="button" className="Save-btn" onClick={handleSave}>
                         Save
                     </button>
 
-                    <button type="button" className="Delete-btn">
+                    <button type="button" className="Delete-btn" onClick={handleDelete}>
                         Delete
                     </button>
                 </div>

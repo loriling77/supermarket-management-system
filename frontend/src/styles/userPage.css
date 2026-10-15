@@ -1,0 +1,89 @@
+/* =================================
+   USER PAGE ONLY
+   不影响其他页面
+================================= */
+
+/* User 页面右侧主区域 */
+.user-page .home-main {
+    margin-left: 20%;
+    width: 80%;
+    min-width: 0;
+    padding: 30px;
+    box-sizing: border-box;
+}
+
+/* User 页面标题 */
+.user-page .home-header {
+    margin-bottom: 30px;
+}
+
+.user-page .home-header h1 {
+    font-size: 30px;
+    font-weight: 700;
+    color: #14532d;
+}
+
+.user-page .home-header p {
+    font-size: 15px;
+    color: #64748b;
+}
+
+/* User 页面内容布局 */
+.user-page .home-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    gap: 24px;
+}
+
+/* UserMenu 居中 */
+.user-page .home-table-section {
+    width: 85%;
+    max-width: 1100px;
+    min-width: 0;
+    margin: 20px auto 0;
+    box-sizing: border-box;
+    overflow-x: auto;
+}
+
+/* UserMenu 表格宽度 */
+.user-page .home-table-section table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+/* =================================
+   Responsive
+================================= */
+
+@media (max-width: 1100px) {
+    .user-page .home-table-section {
+        width: 95%;
+    }
+}
+
+@media (max-width: 768px) {
+    .user-page .home-main {
+        margin-left: 180px;
+        width: calc(100% - 180px);
+        padding: 20px;
+    }
+
+    .user-page .home-table-section {
+        width: 100%;
+    }
+}
+
+@media (max-width: 520px) {
+    .user-page .home-main {
+        margin-left: 0;
+        width: 100%;
+        padding: 16px;
+    }
+
+    .user-page .home-table-section {
+        width: 100%;
+        margin-top: 10px;
+    }
+}

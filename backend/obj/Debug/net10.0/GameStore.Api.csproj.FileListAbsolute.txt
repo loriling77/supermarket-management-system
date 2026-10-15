@@ -26,3 +26,14 @@ C:\Users\18810\OneDrive\Desktop\GameStore\GameStore.Api\obj\Debug\net10.0\refint
 C:\Users\18810\OneDrive\Desktop\GameStore\GameStore.Api\obj\Debug\net10.0\GameStore.Api.pdb
 C:\Users\18810\OneDrive\Desktop\GameStore\GameStore.Api\obj\Debug\net10.0\GameStore.Api.genruntimeconfig.cache
 C:\Users\18810\OneDrive\Desktop\GameStore\GameStore.Api\obj\Debug\net10.0\ref\GameStore.Api.dll
+C:\Users\18810\OneDrive\Desktop\Supermarket\backend\obj\Debug\net10.0\GameStore.Api.csproj.AssemblyReference.cache
+C:\Users\18810\OneDrive\Desktop\Supermarket\backend\obj\Debug\net10.0\rpswa.dswa.cache.json
+C:\Users\18810\OneDrive\Desktop\Supermarket\backend\obj\Debug\net10.0\GameStore.Api.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\18810\OneDrive\Desktop\Supermarket\backend\obj\Debug\net10.0\GameStore.Api.AssemblyInfoInputs.cache
+C:\Users\18810\OneDrive\Desktop\Supermarket\backend\obj\Debug\net10.0\GameStore.Api.AssemblyInfo.cs
+C:\Users\18810\OneDrive\Desktop\Supermarket\backend\obj\Debug\net10.0\GameStore.Api.csproj.CoreCompileInputs.cache
+C:\Users\18810\OneDrive\Desktop\Supermarket\backend\obj\Debug\net10.0\GameStore.Api.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\18810\OneDrive\Desktop\Supermarket\backend\obj\Debug\net10.0\GameStore.Api.sourcelink.json
+C:\Users\18810\OneDrive\Desktop\Supermarket\backend\obj\Debug\net10.0\GameStore.Api.dll
+C:\Users\18810\OneDrive\Desktop\Supermarket\backend\obj\Debug\net10.0\refint\GameStore.Api.dll
+C:\Users\18810\OneDrive\Desktop\Supermarket\backend\obj\Debug\net10.0\GameStore.Api.pdb

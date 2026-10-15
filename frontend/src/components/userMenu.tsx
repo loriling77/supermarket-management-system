@@ -26,6 +26,13 @@ export default function UserMenu() {
                         <tbody>
                             <tr>
                                 <td>1</td>
+                                <td>1</td>
+                                <td>1</td>
+                                <td>1</td>
+                                <td>1</td>
+                                <td>
+                                    <button>Delete</button>
+                                </td>
 
                             </tr>
 

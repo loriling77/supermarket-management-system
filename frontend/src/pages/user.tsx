@@ -1,13 +1,12 @@
-
 import NavBar from "../components/navBar";
-import UserForm from "../components/userForm";
 import UserMenu from "../components/userMenu";
 
 import "../styles/home.css";
+import "../styles/userPage.css";
 
-export default function Manufacture() {
+export default function User() {
     return (
-        <div className="home-container">
+        <div className="home-container user-page">
             <aside className="home-sidebar">
                 <NavBar />
             </aside>
@@ -15,14 +14,10 @@ export default function Manufacture() {
             <main className="home-main">
                 <div className="home-header">
                     <h1>Dashboard</h1>
-                    <p>Manage your Manufactures</p>
+                    <p>Manage your Users</p>
                 </div>
 
                 <div className="home-content">
-                    <section className="home-form-section">
-                        <UserForm />
-                    </section>
-
                     <section className="home-table-section">
                         <UserMenu />
                     </section>

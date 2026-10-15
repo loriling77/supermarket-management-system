@@ -15,7 +15,7 @@ export default function ProductForm() {
                     <input
                         id="productname"
                         type="text"
-                        placeholder="Enter product name"
+
                         required
                     />
                 </div>
@@ -25,7 +25,7 @@ export default function ProductForm() {
                     <input
                         id="manufacturename"
                         type="text"
-                        placeholder="Enter manufacturer name"
+
                         required
                     />
                 </div>
@@ -35,7 +35,7 @@ export default function ProductForm() {
                     <input
                         id="category"
                         type="text"
-                        placeholder="Enter category"
+
                         required
                     />
                 </div>
@@ -45,10 +45,9 @@ export default function ProductForm() {
                         <label htmlFor="price">Password</label>
                         <input
                             id="price"
-                            type="number"
-                            step="0.01"
-                            min="0"
-                            placeholder="0.00"
+                            type="text"
+
+
                             required
                         />
                     </div>
@@ -59,10 +58,6 @@ export default function ProductForm() {
                 <div className="form-actions">
 
 
-
-                    <button type="submit" className="Save-btn">
-                        Save
-                    </button>
 
                     <button type="button" className="Delete-btn">
                         Delete

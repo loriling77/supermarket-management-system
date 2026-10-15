@@ -1,7 +1,12 @@
-
+import type { Category } from '../types/types'
 import "../styles/productMenu.css";
 
-export default function CategoryMenu() {
+interface CategoryMenuProps {
+    categories: Category[]
+    onSelectCategory: (category: Category) => void
+}
+
+export default function CategoryMenu({ categories, onSelectCategory }: CategoryMenuProps) {
     return (
         <div className="product-menu-container">
             <div className="product-menu">
@@ -23,10 +28,18 @@ export default function CategoryMenu() {
                         </thead>
 
                         <tbody>
-                            <tr>
-                                <td>1</td>
+                            {categories.map(category => (
+                                <tr key={category.id}>
+                                    <td>{category.id}</td>
+                                    <td>{category.categoryName}</td>
+                                    <td>{category.detail}</td>
+                                    <td><button onClick={() => onSelectCategory(category)}>select</button></td>
 
-                            </tr>
+                                </tr>
+
+
+                            ))}
+
 
 
 

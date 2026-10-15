@@ -42,6 +42,18 @@ export default function Login() {
                             required
                         />
                     </div>
+                    <div className="input-group">
+                        <label htmlFor="password">
+                            Telephone
+                        </label>
+                        <input
+                            id="password"
+                            type="password"
+                            placeholder="Please enter your telephone number"
+
+                            required
+                        />
+                    </div>
 
                     <div className="input-group">
                         <label htmlFor="password">

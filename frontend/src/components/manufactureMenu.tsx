@@ -1,7 +1,15 @@
 
 import "../styles/productMenu.css";
+import type { Manufacture } from '../types/types'
 
-export default function ManufactureMenu() {
+interface ManufactureMenuProps {
+    manufactures: Manufacture[];
+    onSelectManufacture: (manufacture: Manufacture) => void
+}
+
+export default function ManufactureMenu({ manufactures, onSelectManufacture }: ManufactureMenuProps) {
+
+
     return (
         <div className="product-menu-container">
             <div className="product-menu">
@@ -24,11 +32,24 @@ export default function ManufactureMenu() {
                         </thead>
 
                         <tbody>
-                            <tr>
-                                <td>1</td>
+                            {manufactures.map((manufacture) => (
+                                <tr key={manufacture.id}>
+                                    <td>{manufacture.id}</td>
+                                    <td>{manufacture.manufactureName}</td>
+                                    <td>{manufacture.productionLiscenseNumber}</td>
+                                    <td>{manufacture.placeOfOrigin}</td>
+                                    <td>
+                                        <button
+                                            type="button"
+                                            className="select-btn"
+                                            onClick={() => onSelectManufacture(manufacture)}
+                                        >select</button>
+                                    </td>
+                                </tr>
 
 
-                            </tr>
+                            ))}
+
 
 
 
