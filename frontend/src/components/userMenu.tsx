@@ -1,7 +1,10 @@
 
 import "../styles/productMenu.css";
+import { useState } from 'react';
+import OrderModal from './orderModal'
 
 export default function UserMenu() {
+    const [showOrder, setShowOrder] = useState<boolean>(false)
     return (
         <div className="product-menu-container">
             <div className="product-menu">
@@ -31,8 +34,9 @@ export default function UserMenu() {
                                 <td>1</td>
                                 <td>1</td>
                                 <td>
-                                    <button>Delete</button>
+                                    <button onClick={() => setShowOrder(true)} >View Order</button>
                                 </td>
+                                <OrderModal isOpen={showOrder} onClose={() => setShowOrder(false)}></OrderModal>
 
                             </tr>
 

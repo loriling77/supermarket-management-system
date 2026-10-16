@@ -33,7 +33,18 @@ export interface Category {
 
 }
 
+export interface Order {
+
+    id: number;
+    productName: string;
+    unitPrice: number;
+    count: number;
+    createdTime: Date;
+    createDate: Date;
 
 
 
+
+
+}
 

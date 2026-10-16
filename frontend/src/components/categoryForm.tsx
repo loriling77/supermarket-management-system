@@ -5,10 +5,10 @@ import type { SubmitEventHandler } from 'react'
 import { useState, useEffect } from 'react'
 
 interface CategoryFormProps {
-    onAddCategory: (category: Omit<Category, 'id'>) => void
+    onAddCategory: (category: Omit<Category, 'id'>) => Promise<void>
     selectCategory: Category | null
-    onSaveCategory: (category: Category) => void
-    onDeleteCategory: (id: number) => void
+    onSaveCategory: (category: Category) => Promise<void>
+    onDeleteCategory: (id: number) => Promise<void>
 }
 
 export default function CategoryForm({ onAddCategory, selectCategory, onSaveCategory, onDeleteCategory }: CategoryFormProps) {
@@ -17,22 +17,30 @@ export default function CategoryForm({ onAddCategory, selectCategory, onSaveCate
     const [detail, setDetail] = useState("")
 
 
-    const handleSubmit: SubmitEventHandler<HTMLElement> = (e) => {
+    const handleSubmit: SubmitEventHandler<HTMLElement> = async (e) => {
         e.preventDefault()
 
-        onAddCategory(
-            {
-                categoryName,
-                detail
+        try {
+            await onAddCategory(
+                {
+                    categoryName,
+                    detail
 
-            }
-        )
+                }
+            )
+            setCategoryName("")
+            setDetail("")
 
-        setCategoryName("")
-        setDetail("")
+        } catch (error
+        ) {
+            console.error(error)
+        }
+
+
+
 
     }
-    const handleDelete = () => {
+    const handleDelete = async () => {
         if (!selectCategory) {
             alert("Please select a category")
             return
@@ -46,16 +54,19 @@ export default function CategoryForm({ onAddCategory, selectCategory, onSaveCate
         if (!confirmed) {
             return
         }
+        try {
+            await onDeleteCategory(selectCategory.id)
 
-        onDeleteCategory(selectCategory.id)
+            setCategoryName("")
+            setDetail("")
 
-        setCategoryName("")
-        setDetail("")
+        } catch (error) { console.error(error) }
+
 
 
     }
 
-    const handleSave = () => {
+    const handleSave = async () => {
         if (!selectCategory) {
             alert("Please select a category first!")
             return
@@ -68,11 +79,16 @@ export default function CategoryForm({ onAddCategory, selectCategory, onSaveCate
             return
         }
 
-        onSaveCategory({
-            id: selectCategory.id,
-            categoryName,
-            detail
-        })
+        try {
+
+            await onSaveCategory({
+                id: selectCategory.id,
+                categoryName,
+                detail
+            })
+        } catch (error) { console.error(error) }
+
+
 
 
     }

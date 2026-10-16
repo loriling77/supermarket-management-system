@@ -1,7 +1,14 @@
 
 import "../styles/productMenu.css";
 
-export default function UserOrderMenu() {
+
+interface UserOrderMenuProps {
+
+    search: string
+}
+export default function UserOrderMenu({ search }: UserOrderMenuProps) {
+
+
     return (
         <div className="product-menu-container">
             <div className="product-menu">
@@ -26,8 +33,14 @@ export default function UserOrderMenu() {
                             <tr>
                                 <td>1</td>
                                 <td>iPhone 15</td>
+                                <td>i 15</td>
+                                <td> 15</td>
+                                <td>
+                                    <button>Select</button>
+                                </td>
 
                             </tr>
+
 
 
 

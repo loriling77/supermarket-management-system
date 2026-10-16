@@ -4,47 +4,83 @@ import CategoryForm from "../components/categoryForm";
 import CategoryMenu from "../components/categoryMenu";
 import { useState } from 'react'
 import type { Category } from '../types/types'
+import {
+    getCategories,
+    addCategory,
+    updateCategory,
+    deleteCategory
+} from "../api/categoryApi";
 
 import "../styles/home.css";
-
+import { useEffect } from 'react'
 export default function Category() {
 
     const [categories, setCategories] = useState<Category[]>([])
     const [selectCategory, setSelectCategory] = useState<Category | null>(null)
-
-    const handleAddCategory = (newCategory: Omit<Category, 'id'>) => {
-        setCategories(prevCategories => [
-            ...prevCategories,
-            {
-                ...newCategory,
-                id: prevCategories.length > 0
-                    ? Math.max(...prevCategories.map(p => p.id)) + 1
-                    : 1
+    const [error, setError] = useState("");
+    useEffect(() => {
+        const loadCategories = async () => {
+            try {
+                const data = await getCategories()
+            } catch (err) {
+                console.log(err)
+                setError("Failed to load categories")
             }
-        ]
+            loadCategories()
+        }
+    }, [])
 
-        )
 
 
+    const handleAddCategory = async (newCategory: Omit<Category, 'id'>) => {
+        try {
+            setError("")
+            const createdCategory = await addCategory(newCategory)
+            setCategories(prev => [...prev, createdCategory])
+
+        } catch (err) {
+            console.log(err)
+            setError("failed to add category")
+        }
 
     }
 
-    const handleSaveCategory = (updatedCategory: Category) => {
-        setCategories(prevCategories =>
-            prevCategories.map(category =>
-                category.id === updatedCategory.id ?
-                    updatedCategory :
-                    category
+    const handleSaveCategory = async (updatedCategory: Category) => {
+
+        try {
+            setError('')
+            await updateCategory(updatedCategory)
+
+            setCategories(prevCategories =>
+                prevCategories.map(category =>
+                    category.id === updatedCategory.id ?
+                        updatedCategory :
+                        category
+                )
             )
-        )
+        } catch (err) {
+            console.log(err)
+            setError("Failed to update category")
+        }
+
     }
 
-    const handleDeleteCategory = (id: number) => {
-        setCategories(prevCategories =>
-            prevCategories.filter(category => category.id !== id)
-        );
+    const handleDeleteCategory = async (id: number) => {
 
-        setSelectCategory(null);
+        try {
+            setError("")
+            await deleteCategory(id)
+
+            setCategories(prevCategories =>
+                prevCategories.filter(category => category.id !== id)
+            );
+
+            setSelectCategory(null);
+        } catch (err) {
+            console.log(err)
+            setError("Failed to delete category")
+        }
+
     }
 
     return (
@@ -56,8 +92,13 @@ export default function Category() {
             <main className="home-main">
                 <div className="home-header">
                     <h1>Dashboard</h1>
-                    <p>Manage your Manufactures</p>
+                    <p>Manage your Categories</p>
                 </div>
+                {error && (
+                    <p role="alert" style={{ color: "red" }}>
+                        {error}
+                    </p>
+                )}
 
                 <div className="home-content">
                     <section className="home-form-section">

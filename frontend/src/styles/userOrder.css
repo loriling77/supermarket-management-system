@@ -1,0 +1,36 @@
+/* Only affect UserOrder page */
+
+/* Keep the original header position */
+.user-order-page .home-header {
+    /* Inherit the original home.css styles */
+}
+
+/* Split only the content area into two equal columns */
+.user-order-page .home-content {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+    width: 100%;
+}
+
+/* Equal-width columns */
+.user-order-page .home-left-column,
+.user-order-page .home-right-column {
+    width: 100%;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Prevent tables from stretching the layout */
+.user-order-page .product-table-wrapper {
+    max-width: 100%;
+    overflow-x: auto;
+}
+
+@media (max-width: 768px) {
+    .user-order-page .home-content {
+        grid-template-columns: 1fr;
+    }
+}

@@ -1,0 +1,59 @@
+.order-modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    padding: 20px;
+}
+
+.order-modal-content {
+    width: 100%;
+    max-width: 1100px;
+    max-height: 85vh;
+    background: white;
+    border-radius: 12px;
+    padding: 24px;
+    box-sizing: border-box;
+    overflow-y: auto;
+    box-shadow: 0 10px 35px rgba(0, 0, 0, 0.2);
+}
+
+.order-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.order-modal-header h1 {
+    margin: 0;
+}
+
+.order-modal-close {
+    background: transparent;
+    border: none;
+    font-size: 30px;
+    cursor: pointer;
+    color: #666;
+}
+
+.order-modal-close:hover {
+    color: #111;
+}
+
+.order-modal-content .product-table-wrapper {
+    overflow-x: auto;
+}
+
+.order-modal-content .product-table {
+    width: 100%;
+}
+
+@media (max-width: 600px) {
+    .order-modal-content {
+        padding: 16px;
+    }
+}

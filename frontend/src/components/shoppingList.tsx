@@ -19,6 +19,7 @@ export default function ShoppingList() {
                                 <th>Unit Price</th>
                                 <th>Count</th>
                                 <th>Total Price</th>
+                                <th>Action</th>
                             </tr>
                         </thead>
 
@@ -29,7 +30,11 @@ export default function ShoppingList() {
                                 <td></td>
                                 <td></td>
                                 <td></td>
+                                <td>
+                                    <button>Remove</button>
+                                </td>
                             </tr>
+
                         </tbody>
                     </table>
                 </div>
