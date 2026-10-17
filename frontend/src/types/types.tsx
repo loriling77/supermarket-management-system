@@ -2,8 +2,8 @@
 export interface Product {
     id: number;
     productName: string;
-    manufactureName: string;
-    category: string;
+    manufactureId: number;
+    categoryId: number;
     price: number;
     count: number;
 }
@@ -48,3 +48,15 @@ export interface Order {
 
 }
 
+export interface AuthUser {
+    id: string;
+    email: string;
+    roles: string[];
+}
+
+export interface RegisterRequest {
+    username: string;
+    email: string;
+    phoneNumber: string;
+    password: string;
+}

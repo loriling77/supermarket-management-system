@@ -4,9 +4,15 @@ import "../styles/productMenu.css";
 interface CategoryMenuProps {
     categories: Category[]
     onSelectCategory: (category: Category) => void
+    search: string
 }
 
-export default function CategoryMenu({ categories, onSelectCategory }: CategoryMenuProps) {
+export default function CategoryMenu({ categories, onSelectCategory, search }: CategoryMenuProps) {
+    const filteredCategories = categories.filter(
+        category => category.categoryName
+            .toLowerCase()
+            .includes(search.trim().toLowerCase()))
+
     return (
         <div className="product-menu-container">
             <div className="product-menu">
@@ -28,7 +34,7 @@ export default function CategoryMenu({ categories, onSelectCategory }: CategoryM
                         </thead>
 
                         <tbody>
-                            {categories.map(category => (
+                            {filteredCategories.map(category => (
                                 <tr key={category.id}>
                                     <td>{category.id}</td>
                                     <td>{category.categoryName}</td>
@@ -39,6 +45,13 @@ export default function CategoryMenu({ categories, onSelectCategory }: CategoryM
 
 
                             ))}
+                            {filteredCategories.length === 0 && (
+                                <tr>
+                                    <td colSpan={4}>
+                                        No categories found
+                                    </td>
+                                </tr>
+                            )}
 
 
 

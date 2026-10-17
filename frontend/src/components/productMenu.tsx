@@ -4,10 +4,11 @@ import type { Product } from '../types/types'
 
 interface ProductMenuProps {
     products: Product[];
-    onSelectProduct: (product: Product) => void
+    onSelectProduct: (product: Product) => void;
+    search: string
 }
 
-export default function ProductMenu({ products, onSelectProduct }: ProductMenuProps
+export default function ProductMenu({ products, onSelectProduct, search }: ProductMenuProps
 
 ) {
     return (
@@ -37,8 +38,8 @@ export default function ProductMenu({ products, onSelectProduct }: ProductMenuPr
                                 <tr key={product.id}>
                                     <td>{product.id}</td>
                                     <td>{product.productName}</td>
-                                    <td>{product.manufactureName}</td>
-                                    <td>{product.category}</td>
+                                    <td>{product.manufactureId}</td>
+                                    <td>{product.categoryId}</td>
                                     <td>{product.count}</td>
                                     <td>{product.price}</td>
                                     <td>

@@ -5,11 +5,13 @@ import type { Manufacture } from '../types/types'
 interface ManufactureMenuProps {
     manufactures: Manufacture[];
     onSelectManufacture: (manufacture: Manufacture) => void
+    search: string
 }
 
-export default function ManufactureMenu({ manufactures, onSelectManufacture }: ManufactureMenuProps) {
+export default function ManufactureMenu({ manufactures, onSelectManufacture, search }: ManufactureMenuProps) {
 
-
+    const filteredManufactures = manufactures.filter(manufacture => manufacture.manufactureName.toLowerCase().includes(search.trim().toLowerCase())
+    )
     return (
         <div className="product-menu-container">
             <div className="product-menu">
@@ -32,7 +34,7 @@ export default function ManufactureMenu({ manufactures, onSelectManufacture }: M
                         </thead>
 
                         <tbody>
-                            {manufactures.map((manufacture) => (
+                            {filteredManufactures.map((manufacture) => (
                                 <tr key={manufacture.id}>
                                     <td>{manufacture.id}</td>
                                     <td>{manufacture.manufactureName}</td>
@@ -49,6 +51,13 @@ export default function ManufactureMenu({ manufactures, onSelectManufacture }: M
 
 
                             ))}
+                            {filteredManufactures.length === 0 && (
+                                <tr>
+                                    <td colSpan={4}>
+                                        No categories found
+                                    </td>
+                                </tr>
+                            )}
 
 
 

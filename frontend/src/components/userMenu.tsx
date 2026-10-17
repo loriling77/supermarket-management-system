@@ -21,7 +21,7 @@ export default function UserMenu() {
                                 <th>Username</th>
                                 <th>Email</th>
                                 <th>Telephone</th>
-                                <th>Password</th>
+
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -32,7 +32,7 @@ export default function UserMenu() {
                                 <td>1</td>
                                 <td>1</td>
                                 <td>1</td>
-                                <td>1</td>
+
                                 <td>
                                     <button onClick={() => setShowOrder(true)} >View Order</button>
                                 </td>

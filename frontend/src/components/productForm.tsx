@@ -1,51 +1,75 @@
-import type { Product } from '../types/types'
+import type { Product, Category, Manufacture } from '../types/types'
 import "../styles/productForm.css";
 import { useState, useEffect } from 'react'
 import type { SubmitEventHandler } from 'react'
+import { getManufactures } from "../api/manufactureApi";
+import { getCategories } from "../api/categoryApi";
 
 interface ProductFormProps {
-    onAddProduct: (product: Omit<Product, "id">) => void
+    onAddProduct: (product: Omit<Product, "id">) => Promise<void>
     selectProduct: Product | null
-    onSaveProduct: (product: Product) => void
-    onDeleteProduct: (id: number) => void
+    onSaveProduct: (product: Product) => Promise<void>
+    onDeleteProduct: (id: number) => Promise<void>
 }
 
 export default function ProductForm({ onAddProduct, selectProduct, onSaveProduct, onDeleteProduct }: ProductFormProps) {
 
 
     const [productName, setProductName] = useState("");
-    const [manufactureName, setManufactureName] = useState("");
-    const [category, setCategory] = useState("");
+    const [manufactureId, setManufactureId] = useState("");
+    const [categoryId, setCategoryId] = useState("");
+    const [manufactures, setManufactures] = useState<Manufacture[]>([]);
+    const [categories, setCategories] = useState<Category[]>([])
     const [price, setPrice] = useState("");
     const [count, setCount] = useState("");
-    const handleSubmit: SubmitEventHandler<HTMLElement> = (e) => {
-        e.preventDefault()
+    const handleSubmit: SubmitEventHandler<HTMLFormElement> = async (e) => {
+        e.preventDefault();
 
+        if (
+            !productName.trim() ||
+            !manufactureId ||
+            !categoryId ||
+            price === "" ||
+            count === "" ||
+            !Number.isInteger(Number(manufactureId)) ||
+            Number(manufactureId) <= 0 ||
+            !Number.isInteger(Number(categoryId)) ||
+            Number(categoryId) <= 0 ||
+            Number(price) < 0 ||
+            !Number.isInteger(Number(count)) ||
+            Number(count) < 0
+        ) {
+            alert("Please enter valid product information");
+            return;
+        }
 
-        onAddProduct({
-            productName,
-            manufactureName,
-            category,
-            price: Number(price),
-            count: Number(count)
+        try {
+            await onAddProduct({
+                productName: productName.trim(),
+                manufactureId: Number(manufactureId),
+                categoryId: Number(categoryId),
+                price: Number(price),
+                count: Number(count)
+            });
 
-        })
+            setProductName("");
+            setManufactureId("");
+            setCategoryId("");
+            setPrice("");
+            setCount("");
+        } catch (error) {
+            console.error(error);
+        }
+    };
 
-        setProductName("");
-        setManufactureName("");
-        setCategory("");
-        setPrice("");
-        setCount("");
-    }
-
-    const handleSave = () => {
+    const handleSave = async () => {
         if (!selectProduct) {
             alert("Please select a product first!")
             return
         }
         if (!productName.trim() ||
-            !manufactureName.trim() ||
-            !category.trim() ||
+            !manufactureId.trim() ||
+            !categoryId.trim() ||
             price === "" ||
             count === "" ||
             Number(price) < 0 ||
@@ -55,18 +79,21 @@ export default function ProductForm({ onAddProduct, selectProduct, onSaveProduct
             alert('Please enter valid product information')
             return
         }
+        try {
 
-        onSaveProduct({
-            id: selectProduct.id,
-            productName,
-            manufactureName: manufactureName,
-            category,
-            price: Number(price),
-            count: Number(count)
-        })
+            await onSaveProduct({
+                id: selectProduct.id,
+                productName,
+                manufactureId: Number(manufactureId),
+                categoryId: Number(categoryId),
+                price: Number(price),
+                count: Number(count)
+            })
+
+        } catch (error) { console.log(error) }
 
     }
-    const handleDelete = () => {
+    const handleDelete = async () => {
         if (!selectProduct) {
             alert("Please select a product first!");
             return;
@@ -79,22 +106,43 @@ export default function ProductForm({ onAddProduct, selectProduct, onSaveProduct
         if (!confirmed) {
             return;
         }
+        try {
 
-        onDeleteProduct(selectProduct.id);
+            await onDeleteProduct(selectProduct.id)
+            setProductName("");
+            setManufactureId("");
+            setCategoryId("");
+            setPrice("");
+            setCount("");
+        } catch (error) { console.log(error) }
 
-        setProductName("");
-        setManufactureName("");
-        setCategory("");
-        setPrice("");
-        setCount("");
+
+
+
 
     }
 
     useEffect(() => {
+        const loadDropdownData = async () => {
+            try {
+                const [manufactureData, categoryData] = await Promise.all([
+                    getManufactures(),
+                    getCategories()
+                ]);
+                setManufactures(manufactureData);
+                setCategories(categoryData)
+            } catch (error) {
+                console.error("Failed to load dropdown data", error)
+            }
+        }
+        void loadDropdownData()
+    }, [])
+
+    useEffect(() => {
         if (selectProduct) {
             setProductName(selectProduct.productName);
-            setManufactureName(selectProduct.manufactureName);
-            setCategory(selectProduct.category);
+            setManufactureId(String(selectProduct.manufactureId));
+            setCategoryId(String(selectProduct.categoryId));
             setPrice(String(selectProduct.price));
             setCount(String(selectProduct.count));
         }
@@ -123,29 +171,47 @@ export default function ProductForm({ onAddProduct, selectProduct, onSaveProduct
                 </div>
 
                 <div className="input-group">
-                    <label htmlFor="manufacturename">Manufacture Name</label>
-                    <input
-                        id="manufacturename"
-                        type="text"
-                        placeholder="Enter manufacturer name"
-                        required
-                        value={manufactureName}
-                        onChange={(e) => setManufactureName(e.target.value)}
+                    <label htmlFor="manufactureId">Manufacture Name</label>
 
-                    />
+                    <select
+                        id="manufactureId"
+                        required
+                        value={manufactureId}
+                        onChange={(e) => setManufactureId(e.target.value)}
+                    >
+                        <option value="">Select Manufacturer</option>
+
+                        {manufactures.map(manufacture => (
+                            <option
+                                key={manufacture.id}
+                                value={manufacture.id}
+                            >
+                                {manufacture.manufactureName}
+                            </option>
+                        ))}
+                    </select>
                 </div>
 
                 <div className="input-group">
-                    <label htmlFor="category">Category</label>
-                    <input
-                        id="category"
-                        type="text"
-                        placeholder="Enter category"
-                        required
-                        value={category}
-                        onChange={(e) => setCategory(e.target.value)}
+                    <label htmlFor="categoryId">Category</label>
 
-                    />
+                    <select
+                        id="categoryId"
+                        required
+                        value={categoryId}
+                        onChange={(e) => setCategoryId(e.target.value)}
+                    >
+                        <option value="">Select Category</option>
+
+                        {categories.map(category => (
+                            <option
+                                key={category.id}
+                                value={category.id}
+                            >
+                                {category.categoryName}
+                            </option>
+                        ))}
+                    </select>
                 </div>
 
                 <div className="form-row">
@@ -156,7 +222,7 @@ export default function ProductForm({ onAddProduct, selectProduct, onSaveProduct
                             type="number"
                             step="0.01"
                             min="0"
-                            placeholder="0.00"
+
                             required
                             value={price}
                             onChange={(e) => setPrice(e.target.value)}
@@ -171,7 +237,7 @@ export default function ProductForm({ onAddProduct, selectProduct, onSaveProduct
                             type="number"
                             step="1"
                             min="0"
-                            placeholder="0"
+
                             required
                             value={count}
                             onChange={(e) => setCount(e.target.value)}

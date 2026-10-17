@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Supermarket.Api.Data;
 using Supermarket.Api.Models;
 using Microsoft.EntityFrameworkCore;
+using Supermarket.Api.Dtos;
 using System.Runtime.CompilerServices;
 
 namespace Supermarket.Api.Controllers
@@ -42,8 +43,17 @@ namespace Supermarket.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<Product>> AddProduct(Product product)
+        public async Task<ActionResult<Product>> AddProduct(ProductRequestDto dto)
         {
+            var product = new Product
+            {
+                ProductName = dto.ProductName,
+                ManufactureId = dto.ManufactureId,
+                CategoryId = dto.CategoryId,
+                Price = dto.Price,
+                Count = dto.Count
+            };
+
             product.Id = 0;
             _context.Products.Add(product);
             await _context.SaveChangesAsync();
@@ -54,20 +64,19 @@ namespace Supermarket.Api.Controllers
             );
         }
         [HttpPut("{id}")]
-        public async Task<ActionResult<Product>> UpdateProduct(int id, Product updatedProduct)
+        public async Task<ActionResult<Product>> UpdateProduct(int id, ProductRequestDto dto)
         {
-            if (id != updatedProduct.Id)
-                return BadRequest();
+
             var product = await _context.Products.FindAsync(id);
-            if (product != null)
+            if (product == null)
                 return NotFound();
 
-            product.ProductName = updatedProduct.ProductName;
-            product.ManufactureId = updatedProduct.ManufactureId;
-            product.Category = updatedProduct.Category;
+            product.ProductName = dto.ProductName;
+            product.ManufactureId = dto.ManufactureId;
+            product.CategoryId = dto.CategoryId;
 
-            product.Price = updatedProduct.Price;
-            product.Count = updatedProduct.Count;
+            product.Price = dto.Price;
+            product.Count = dto.Count;
 
             await _context.SaveChangesAsync();
             return NoContent();

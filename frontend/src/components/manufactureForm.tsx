@@ -16,21 +16,27 @@ export default function ManufactureForm({ onAddManufacture, selectManufacture, o
     const [productionLiscenseNumber, setProductionLiscenseNumber] = useState("")
     const [placeOfOrigin, setPlaceOfOrigin] = useState("")
 
-    const handleAdd: SubmitEventHandler<HTMLElement> = (e) => {
+    const handleAdd: SubmitEventHandler<HTMLElement> = async (e) => {
         e.preventDefault();
 
-        onAddManufacture({
+        try {
+            await onAddManufacture({
 
-            manufactureName,
-            productionLiscenseNumber,
-            placeOfOrigin,
+                manufactureName,
+                productionLiscenseNumber,
+                placeOfOrigin,
 
 
-        })
+            })
 
-        setManufactureName("");
-        setProductionLiscenseNumber("");
-        setPlaceOfOrigin("");
+            setManufactureName("");
+            setProductionLiscenseNumber("");
+            setPlaceOfOrigin("");
+
+        } catch (error) {
+            console.error(error)
+
+        }
 
     }
 
@@ -43,7 +49,7 @@ export default function ManufactureForm({ onAddManufacture, selectManufacture, o
         }
     }, [selectManufacture]);
 
-    const handleDelete = () => {
+    const handleDelete = async () => {
         if (!selectManufacture) {
             alert("Please select a manufacture first!");
             return;
@@ -56,17 +62,19 @@ export default function ManufactureForm({ onAddManufacture, selectManufacture, o
         if (!confirmed) {
             return;
         }
+        try {
+            await onDeleteManufacture(selectManufacture.id);
 
-        onDeleteManufacture(selectManufacture.id);
+            setManufactureName("");
+            setProductionLiscenseNumber("");
+            setPlaceOfOrigin("");
+        } catch (error) { console.error(error) }
 
-        setManufactureName("");
-        setProductionLiscenseNumber("");
-        setPlaceOfOrigin("");
 
 
     }
 
-    const handleSave = () => {
+    const handleSave = async () => {
 
 
         if (!selectManufacture) {
@@ -82,16 +90,18 @@ export default function ManufactureForm({ onAddManufacture, selectManufacture, o
             alert('Please enter valid manufacture information')
             return
         }
+        try {
+            await onSaveManufacture({
+                id: selectManufacture.id,
 
-        onSaveManufacture({
-            id: selectManufacture.id,
-
-            manufactureName: manufactureName,
-            productionLiscenseNumber,
-            placeOfOrigin
+                manufactureName: manufactureName,
+                productionLiscenseNumber,
+                placeOfOrigin
 
 
-        })
+            })
+
+        } catch (error) { console.error(error) }
 
 
     }

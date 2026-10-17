@@ -1,45 +1,37 @@
-using Microsoft.AspNetCore.Http;
+
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Supermarket.Api.Data;
-using Supermarket.Api.Models;
+using Supermarket.Api.Dtos;
 
-namespace Supermarket.Api.Controllers
+namespace Supermarket.Api.Controllers;
+
+[Route("api/[controller]")]
+[ApiController]
+[Authorize(Roles = "Admin")]
+public class UserController : ControllerBase
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class UserController : ControllerBase
+    private readonly AppDbContext _context;
+
+    public UserController(AppDbContext context)
     {
-        private readonly AppDbContext _context;
+        _context = context;
+    }
 
-        public UserController(AppDbContext context)
-        {
-            _context = context;
-        }
+    // GET: api/user
+    [HttpGet]
+    public async Task<ActionResult<IEnumerable<UserResponseDto>>> GetUsers()
+    {
+        var users = await _context.Users
+            .Select(user => new UserResponseDto
+            {
+                Id = user.Id,
+                Username = user.UserName,
+                Email = user.Email
+            })
+            .ToListAsync();
 
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<User>>> GetUsers()
-        {
-            return await _context.Users.ToListAsync();
-        }
-
-        [HttpPost]
-        public async Task<ActionResult<User>> PostUser(User user)
-        {
-            user.Id = 0;
-            _context.Users.Add(user);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction(
-                nameof(PostUser),
-                new { id = user.Id },
-                user
-            );
-
-
-
-        }
-
-
+        return Ok(users);
     }
 }

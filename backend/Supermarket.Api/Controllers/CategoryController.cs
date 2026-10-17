@@ -4,6 +4,7 @@ using Supermarket.Api.Models;
 using Microsoft.AspNetCore.Mvc;
 using Supermarket.Api.Controllers;
 using System.Data;
+using Supermarket.Api.Dtos;
 
 namespace Supermarket.Api.Controllers
 {
@@ -33,9 +34,14 @@ namespace Supermarket.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<Category>> AddCategory(Category category)
+        public async Task<ActionResult<Category>> AddCategory(CategoryRequestDto dto)
         {
-            category.Id = 0;
+            var category = new Category
+            {
+                CategoryName = dto.CategoryName,
+                Detail = dto.Detail
+            };
+
             _context.Categories.Add(category);
             await _context.SaveChangesAsync();
 
@@ -46,17 +52,16 @@ namespace Supermarket.Api.Controllers
             );
         }
         [HttpPut("{id}")]
-        public async Task<ActionResult<Category>> UpdateCategory(int id, Category updatedCategory)
+        public async Task<ActionResult<Category>> UpdateCategory(int id, CategoryRequestDto dto)
         {
-            if (id != updatedCategory.Id)
-                return BadRequest();
+
 
             var category = await _context.Categories.FindAsync(id);
 
             if (category == null)
                 return NotFound();
-            category.CategoryName = updatedCategory.CategoryName;
-            category.Detail = updatedCategory.Detail;
+            category.CategoryName = dto.CategoryName;
+            category.Detail = dto.Detail;
 
             await _context.SaveChangesAsync();
             return NoContent();

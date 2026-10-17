@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Supermarket.Api.Data;
+using Supermarket.Api.Dtos;
 using Supermarket.Api.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -29,9 +30,15 @@ namespace Supermarket.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<Manufacture>> AddManufacture(Manufacture manufacture)
+        public async Task<ActionResult<Manufacture>> AddManufacture(ManufactureRequestDto dto)
         {
-            manufacture.Id = 0;
+            var manufacture = new Manufacture
+            {
+                ManufactureName = dto.ManufactureName,
+                ProductionLiscenseNumber = dto.ProductionLiscenseNumber,
+                PlaceOfOrigin = dto.PlaceOfOrigin
+
+            };
             _context.Manufactures.Add(manufacture);
             await _context.SaveChangesAsync();
 
@@ -43,17 +50,16 @@ namespace Supermarket.Api.Controllers
         }
         [HttpPut("{id}")]
 
-        public async Task<ActionResult<Manufacture>> UpdateManufacture(int id, Manufacture updatedManufacture)
+        public async Task<ActionResult<Manufacture>> UpdateManufacture(int id, ManufactureRequestDto dto)
         {
-            if (id != updatedManufacture.Id)
-                return BadRequest();
+
             var manufacture = await _context.Manufactures.FindAsync(id);
             if (manufacture == null)
                 return NotFound();
 
-            manufacture.ManufactureName = updatedManufacture.ManufactureName;
-            manufacture.ProductionLiscenseNumber = updatedManufacture.ProductionLiscenseNumber;
-            manufacture.PlaceOfOrigin = updatedManufacture.PlaceOfOrigin;
+            manufacture.ManufactureName = dto.ManufactureName;
+            manufacture.ProductionLiscenseNumber = dto.ProductionLiscenseNumber;
+            manufacture.PlaceOfOrigin = dto.PlaceOfOrigin;
 
             await _context.SaveChangesAsync();
             return NoContent();

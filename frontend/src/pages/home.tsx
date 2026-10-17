@@ -2,24 +2,48 @@
 import NavBar from "../components/navBar";
 import ProductForm from "../components/productForm";
 import ProductMenu from "../components/productMenu";
-import { useState } from 'react'
+import Search from "../components/search";
+import { useState, useEffect } from 'react'
 import type { Product } from '../types/types'
+import {
+    getProducts,
+    getProduct,
+    addProduct,
+    updateProduct,
+    deleteProduct
+} from '../api/productApi'
 
 import "../styles/home.css";
 
 export default function Home() {
     const [products, setProducts] = useState<Product[]>([])
+    const [error, setError] = useState("")
     const [selectProduct, setSelectProduct] = useState<Product | null>(null)
-    const handleAddProduct = (newProduct: Omit<Product, "id">) => {
-        setProducts(prevProducts => [
-            ...prevProducts,
-            {
-                ...newProduct,
-                id: prevProducts.length > 0
-                    ? Math.max(...prevProducts.map(p => p.id)) + 1
-                    : 1
+    const [search, setSearch] = useState<string>("")
+    useEffect(() => {
+        const loadProducts = async () => {
+            try {
+                setError("")
+                const data = await getProducts()
+                setProducts(data)
+            } catch (error) {
+                console.log(error),
+                    setError("Failed to load Products")
             }
-        ])
+            loadProducts()
+        }
+    }, [])
+    const handleAddProduct = async (newProduct: Omit<Product, "id">) => {
+
+        try {
+            setError("")
+            const createdProduct = await addProduct(newProduct)
+            setProducts(prev => [...prev, createdProduct])
+        } catch (err) {
+            console.log(err)
+            setError("failed to add product")
+        }
+
     }
 
 
@@ -27,22 +51,41 @@ export default function Home() {
 
 
 
-    const handleDeleteProduct = (id: number) => {
-        setProducts(prevProducts =>
-            prevProducts.filter(product => product.id !== id)
-        );
+    const handleDeleteProduct = async (id: number) => {
 
-        setSelectProduct(null);
+        try {
+            setError("")
+            await deleteProduct(id)
+
+            setProducts(prevProducts =>
+                prevProducts.filter(product => product.id !== id)
+            );
+            setSelectProduct(null)
+        } catch (err) {
+            console.log(err)
+            setError("Failed to delete product")
+        }
+
+
+
     }
 
-    const handleSaveProduct = (updatedProduct: Product) => {
+    const handleSaveProduct = async (updatedProduct: Product) => {
+        try {
+            setError("")
+            await updateProduct(updatedProduct)
 
-        setProducts(prevProducts =>
-            prevProducts.map(product =>
-                product.id === updatedProduct.id ?
-                    updatedProduct :
-                    product
-            ))
+            setProducts(prevProducts =>
+                prevProducts.map(product =>
+                    product.id === updatedProduct.id ?
+                        updatedProduct :
+                        product
+                ))
+        } catch (err) {
+            console.log(err)
+            setError("Failed to save product")
+        }
+
     }
 
 
@@ -59,6 +102,12 @@ export default function Home() {
                     <h1>Dashboard</h1>
                     <p>Manage your products and inventory</p>
                 </div>
+                {error && (
+                    <p role="alert" style={{ color: "red" }}>
+                        {error}
+                    </p>
+                )}
+
 
                 <div className="home-content">
                     <section className="home-form-section">
@@ -66,7 +115,8 @@ export default function Home() {
                     </section>
 
                     <section className="home-table-section">
-                        <ProductMenu products={products} onSelectProduct={setSelectProduct} />
+                        <Search onSearch={setSearch}></Search>
+                        <ProductMenu products={products} onSelectProduct={setSelectProduct} search={search} />
                     </section>
                 </div>
             </main>

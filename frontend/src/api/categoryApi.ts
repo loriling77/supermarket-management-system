@@ -10,11 +10,12 @@ export async function getCategories(): Promise<Category[]> {
     return response.json()
 }
 
-export async function getCategory(id: number): Promise<void> {
+export async function getCategory(id: number): Promise<Category> {
     const response = await fetch(`${API_URL}/${id}`)
     if (!response.ok) {
         throw new Error("Failed to get this category")
     }
+    return await response.json()
 }
 
 export async function addCategory(category: Omit<Category, "id">): Promise<Category> {

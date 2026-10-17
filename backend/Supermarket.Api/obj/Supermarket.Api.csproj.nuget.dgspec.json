@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "c:\\Users\\18810\\OneDrive\\Desktop\\Supermarket\\backend\\Supermarket.Api\\Supermarket.Api.csproj": {}
+    "C:\\Users\\18810\\OneDrive\\Desktop\\Supermarket\\backend\\Supermarket.Api\\Supermarket.Api.csproj": {}
   },
   "projects": {
-    "c:\\Users\\18810\\OneDrive\\Desktop\\Supermarket\\backend\\Supermarket.Api\\Supermarket.Api.csproj": {
+    "C:\\Users\\18810\\OneDrive\\Desktop\\Supermarket\\backend\\Supermarket.Api\\Supermarket.Api.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "c:\\Users\\18810\\OneDrive\\Desktop\\Supermarket\\backend\\Supermarket.Api\\Supermarket.Api.csproj",
+        "projectUniqueName": "C:\\Users\\18810\\OneDrive\\Desktop\\Supermarket\\backend\\Supermarket.Api\\Supermarket.Api.csproj",
         "projectName": "Supermarket.Api",
-        "projectPath": "c:\\Users\\18810\\OneDrive\\Desktop\\Supermarket\\backend\\Supermarket.Api\\Supermarket.Api.csproj",
+        "projectPath": "C:\\Users\\18810\\OneDrive\\Desktop\\Supermarket\\backend\\Supermarket.Api\\Supermarket.Api.csproj",
         "packagesPath": "C:\\Users\\18810\\.nuget\\packages\\",
-        "outputPath": "c:\\Users\\18810\\OneDrive\\Desktop\\Supermarket\\backend\\Supermarket.Api\\obj\\",
+        "outputPath": "C:\\Users\\18810\\OneDrive\\Desktop\\Supermarket\\backend\\Supermarket.Api\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\18810\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -46,6 +46,10 @@
           "framework": "net10.0",
           "targetAlias": "net10.0",
           "dependencies": {
+            "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[10.0.0, )"
+            },
             "Microsoft.AspNetCore.OpenApi": {
               "target": "Package",
               "version": "[10.0.12, )"

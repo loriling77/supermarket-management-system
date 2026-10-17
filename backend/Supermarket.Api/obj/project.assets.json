@@ -51,6 +51,22 @@
           }
         }
       },
+      "Microsoft.AspNetCore.Identity.EntityFrameworkCore/10.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.EntityFrameworkCore.Relational": "10.0.0"
+        },
+        "compile": {
+          "lib/net10.0/Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net10.0/Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "Microsoft.AspNetCore.OpenApi/10.0.12": {
         "type": "package",
         "dependencies": {
@@ -1551,6 +1567,22 @@
         "lib/netstandard2.0/Humanizer.dll",
         "lib/netstandard2.0/Humanizer.xml",
         "logo.png"
+      ]
+    },
+    "Microsoft.AspNetCore.Identity.EntityFrameworkCore/10.0.0": {
+      "sha512": "mH1+58nbX5RWSd8hajSnXSdpQ1MN3oca488Zd+DvKX2nPTAyTVNRzubMV06BmPcjOZ9waLr/AjwcNiCQ8bCscQ==",
+      "type": "package",
+      "path": "microsoft.aspnetcore.identity.entityframeworkcore/10.0.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Icon.png",
+        "PACKAGE.md",
+        "THIRD-PARTY-NOTICES.TXT",
+        "lib/net10.0/Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll",
+        "lib/net10.0/Microsoft.AspNetCore.Identity.EntityFrameworkCore.xml",
+        "microsoft.aspnetcore.identity.entityframeworkcore.10.0.0.nupkg.sha512",
+        "microsoft.aspnetcore.identity.entityframeworkcore.nuspec"
       ]
     },
     "Microsoft.AspNetCore.OpenApi/10.0.12": {
@@ -3776,6 +3808,7 @@
   },
   "projectFileDependencyGroups": {
     "net10.0": [
+      "Microsoft.AspNetCore.Identity.EntityFrameworkCore >= 10.0.0",
       "Microsoft.AspNetCore.OpenApi >= 10.0.12",
       "Microsoft.EntityFrameworkCore >= 10.0.13",
       "Microsoft.EntityFrameworkCore.Design >= 10.0.0",
@@ -3788,11 +3821,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "c:\\Users\\18810\\OneDrive\\Desktop\\Supermarket\\backend\\Supermarket.Api\\Supermarket.Api.csproj",
+      "projectUniqueName": "C:\\Users\\18810\\OneDrive\\Desktop\\Supermarket\\backend\\Supermarket.Api\\Supermarket.Api.csproj",
       "projectName": "Supermarket.Api",
-      "projectPath": "c:\\Users\\18810\\OneDrive\\Desktop\\Supermarket\\backend\\Supermarket.Api\\Supermarket.Api.csproj",
+      "projectPath": "C:\\Users\\18810\\OneDrive\\Desktop\\Supermarket\\backend\\Supermarket.Api\\Supermarket.Api.csproj",
       "packagesPath": "C:\\Users\\18810\\.nuget\\packages\\",
-      "outputPath": "c:\\Users\\18810\\OneDrive\\Desktop\\Supermarket\\backend\\Supermarket.Api\\obj\\",
+      "outputPath": "C:\\Users\\18810\\OneDrive\\Desktop\\Supermarket\\backend\\Supermarket.Api\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\18810\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -3827,6 +3860,10 @@
         "framework": "net10.0",
         "targetAlias": "net10.0",
         "dependencies": {
+          "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
+            "target": "Package",
+            "version": "[10.0.0, )"
+          },
           "Microsoft.AspNetCore.OpenApi": {
             "target": "Package",
             "version": "[10.0.12, )"

@@ -2,10 +2,12 @@
 import NavBar from "../components/navBar";
 import CategoryForm from "../components/categoryForm";
 import CategoryMenu from "../components/categoryMenu";
+import Search from "../components/search";
 import { useState } from 'react'
 import type { Category } from '../types/types'
 import {
     getCategories,
+    getCategory,
     addCategory,
     updateCategory,
     deleteCategory
@@ -18,16 +20,20 @@ export default function Category() {
     const [categories, setCategories] = useState<Category[]>([])
     const [selectCategory, setSelectCategory] = useState<Category | null>(null)
     const [error, setError] = useState("");
+    const [search, setSearch] = useState<string>("")
     useEffect(() => {
         const loadCategories = async () => {
             try {
+                setError("")
                 const data = await getCategories()
+                setCategories(data)
             } catch (err) {
                 console.log(err)
                 setError("Failed to load categories")
             }
-            loadCategories()
+
         }
+        loadCategories()
     }, [])
 
 
@@ -40,7 +46,7 @@ export default function Category() {
 
         } catch (err) {
             console.log(err)
-            setError("failed to add category")
+            setError("failed to add a category")
         }
 
     }
@@ -106,7 +112,8 @@ export default function Category() {
                     </section>
 
                     <section className="home-table-section">
-                        <CategoryMenu categories={categories} onSelectCategory={setSelectCategory} />
+                        <Search onSearch={setSearch}></Search>
+                        <CategoryMenu search={search} categories={categories} onSelectCategory={setSelectCategory} />
                     </section>
                 </div>
             </main>
