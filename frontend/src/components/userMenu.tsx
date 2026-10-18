@@ -1,13 +1,21 @@
 
 import "../styles/productMenu.css";
-import { useState } from 'react';
-import OrderModal from './orderModal'
+import type { RegisteredUser } from "../api/userApi";
 
-export default function UserMenu() {
-    const [showOrder, setShowOrder] = useState<boolean>(false)
+interface UserMenuProps {
+    users: RegisteredUser[];
+    onViewOrder: (user: RegisteredUser) => void;
+}
+
+export default function UserMenu({
+    users,
+    onViewOrder
+}: UserMenuProps) {
+
     return (
         <div className="product-menu-container">
             <div className="product-menu">
+
                 <div className="product-menu-header">
                     <h1>User Management</h1>
                     <p>View and manage your users</p>
@@ -17,37 +25,58 @@ export default function UserMenu() {
                     <table className="product-table">
                         <thead>
                             <tr>
-                                <th>ID</th>
+                                <th>No.</th>
                                 <th>Username</th>
                                 <th>Email</th>
-                                <th>Telephone</th>
 
+                                <th>Role</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
 
                         <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>1</td>
-                                <td>1</td>
-                                <td>1</td>
+                            {users.length === 0 ? (
+                                <tr>
+                                    <td colSpan={5}>
+                                        No users found.
+                                    </td>
+                                </tr>
+                            ) : (
+                                users.map((user, index) => (
+                                    <tr key={user.id}>
+                                        <td>{index + 1}</td>
+                                        <td>{user.userName}</td>
 
-                                <td>
-                                    <button onClick={() => setShowOrder(true)} >View Order</button>
-                                </td>
-                                <OrderModal isOpen={showOrder} onClose={() => setShowOrder(false)}></OrderModal>
-
-                            </tr>
-
-
-
+                                        <td>{user.email}</td>
 
 
 
+                                        <td>
+                                            {user.roles.join(", ")}
+                                        </td>
+
+                                        <td>
+                                            <button
+                                                type="button"
+                                                onClick={() => {
+                                                    console.log(
+                                                        "View Order clicked:",
+                                                        user
+                                                    );
+
+                                                    onViewOrder(user);
+                                                }}
+                                            >
+                                                View Order
+                                            </button>
+                                        </td>
+                                    </tr>
+                                ))
+                            )}
                         </tbody>
                     </table>
                 </div>
+
             </div>
         </div>
     );

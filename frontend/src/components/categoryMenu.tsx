@@ -25,7 +25,8 @@ export default function CategoryMenu({ categories, onSelectCategory, search }: C
                     <table className="product-table">
                         <thead>
                             <tr>
-                                <th>ID</th>
+                                <th>No.</th>
+                                {/* <th>ID</th> */}
                                 <th>Category Name</th>
                                 <th>Detail</th>
 
@@ -34,9 +35,10 @@ export default function CategoryMenu({ categories, onSelectCategory, search }: C
                         </thead>
 
                         <tbody>
-                            {filteredCategories.map(category => (
+                            {filteredCategories.map((category, index) => (
                                 <tr key={category.id}>
-                                    <td>{category.id}</td>
+                                    <td>{index + 1}</td>
+                                    {/* <td>{category.id}</td> */}
                                     <td>{category.categoryName}</td>
                                     <td>{category.detail}</td>
                                     <td><button onClick={() => onSelectCategory(category)}>select</button></td>

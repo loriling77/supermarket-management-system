@@ -1,6 +1,7 @@
 
 import "../styles/searchProduct.css";
 import { useState } from 'react';
+import { useLocation } from 'react-router-dom';
 
 
 interface SearchProps {
@@ -8,6 +9,15 @@ interface SearchProps {
 }
 
 export default function SearchProduct({ onSearch }: SearchProps) {
+    const location = useLocation()
+    const pageName =
+        location.pathname === "/home" ? "Products" :
+            location.pathname === "/user" ? "Users" :
+                location.pathname === "/category" ? "Categories" :
+                    location.pathname === "/manufacture" ? "Manufactures" :
+                        "Products";
+
+
     const [input, setInput] = useState<string>("");
     const handleSearch = () => {
 
@@ -15,7 +25,7 @@ export default function SearchProduct({ onSearch }: SearchProps) {
     }
     return (
         <div className="search-product">
-            <h2>Search Products</h2>
+            <h2>Search {pageName}</h2>
 
             <div className="search-bar">
                 <div className="search-input-wrapper">
@@ -23,7 +33,7 @@ export default function SearchProduct({ onSearch }: SearchProps) {
 
                     <input
                         type="text"
-                        placeholder="Search by product name..."
+
                         value={input}
                         onChange={(e) => setInput(e.target.value)}
                     />

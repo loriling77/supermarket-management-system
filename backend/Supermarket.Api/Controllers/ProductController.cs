@@ -5,6 +5,7 @@ using Supermarket.Api.Models;
 using Microsoft.EntityFrameworkCore;
 using Supermarket.Api.Dtos;
 using System.Runtime.CompilerServices;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Supermarket.Api.Controllers
 {
@@ -19,44 +20,108 @@ namespace Supermarket.Api.Controllers
             _context = context;
         }
 
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<Product>>> GetProducts()
-        {
-            return await _context.Products
-            .Include(p => p.Manufacture)
-            .Include(p => p.Category)
 
-            .ToListAsync();
+        [HttpGet]
+        [Authorize(Roles = "Admin,User")]
+        public async Task<IActionResult> GetProducts()
+        {
+            var products = await _context.Products
+                .AsNoTracking()
+                .Select(p => new
+                {
+                    p.Id,
+                    p.ProductName,
+                    p.Price,
+                    p.Count,
+                    p.CategoryId,
+                    p.ManufactureId,
+
+                    CategoryName = p.Category != null
+                        ? p.Category.CategoryName
+                        : null,
+
+                    ManufactureName = p.Manufacture != null
+                        ? p.Manufacture.ManufactureName
+                        : null
+                })
+                .ToListAsync();
+
+            return Ok(products);
         }
+
+
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Product>> GetProduct(int id)
+        [Authorize(Roles = "Admin,User")]
+        public async Task<IActionResult> GetProduct(int id)
         {
             var product = await _context.Products
-            .Include(p => p.Manufacture)
-            .Include(p => p.Category)
-            .FirstOrDefaultAsync(p => p.Id == id);
+                .AsNoTracking()
+                .Where(p => p.Id == id)
+                .Select(p => new
+                {
+                    p.Id,
+                    p.ProductName,
+                    p.Price,
+                    p.Count,
+                    p.CategoryId,
+                    p.ManufactureId
+                })
+                .FirstOrDefaultAsync();
 
             if (product == null)
+            {
                 return NotFound();
-            return product;
+            }
+
+            return Ok(product);
         }
 
+
         [HttpPost]
-        public async Task<ActionResult<Product>> AddProduct(ProductRequestDto dto)
+        [Authorize(Roles = "Admin")]
+        public async Task<ActionResult<Product>> AddProduct(
+    ProductRequestDto dto)
         {
+            var productName = dto.ProductName?.Trim();
+
+            if (string.IsNullOrWhiteSpace(productName))
+            {
+                return BadRequest(new
+                {
+                    message = "Product name is required."
+                });
+            }
+
+            // Check whether the same product already exists
+            var existingProduct = await _context.Products
+                .AsNoTracking()
+                .FirstOrDefaultAsync(p =>
+                    p.ProductName.Trim().ToLower() == productName.ToLower() &&
+                    p.ManufactureId == dto.ManufactureId &&
+                    p.CategoryId == dto.CategoryId
+                );
+
+            if (existingProduct != null)
+            {
+                return Conflict(new
+                {
+                    message = "Product already exists."
+                });
+            }
+
             var product = new Product
             {
-                ProductName = dto.ProductName,
+                ProductName = productName,
                 ManufactureId = dto.ManufactureId,
                 CategoryId = dto.CategoryId,
                 Price = dto.Price,
                 Count = dto.Count
             };
 
-            product.Id = 0;
             _context.Products.Add(product);
             await _context.SaveChangesAsync();
+
             return CreatedAtAction(
                 nameof(GetProduct),
                 new { id = product.Id },
@@ -64,27 +129,46 @@ namespace Supermarket.Api.Controllers
             );
         }
         [HttpPut("{id}")]
-        public async Task<ActionResult<Product>> UpdateProduct(int id, ProductRequestDto dto)
+        [Authorize(Roles = "Admin")]
+        public async Task<ActionResult<Product>> UpdateProduct(
+      int id,
+      ProductRequestDto dto)
         {
-
             var product = await _context.Products.FindAsync(id);
+
             if (product == null)
                 return NotFound();
 
-            product.ProductName = dto.ProductName;
+            var productName = dto.ProductName.Trim();
+
+            bool productExists = await _context.Products
+                .AnyAsync(p =>
+                    p.Id != id &&
+                    p.ProductName == productName &&
+                    p.ManufactureId == dto.ManufactureId &&
+                    p.CategoryId == dto.CategoryId
+                );
+
+            if (productExists)
+            {
+                return Conflict(new
+                {
+                    message = "Product already exists."
+                });
+            }
+
+            product.ProductName = productName;
             product.ManufactureId = dto.ManufactureId;
             product.CategoryId = dto.CategoryId;
-
             product.Price = dto.Price;
             product.Count = dto.Count;
 
             await _context.SaveChangesAsync();
+
             return NoContent();
-
-
-
         }
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<Product>> DeleteProduct(int id)
         {
             var product = await _context.Products.FindAsync(id);

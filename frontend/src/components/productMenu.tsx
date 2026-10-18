@@ -23,7 +23,8 @@ export default function ProductMenu({ products, onSelectProduct, search }: Produ
                     <table className="product-table">
                         <thead>
                             <tr>
-                                <th>ID</th>
+                                <th>No.</th>
+                                {/* <th>ID</th> */}
                                 <th>Product Name</th>
                                 <th>Manufacture</th>
                                 <th>Category</th>
@@ -34,12 +35,13 @@ export default function ProductMenu({ products, onSelectProduct, search }: Produ
                         </thead>
 
                         <tbody>
-                            {products.map(product => (
+                            {products.map((product, index) => (
                                 <tr key={product.id}>
-                                    <td>{product.id}</td>
+                                    <td>{index + 1}</td>
+                                    {/* <td>{product.id}</td> */}
                                     <td>{product.productName}</td>
-                                    <td>{product.manufactureId}</td>
-                                    <td>{product.categoryId}</td>
+                                    <td>{product.manufactureName ?? "Unknown"}</td>
+                                    <td>{product.categoryName ?? "Unknown"}</td>
                                     <td>{product.count}</td>
                                     <td>{product.price}</td>
                                     <td>

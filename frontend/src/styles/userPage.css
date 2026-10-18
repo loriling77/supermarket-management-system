@@ -87,3 +87,34 @@
         margin-top: 10px;
     }
 }
+
+/* Search Bar and User List same width */
+.user-page .home-content {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.user-page .search-product,
+.user-page .home-table-section {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+/* Search input and button */
+.user-page .search-bar {
+    display: flex;
+    width: 100%;
+    gap: 12px;
+    box-sizing: border-box;
+}
+
+.user-page .search-input-wrapper {
+    flex: 1;
+    min-width: 0;
+}
+
+.user-page .search-input-wrapper input {
+    width: 100%;
+    box-sizing: border-box;
+}

@@ -71,8 +71,8 @@ export default function CategoryForm({ onAddCategory, selectCategory, onSaveCate
             alert("Please select a category first!")
             return
         }
-        if (!categoryName.trim() ||
-            !detail.trim()
+        if (!categoryName.trim()
+
 
         ) {
             alert('Please enter valid category information')
@@ -114,7 +114,7 @@ export default function CategoryForm({ onAddCategory, selectCategory, onSaveCate
                         id="productname"
                         type="text"
                         value={categoryName}
-                        placeholder="Enter product name"
+
                         required
                         onChange={(e) => setCategoryName(e.target.value)}
                     />
@@ -126,8 +126,8 @@ export default function CategoryForm({ onAddCategory, selectCategory, onSaveCate
                         id="manufacturename"
                         type="text"
                         value={detail}
-                        placeholder="Enter manufacturer name"
-                        required
+
+
                         onChange={(e) => setDetail(e.target.value)}
                     />
                 </div>

@@ -24,7 +24,8 @@ export default function ManufactureMenu({ manufactures, onSelectManufacture, sea
                     <table className="product-table">
                         <thead>
                             <tr>
-                                <th>ID</th>
+                                <th>No.</th>
+                                {/* <th>ID</th> */}
                                 <th>Manufacture Name</th>
                                 <th>Product Liscence Number</th>
                                 <th>Place of Origin</th>
@@ -34,9 +35,10 @@ export default function ManufactureMenu({ manufactures, onSelectManufacture, sea
                         </thead>
 
                         <tbody>
-                            {filteredManufactures.map((manufacture) => (
+                            {filteredManufactures.map((manufacture, index) => (
                                 <tr key={manufacture.id}>
-                                    <td>{manufacture.id}</td>
+                                    <td>{index + 1}</td>
+                                    {/* <td>{manufacture.id}</td> */}
                                     <td>{manufacture.manufactureName}</td>
                                     <td>{manufacture.productionLiscenseNumber}</td>
                                     <td>{manufacture.placeOfOrigin}</td>

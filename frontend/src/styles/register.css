@@ -1,42 +1,139 @@
-/* Register Button */
+/* Field validation */
+.valid-text,
+.invalid-text {
+    font-size: 12px;
+    margin: 5px 0 0;
+    line-height: 1.5;
+}
+
+.valid-text {
+    color: #16a34a;
+}
+
+.invalid-text {
+    color: #dc2626;
+}
+
+/* Password visibility */
+.password-field {
+    position: relative;
+    width: 100%;
+}
+
+.password-field input {
+    width: 100%;
+    box-sizing: border-box;
+    padding-right: 65px;
+}
+
+.toggle-password {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: transparent;
+    border: none;
+    color: #64748b;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.toggle-password:hover {
+    color: #16a34a;
+}
+
+/* Password requirements */
+.password-rules {
+    margin-top: 10px;
+    padding: 12px;
+    border-radius: 8px;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+}
+
+.rules-title {
+    font-size: 12px;
+    font-weight: 600;
+    margin: 0 0 8px;
+    color: #334155;
+}
+
+.rule {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    margin-top: 6px;
+}
+
+.rule span:first-child {
+    font-size: 14px;
+    width: 16px;
+}
+
+.rule-valid {
+    color: #16a34a;
+}
+
+.rule-invalid {
+    color: #94a3b8;
+}
+
+/* API errors */
+.error-message {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px;
+    border-radius: 8px;
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+    color: #dc2626;
+    font-size: 13px;
+}
+
+.error-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #dc2626;
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+    flex-shrink: 0;
+}
+
+
 .register-btn {
     width: 100%;
     padding: 12px;
-    border: none;
-    border-radius: 8px;
+    margin-top: 10px;
+
     background-color: #16a34a;
     color: white;
+
+    border: none;
+    border-radius: 8px;
+
     font-size: 16px;
     font-weight: 600;
     cursor: pointer;
-    transition: background-color 0.2s ease,
-        transform 0.2s ease;
+
+    transition: background-color 0.2s ease;
 }
 
-.register-btn:hover {
+.register-btn:hover:not(:disabled) {
     background-color: #15803d;
-    transform: translateY(-2px);
 }
 
-.register-btn:active {
-    transform: translateY(0);
+.register-btn:active:not(:disabled) {
+    background-color: #166534;
 }
 
-/* Forgot Password Link */
-.forgot-password-link {
-    margin-top: 20px;
-    text-align: center;
-    font-size: 14px;
-}
-
-.forgot-password-link a {
-    color: #16a34a;
-    font-weight: 600;
-    text-decoration: none;
-    transition: color 0.2s ease;
-}
-
-.forgot-password-link a:hover {
-    color: #15803d;
-    text-decoration: underline;
+.register-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
 }

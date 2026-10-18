@@ -13,9 +13,9 @@ export default function UserOrderNavbar() {
             </div>
 
             <div className="sidebar-menu">
-                <Link to='/home'>
-                    <h1>Order Payment</h1>
-                </Link>
+
+                <h1>Order Payment</h1>
+
 
 
 

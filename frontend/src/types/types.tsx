@@ -3,7 +3,9 @@ export interface Product {
     id: number;
     productName: string;
     manufactureId: number;
+    manufactureName?: string | null;
     categoryId: number;
+    categoryName?: string | null;
     price: number;
     count: number;
 }
@@ -36,11 +38,12 @@ export interface Category {
 export interface Order {
 
     id: number;
-    productName: string;
-    unitPrice: number;
-    count: number;
-    createdTime: Date;
-    createDate: Date;
+    userId: number;
+    totalAmount: number;
+    status: boolean;
+    createdAt: Date;
+    OrderItems: [];
+
 
 
 
@@ -55,8 +58,15 @@ export interface AuthUser {
 }
 
 export interface RegisterRequest {
-    username: string;
+    userName: string;
     email: string;
-    phoneNumber: string;
+
     password: string;
+}
+
+export interface CartItem {
+    productId: number;
+    productName: string;
+    unitPrice: number;
+    quantity: number;
 }

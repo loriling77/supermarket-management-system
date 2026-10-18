@@ -20,12 +20,13 @@ function Navbar() {
                 <Link to='/manufacture'>
                     <h1>Manufacture</h1>
                 </Link>
-                <Link to='/user'>
-                    <h1>User</h1>
-                </Link>
                 <Link to='/category'>
                     <h1>Category</h1>
                 </Link>
+                <Link to='/user'>
+                    <h1>User</h1>
+                </Link>
+
 
             </div>
 
