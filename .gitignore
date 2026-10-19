@@ -1,0 +1,22 @@
+# React
+**/node_modules/
+**/dist/
+**/.env
+**/.env.*
+!**/.env.example
+
+# ASP.NET Core
+**/bin/
+**/obj/
+**/publish/
+**/appsettings.Development.json
+
+# Secrets
+**/secrets.json
+*.pfx
+*.publishsettings
+
+# IDE
+.vs/
+.vscode/
+backend/Supermarket.Api/identity-update.sql
