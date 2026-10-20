@@ -52,9 +52,9 @@ jobs:
       
       - name: Check Azure secrets
         env:
-          CLIENT_ID: ${{ secrets.AZURE_CLIENTID }}
-          TENANT_ID: ${{ secrets.AZURE_TENANTID }}
-          SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTIONID }}
+          CLIENT_ID: ${{ secrets.AZUREAPPSERVICE_CLIENTID_C18E9507AB78472590C5CCCA8DEABFD2 }}
+          TENANT_ID: ${{ secrets.AZUREAPPSERVICE_TENANTID_BF33ED18560040CD9E1A019730D59F70 }}
+          SUBSCRIPTION_ID: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_1D70F53276BF497CA47B795AB54CC90E }}
         run: |
           test -n "$CLIENT_ID" && echo "CLIENT_ID PRESENT" || echo "CLIENT_ID MISSING"
           test -n "$TENANT_ID" && echo "TENANT_ID PRESENT" || echo "TENANT_ID MISSING"
