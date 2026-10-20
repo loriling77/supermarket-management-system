@@ -49,13 +49,14 @@ jobs:
         with:
           name: dotnet-app
           path: ./publish
-
+          
       - name: Login to Azure
         uses: azure/login@v2
         with:
           client-id: ${{ secrets.AZURE_CLIENTID }}
           tenant-id: ${{ secrets.AZURE_TENANTID }}
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTIONID }}
+          
 
       - name: Deploy to Azure App Service
         uses: azure/webapps-deploy@v3
@@ -63,3 +64,8 @@ jobs:
           app-name: supermarket-api-ll
           slot-name: Production
           package: ./publish
+
+          run: |
+          if [ -n "$CLIENT_ID" ]; then echo "CLIENT_ID: PRESENT"; else echo "CLIENT_ID: MISSING"; fi
+          if [ -n "$TENANT_ID" ]; then echo "TENANT_ID: PRESENT"; else echo "TENANT_ID: MISSING"; fi
+          if [ -n "$SUBSCRIPTION_ID" ]; then echo "SUBSCRIPTION_ID: PRESENT"; else echo "SUBSCRIPTION_ID: MISSING"; fi
