@@ -49,7 +49,17 @@ jobs:
         with:
           name: dotnet-app
           path: ./publish
-          
+      
+      - name: Check Azure secrets
+        env:
+          CLIENT_ID: ${{ secrets.AZURE_CLIENTID }}
+          TENANT_ID: ${{ secrets.AZURE_TENANTID }}
+          SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTIONID }}
+        run: |
+          test -n "$CLIENT_ID" && echo "CLIENT_ID PRESENT" || echo "CLIENT_ID MISSING"
+          test -n "$TENANT_ID" && echo "TENANT_ID PRESENT" || echo "TENANT_ID MISSING"
+          test -n "$SUBSCRIPTION_ID" && echo "SUBSCRIPTION_ID PRESENT" || echo "SUBSCRIPTION_ID MISSING"
+   
       - name: Login to Azure
         uses: azure/login@v2
         with:
@@ -65,7 +75,4 @@ jobs:
           slot-name: Production
           package: ./publish
 
-          run: |
-          if [ -n "$CLIENT_ID" ]; then echo "CLIENT_ID: PRESENT"; else echo "CLIENT_ID: MISSING"; fi
-          if [ -n "$TENANT_ID" ]; then echo "TENANT_ID: PRESENT"; else echo "TENANT_ID: MISSING"; fi
-          if [ -n "$SUBSCRIPTION_ID" ]; then echo "SUBSCRIPTION_ID: PRESENT"; else echo "SUBSCRIPTION_ID: MISSING"; fi
+        
