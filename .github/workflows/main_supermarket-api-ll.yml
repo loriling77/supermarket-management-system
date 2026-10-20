@@ -1,4 +1,3 @@
-
 # Build and deploy Supermarket ASP.NET Core API to Azure
 
 name: Build and deploy Supermarket API
@@ -49,24 +48,33 @@ jobs:
         with:
           name: dotnet-app
           path: ./publish
-      
+
       - name: Check Azure secrets
+        shell: bash
         env:
-          CLIENT_ID: ${{ secrets.AZUREAPPSERVICE_CLIENTID_C18E9507AB78472590C5CCCA8DEABFD2 }}
-          TENANT_ID: ${{ secrets.AZUREAPPSERVICE_TENANTID_BF33ED18560040CD9E1A019730D59F70 }}
-          SUBSCRIPTION_ID: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_1D70F53276BF497CA47B795AB54CC90E }}
+          AZURE_CLIENTID: ${{ secrets.AZUREAPPSERVICE_CLIENTID_C18E9507AB78472590C5CCCA8DEABFD2 }}
+          AZURE_TENANTID: ${{ secrets.AZUREAPPSERVICE_TENANTID_BF33ED18560040CD9E1A019730D59F70 }}
+          AZURE_SUBSCRIPTIONID: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_1D70F53276BF497CA47B795AB54CC90E }}
         run: |
-          test -n "$CLIENT_ID" && echo "CLIENT_ID PRESENT" || echo "CLIENT_ID MISSING"
-          test -n "$TENANT_ID" && echo "TENANT_ID PRESENT" || echo "TENANT_ID MISSING"
-          test -n "$SUBSCRIPTION_ID" && echo "SUBSCRIPTION_ID PRESENT" || echo "SUBSCRIPTION_ID MISSING"
-   
+          missing=0
+          for name in AZURE_CLIENTID AZURE_TENANTID AZURE_SUBSCRIPTIONID; do
+            if [[ -z "${!name//[[:space:]]/}" ]]; then
+              echo "::error::Missing or empty Azure credential: $name. Check the GitHub Actions secret referenced in this step. Configure it in Settings > Secrets and variables > Actions. If it is an environment secret, set the matching environment on the deploy job."
+              missing=1
+            fi
+          done
+          if (( missing )); then
+            exit 1
+          fi
+          echo "All required Azure secrets are present."
+
       - name: Login to Azure
         uses: azure/login@v2
         with:
-          client-id: ${{ secrets.AZURE_CLIENTID }}
-          tenant-id: ${{ secrets.AZURE_TENANTID }}
-          subscription-id: ${{ secrets.AZURE_SUBSCRIPTIONID }}
-          
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_C18E9507AB78472590C5CCCA8DEABFD2 }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_BF33ED18560040CD9E1A019730D59F70 }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_1D70F53276BF497CA47B795AB54CC90E }}
+
 
       - name: Deploy to Azure App Service
         uses: azure/webapps-deploy@v3
@@ -74,5 +82,3 @@ jobs:
           app-name: supermarket-api-ll
           slot-name: Production
           package: ./publish
-
-        
