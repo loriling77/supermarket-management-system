@@ -28,7 +28,7 @@ export async function getOrdersByUser(
 ): Promise<UserOrder[]> {
 
     const response = await fetch(
-        `http://localhost:5252/api/order/user/${encodeURIComponent(userId)}`,
+        `/api/order/user/${encodeURIComponent(userId)}`,
         {
             method: "GET",
             credentials: "include"
@@ -49,7 +49,7 @@ export async function checkout(
 ): Promise<CheckoutResponse> {
 
     const response = await fetch(
-        "http://localhost:5252/api/order/checkout",
+        "/api/order/checkout",
         {
             method: "POST",
             credentials: "include",

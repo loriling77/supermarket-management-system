@@ -2,7 +2,7 @@ import type { RegisterRequest } from '../types/types'
 
 export async function registerUser(data: RegisterRequest) {
     const response = await fetch(
-        "http://localhost:5252/api/auth/register",
+        "/api/auth/register",
         {
             method: "POST",
             headers: {

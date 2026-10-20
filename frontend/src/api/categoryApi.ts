@@ -1,6 +1,6 @@
 import type { Category } from '../types/types';
 
-const API_URL = "http://localhost:5252/api/category";
+const API_URL = "/api/category";
 
 export async function getCategories(): Promise<Category[]> {
     const response = await fetch(API_URL)

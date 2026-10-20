@@ -101,10 +101,7 @@ export default function User() {
                             ) : (
                                 <UserMenu
                                     users={filteredUsers}
-                                    onViewOrder={(user) => {
-                                        console.log("Opening orders for:", user);
-                                        setSelectedUser(user);
-                                    }}
+                                    onViewOrder={handleViewOrder}
                                 />
                             )}
                         </section>

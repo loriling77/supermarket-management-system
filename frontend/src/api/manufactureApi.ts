@@ -1,6 +1,6 @@
 import type { Manufacture } from '../types/types';
 
-const API_URL = "http://localhost:5252/api/manufacture";
+const API_URL = "/api/manufacture";
 
 export async function getManufactures(): Promise<Manufacture[]> {
     const response = await fetch(API_URL)

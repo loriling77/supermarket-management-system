@@ -24,7 +24,7 @@ export default function UserOrderMenu({
         const loadProducts = async () => {
             try {
                 const response = await fetch(
-                    "http://localhost:5252/api/product",
+                    "/api/product",
                     {
                         credentials: "include"
                     }

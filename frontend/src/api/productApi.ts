@@ -1,7 +1,7 @@
 
 import type { Product } from "../types/types";
 
-const API_URL = "http://localhost:5252/api/product";
+const API_URL = "/api/product";
 
 export type ProductRequest = Pick<
     Product,

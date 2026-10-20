@@ -7,7 +7,6 @@ import type { Manufacture } from '../types/types'
 import { useState, useEffect } from 'react'
 import {
     getManufactures,
-    getManufacture,
     addManufacture,
     updateManufacture,
     deleteManufacture

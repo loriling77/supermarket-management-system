@@ -9,7 +9,7 @@ export interface RegisteredUser {
 
 export async function getUsers(): Promise<RegisteredUser[]> {
     const response = await fetch(
-        "http://localhost:5252/api/users",
+        "/api/users",
         {
             method: "GET",
             credentials: "include"

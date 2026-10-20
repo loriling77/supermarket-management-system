@@ -8,7 +8,7 @@ interface ProductMenuProps {
     search: string
 }
 
-export default function ProductMenu({ products, onSelectProduct, search }: ProductMenuProps
+export default function ProductMenu({ products, onSelectProduct }: ProductMenuProps
 
 ) {
     return (

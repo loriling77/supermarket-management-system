@@ -7,7 +7,6 @@ import { useState } from 'react'
 import type { Category } from '../types/types'
 import {
     getCategories,
-    getCategory,
     addCategory,
     updateCategory,
     deleteCategory
