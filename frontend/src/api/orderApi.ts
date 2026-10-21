@@ -1,5 +1,5 @@
 
-const API_URL = "http://localhost:5252/api/";
+const API_URL = "/api/";
 
 export type TopSellingProduct = {
     productId: number;

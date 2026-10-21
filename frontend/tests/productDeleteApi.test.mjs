@@ -4,7 +4,7 @@ import { deleteProduct } from '../src/api/productApi.ts';
 
 test('deletes the requested product with the authenticated session and accepts an empty response', async t => {
   t.mock.method(globalThis, 'fetch', async (url, options) => {
-    assert.equal(new URL(url).pathname, '/api/product/42');
+    assert.equal(new URL(url, 'http://example.test').pathname, '/api/product/42');
     assert.equal(options.method, 'DELETE');
     assert.equal(options.credentials, 'include');
     return new Response(null, {status:204});

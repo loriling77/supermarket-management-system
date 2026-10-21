@@ -5,8 +5,8 @@ import { getMySuccessfulOrders } from '../src/api/checkOutApi.ts';
 test('loads the current customer orders using the session cookie and no user ID', async t => {
   const orders = [{id:42, createdAt:'2026-10-21T12:00:00Z', status:'Paid', totalAmount:5, items:[]}];
   t.mock.method(globalThis, 'fetch', async (url, options) => {
-    assert.equal(new URL(url).pathname, '/api/order/mine');
-    assert.equal(new URL(url).search, '');
+    assert.equal(new URL(url, 'http://example.test').pathname, '/api/order/mine');
+    assert.equal(new URL(url, 'http://example.test').search, '');
     assert.equal(options.credentials, 'include');
     assert.equal(options.method, 'GET');
     return Response.json(orders);

@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:5252/api/auth";
+const API_URL = "/api/auth";
 import type { AuthUser } from '../types/types'
 
 
