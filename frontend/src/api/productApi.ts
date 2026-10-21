@@ -20,7 +20,7 @@ async function handleApiError(
         throw new Error("You do not have permission to manage products.");
     }
 
-    if (response.status === 409) {
+    if (response.status === 409 && action !== "delete product") {
         throw new Error("Product already exists.");
     }
 

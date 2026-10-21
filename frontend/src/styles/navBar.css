@@ -10,8 +10,8 @@
     padding: 35px 15px;
     box-sizing: border-box;
 
-    background-color: #14532d;
-    color: white;
+    background-color: var(--sidebar-background, #e8f1eb);
+    color: #294d39;
 }
 
 /* Logo */
@@ -21,6 +21,7 @@
 }
 
 .sidebar-logo img {
+    display: block;
     width: 100px;
     height: auto;
     object-fit: contain;
@@ -35,7 +36,7 @@
 }
 
 /* 菜单文字 */
-.sidebar-menu h1 {
+.sidebar-menu .nav-label {
     width: 100%;
     margin: 0;
     padding: 15px 18px;
@@ -44,24 +45,22 @@
 
     font-size: 17px;
     font-weight: 500;
-    color: #dcfce7;
+    color: #315c43;
 
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: background-color 0.15s ease, color 0.15s ease;
 }
 
 /* 鼠标悬停 */
-.sidebar-menu h1:hover {
-    background-color: #22c55e;
-    color: #ffffff;
-    transform: translateX(3px);
+.sidebar-menu .nav-label:hover {
+    background-color: #d2e4d8;
+    color: #234731;
 }
 
 /* 选中菜单 */
-.sidebar-menu .active {
-    background-color: #16a34a;
-    color: #ffffff;
-    font-weight: 600;
+.sidebar-menu a.active .nav-label {
+    background-color: #bed8c7;
+    color: #1f422e;
 }
 
 /* 平板 */
@@ -74,7 +73,7 @@
         width: 75px;
     }
 
-    .sidebar-menu h1 {
+    .sidebar-menu .nav-label {
         padding: 12px;
         font-size: 14px;
     }
@@ -84,6 +83,8 @@
 @media (max-width: 520px) {
     .sidebar {
         padding: 15px;
+        height: auto;
+        min-height: 0;
     }
 
     .sidebar-logo {
@@ -100,15 +101,12 @@
         justify-content: center;
     }
 
-    .sidebar-menu h1 {
+    .sidebar-menu .nav-label {
         width: auto;
         padding: 8px 12px;
         font-size: 13px;
     }
 
-    .sidebar-menu h1:hover {
-        transform: none;
-    }
 }
 
 .sidebar a {
@@ -127,19 +125,49 @@
     display: inline-block;
     padding: 12px 24px;
 
-    background-color: #dc2626;
-    color: white;
+    background-color: #f4e3df;
+    color: #8d3c34;
     text-decoration: none;
 
     border-radius: 8px;
     font-size: 15px;
     font-weight: 600;
 
-    transition: all 0.2s ease;
+    transition: background-color 0.15s ease, color 0.15s ease;
 }
 
 /* 鼠标悬停 */
 .logout-btn a:hover {
-    background-color: #b91c1c;
-    transform: translateY(-2px);
+    background-color: #ecd2cc;
+}
+
+/* Keep the same compact navigation across pages on shorter screens. */
+@media (min-width: 521px) and (max-height: 700px) {
+    .sidebar { padding: 20px 10px; }
+    .sidebar-logo { margin: 0 0 16px; }
+    .sidebar-logo img { width: 70px; }
+    .sidebar-menu { gap: 4px; }
+    .sidebar-menu .nav-label { padding: 10px 12px; }
+    .logout-btn { padding-top: 16px; }
+}
+
+.sidebar-menu .nav-label { display: flex; align-items: center; gap: 10px; font-size: 14px; padding: 14px 12px; }
+.sidebar-menu .nav-label svg { flex-shrink: 0; }
+.sidebar-menu a:focus-visible { outline: 2px solid #52765a; outline-offset: 2px; border-radius: 8px; }
+@media (max-width: 768px) { .sidebar-menu .nav-label { font-size: 12px; gap: 7px; padding: 12px 7px; } }
+@media (max-width: 520px) { .sidebar-menu .nav-label { padding: 8px; } .sidebar-menu .nav-label svg { width: 15px; } }
+
+/* Keep every navigation action visible on short landscape screens. */
+@media (min-width: 521px) and (max-height: 520px) {
+    .sidebar { padding: 12px 10px; }
+    .sidebar-logo { margin: 0 0 12px; }
+    .sidebar-logo img { width: 40px; }
+    .sidebar-menu { gap: 2px; }
+    .sidebar-menu .nav-label { padding: 7px 10px; font-size: 12px; }
+    .sidebar-menu .nav-label svg { width: 16px; height: 16px; }
+    .logout-btn { padding-top: 8px; }
+    .logout-btn a { padding: 7px 18px; font-size: 12px; }
+}
+@media (min-width: 521px) and (max-height: 320px) {
+    .sidebar-logo { display: none; }
 }

@@ -1,13 +1,15 @@
+import RecordActions from "./RecordActions";
 import type { Category } from '../types/types'
 import "../styles/productMenu.css";
 
 interface CategoryMenuProps {
     categories: Category[]
     onSelectCategory: (category: Category) => void
+    onDeleteCategory: (id: number) => Promise<void>;
     search: string
 }
 
-export default function CategoryMenu({ categories, onSelectCategory, search }: CategoryMenuProps) {
+export default function CategoryMenu({ categories, onSelectCategory, onDeleteCategory, search }: CategoryMenuProps) {
     const filteredCategories = categories.filter(
         category => category.categoryName
             .toLowerCase()
@@ -17,7 +19,7 @@ export default function CategoryMenu({ categories, onSelectCategory, search }: C
         <div className="product-menu-container">
             <div className="product-menu">
                 <div className="product-menu-header">
-                    <h1>Category Management</h1>
+                    <h2>Category list</h2>
                     <p>View and manage your categories</p>
                 </div>
 
@@ -41,7 +43,7 @@ export default function CategoryMenu({ categories, onSelectCategory, search }: C
                                     {/* <td>{category.id}</td> */}
                                     <td>{category.categoryName}</td>
                                     <td>{category.detail}</td>
-                                    <td><button onClick={() => onSelectCategory(category)}>select</button></td>
+                                    <td><RecordActions name={category.categoryName} onUpdate={() => onSelectCategory(category)} onDelete={() => onDeleteCategory(category.id)} /></td>
 
                                 </tr>
 

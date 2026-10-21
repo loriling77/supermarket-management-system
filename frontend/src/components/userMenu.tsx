@@ -11,13 +11,12 @@ export default function UserMenu({
     users,
     onViewOrder
 }: UserMenuProps) {
-
     return (
         <div className="product-menu-container">
             <div className="product-menu">
 
                 <div className="product-menu-header">
-                    <h1>User Management</h1>
+                    <h2>Registered customers</h2>
                     <p>View and manage your users</p>
                 </div>
 
@@ -28,7 +27,6 @@ export default function UserMenu({
                                 <th>No.</th>
                                 <th>Username</th>
                                 <th>Email</th>
-
                                 <th>Role</th>
                                 <th>Action</th>
                             </tr>
@@ -46,10 +44,7 @@ export default function UserMenu({
                                     <tr key={user.id}>
                                         <td>{index + 1}</td>
                                         <td>{user.userName}</td>
-
                                         <td>{user.email}</td>
-
-
 
                                         <td>
                                             {user.roles.join(", ")}
@@ -58,16 +53,10 @@ export default function UserMenu({
                                         <td>
                                             <button
                                                 type="button"
-                                                onClick={() => {
-                                                    console.log(
-                                                        "View Order clicked:",
-                                                        user
-                                                    );
-
-                                                    onViewOrder(user);
-                                                }}
+                                                className="select-btn"
+                                                onClick={() => onViewOrder(user)}
                                             >
-                                                View Order
+                                                View Orders
                                             </button>
                                         </td>
                                     </tr>

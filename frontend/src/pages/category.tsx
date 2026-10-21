@@ -7,13 +7,14 @@ import { useState } from 'react'
 import type { Category } from '../types/types'
 import {
     getCategories,
-    getCategory,
+
     addCategory,
     updateCategory,
     deleteCategory
 } from "../api/categoryApi";
 
 import "../styles/home.css";
+import "../styles/admin.css";
 import { useEffect } from 'react'
 export default function Category() {
 
@@ -81,7 +82,7 @@ export default function Category() {
                 prevCategories.filter(category => category.id !== id)
             );
 
-            setSelectCategory(null);
+            setSelectCategory(previous => previous?.id === id ? null : previous);
         } catch (err) {
             console.log(err)
             setError("Failed to delete category")
@@ -90,15 +91,16 @@ export default function Category() {
     }
 
     return (
-        <div className="home-container">
+        <div className="home-container admin-page">
             <aside className="home-sidebar">
                 <NavBar />
             </aside>
 
             <main className="home-main">
                 <div className="home-header">
-                    <h1>Dashboard</h1>
-                    <p>Manage your Categories</p>
+                    <span className="admin-eyebrow">STORE MANAGEMENT</span>
+                    <h1>Categories</h1>
+                    <p>Organise your catalogue with clear, useful categories.</p>
                 </div>
                 {error && (
                     <p role="alert" style={{ color: "red" }}>
@@ -108,12 +110,12 @@ export default function Category() {
 
                 <div className="home-content">
                     <section className="home-form-section">
-                        <CategoryForm onAddCategory={handleAddCategory} selectCategory={selectCategory} onSaveCategory={handleSaveCategory} onDeleteCategory={handleDeleteCategory} />
+                        <CategoryForm key={selectCategory?.id ?? "new"} onAddCategory={handleAddCategory} selectCategory={selectCategory} onSaveCategory={handleSaveCategory} />
                     </section>
 
                     <section className="home-table-section">
                         <Search onSearch={setSearch}></Search>
-                        <CategoryMenu search={search} categories={categories} onSelectCategory={setSelectCategory} />
+                        <CategoryMenu onDeleteCategory={handleDeleteCategory} search={search} categories={categories} onSelectCategory={setSelectCategory} />
                     </section>
                 </div>
             </main>

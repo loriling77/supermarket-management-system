@@ -74,3 +74,18 @@ export async function checkout(
 
     return response.json();
 }
+
+export async function getMySuccessfulOrders(signal?: AbortSignal): Promise<UserOrder[]> {
+    const response = await fetch("http://localhost:5252/api/order/mine", {
+        method: "GET",
+        credentials: "include",
+        signal,
+    });
+    if (response.status === 401) {
+        throw new Error("Your session has expired. Please log in again.");
+    }
+    if (!response.ok) {
+        throw new Error("Unable to load your orders. Please try again.");
+    }
+    return response.json();
+}

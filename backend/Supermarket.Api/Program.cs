@@ -3,19 +3,36 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using Supermarket.Api.Data;
 using Supermarket.Api.Models;
+using Supermarket.Api.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
+var connectionString =
+    builder.Configuration.GetConnectionString(
+        "DefaultConnection"
+    );
+
+if (string.IsNullOrWhiteSpace(connectionString))
+{
+    throw new InvalidOperationException(
+        "Connection string 'DefaultConnection' was not found."
+    );
+}
+
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseSqlServer(
+        connectionString,
+        sqlOptions => sqlOptions.EnableRetryOnFailure()
+    )
+);
+
+
+builder.Services.AddHttpClient<AzureAiService>();
 // Controllers
 builder.Services.AddControllers();
 builder.Services.AddOpenApi();
 
-// SQL Server
-builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseSqlServer(
-        builder.Configuration.GetConnectionString("DefaultConnection")
-    )
-);
+
 
 // ASP.NET Core Identity
 builder.Services
@@ -37,16 +54,34 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
-if (app.Environment.IsDevelopment())
-{
 
+
+if (app.Environment.IsDevelopment() &&
+    builder.Configuration.GetValue<bool>("AdminSetup:Enabled"))
+{
     using var scope = app.Services.CreateScope();
+
+    var adminEmail =
+        builder.Configuration["AdminSetup:Email"];
+
+    if (string.IsNullOrWhiteSpace(adminEmail))
+    {
+        throw new InvalidOperationException(
+            "AdminSetup:Email is missing."
+        );
+    }
+
+    await IdentitySeeder.SeedRolesAsync(
+        scope.ServiceProvider
+    );
 
     await IdentitySeeder.AssignAdminAsync(
         scope.ServiceProvider,
-        "admin@example.com"
+        adminEmail
     );
 }
+
+
 
 app.UseRouting();
 

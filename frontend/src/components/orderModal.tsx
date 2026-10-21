@@ -84,7 +84,7 @@ export default function OrderModal({
 
     return (
         <div
-            className="order-modal-overlay"
+            className="order-modal-overlay admin-order-modal"
             onMouseDown={(event) => {
                 if (event.target === event.currentTarget) {
                     onClose();

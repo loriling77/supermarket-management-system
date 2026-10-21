@@ -1,37 +1,62 @@
 
-import UserOrderNavBar from "../components/userOrderNavBar";
-import UserOrderForm from "../components/userOrderForm";
 import UserOrderMenu from "../components/userOrderMenu";
 import ShoppingList from "../components/shoppingList";
+import MyOrdersDialog from "../components/MyOrdersDialog";
 import Search from "../components/search";
 import { checkout } from "../api/checkOutApi";
-import { useState } from "react";
-import type { Product, CartItem } from "../types/types";
+import { useEffect, useState } from "react";
+import type { AuthUser, CartItem } from "../types/types";
+import { Link } from "react-router-dom";
+import { getCurrentUser } from "../api/authApi";
+import { LogOut, ReceiptText, ShoppingBag, UserRound } from "lucide-react";
+import supermarketLogo from "../assets/supermarket.svg";
+import { addProductToCart } from "../utils/cart";
+import type { CartProduct } from "../utils/cart";
+import AiChat from "../components/AiChat";
+import type { AiShoppingList, AiProduct } from "../api/aiApi";
 
 import "../styles/home.css";
 import "../styles/userOrder.css";
 
+
+
+
+
+
 export default function UserOrder() {
+    const [currentUser, setCurrentUser] = useState<AuthUser | null>(null);
+    const [userLoading, setUserLoading] = useState(true);
 
-    const getAvailableStock = (product: Product) => {
-        const cartItem = cart.find(
-            item => item.productId === product.id
-        );
+    useEffect(() => {
+        let active = true;
+        const loadUser = async () => {
+            try {
+                const user = await getCurrentUser();
+                if (active) setCurrentUser(user);
+            } catch {
+                // Keep shopping content accessible while account details reload.
+            } finally {
+                if (active) setUserLoading(false);
+            }
+        };
+        void loadUser();
+        return () => { active = false; };
+    }, []);
 
-        return product.count - (cartItem?.quantity ?? 0);
-    };
+    const displayName = currentUser?.userName?.trim() || currentUser?.email || "Customer";
+
     // Search keyword
     const [search, setSearch] = useState<string>("");
-
-    // Selected product
-    const [selectedProduct, setSelectedProduct] =
-        useState<Product | null>(null);
 
     // Shopping cart
     const [cart, setCart] = useState<CartItem[]>([]);
 
+    const [productsRevision, setProductsRevision] = useState(0);
+
     const [paying, setPaying] = useState(false);
     const [paymentMessage, setPaymentMessage] = useState("");
+    const [showOrders, setShowOrders] = useState(false);
+    const [latestOrderId, setLatestOrderId] = useState<number | null>(null);
 
     const handlePay = async () => {
         if (cart.length === 0 || paying) {
@@ -40,6 +65,7 @@ export default function UserOrder() {
 
         setPaying(true);
         setPaymentMessage("");
+        setLatestOrderId(null);
 
         try {
             const result = await checkout(cart);
@@ -48,9 +74,11 @@ export default function UserOrder() {
                 `Payment successful! Order ${result.orderId}. Total: ${result.totalAmount.toFixed(2)}`
             );
 
+            setLatestOrderId(result.orderId);
+
             // Clear shopping cart after successful checkout
             setCart([]);
-            setSelectedProduct(null);
+            setProductsRevision(value => value + 1);
 
         } catch (error) {
             console.error(error);
@@ -65,61 +93,16 @@ export default function UserOrder() {
         }
     };
 
-    // Add selected product to shopping cart
-    const handleAddToCart = (quantity: number) => {
-        if (!selectedProduct) {
-            return;
-        }
-
-        if (!Number.isInteger(quantity) || quantity <= 0) {
-            alert("Please enter a valid quantity.");
-            return;
-        }
-
-        const existingItem = cart.find(
-            item => item.productId === selectedProduct.id
-        );
-
-        const currentQuantity = existingItem?.quantity ?? 0;
-
-        if (
-            currentQuantity + quantity >
-            selectedProduct.count
-        ) {
-            alert("Quantity exceeds available stock.");
-            return;
-        }
-
-        setCart(previousCart => {
-            const exists = previousCart.some(
-                item => item.productId === selectedProduct.id
-            );
-
-            if (exists) {
-                return previousCart.map(item =>
-                    item.productId === selectedProduct.id
-                        ? {
-                            ...item,
-                            quantity: quantity
-                        }
-                        : item
-                );
-            }
-
-            return [
-                ...previousCart,
-                {
-                    productId: selectedProduct.id,
-                    productName: selectedProduct.productName,
-                    unitPrice: selectedProduct.price,
-                    quantity: quantity
-                }
-            ];
-        });
+    // Repeated additions accumulate, while the state update enforces stock limits.
+    const handleAddToCart = (product: CartProduct, quantity: number): boolean => {
+        if (paying || addProductToCart(cart, product, quantity) === cart) return false;
+        setCart(previous => addProductToCart(previous, product, quantity));
+        return true;
     };
 
     // Remove product from shopping cart
     const handleRemoveFromCart = (productId: number) => {
+        if (paying) return;
         setCart(previousCart =>
             previousCart.filter(
                 item => item.productId !== productId
@@ -127,59 +110,153 @@ export default function UserOrder() {
         );
     };
 
+    const handleAiAddToCart = (product: AiProduct): boolean =>
+        handleAddToCart(product, 1);
+
+    const handleAiAddAllToCart = (
+        list: AiShoppingList
+    ): boolean => {
+        if (!list.items.length || paying) {
+            return false;
+        }
+
+        // Check every product BEFORE updating the cart.
+        // If any item fails, nothing is added.
+        const valid = list.items.every(item => {
+            const existingItem = cart.find(
+                cartItem =>
+                    cartItem.productId === item.productId
+            );
+
+            const currentQuantity =
+                existingItem?.quantity ?? 0;
+
+            return (
+                Number.isInteger(item.quantity) &&
+                item.quantity > 0 &&
+                currentQuantity + item.quantity <=
+                item.availableStock
+            );
+        });
+
+        if (!valid) {
+            return false;
+        }
+
+        // All items passed validation.
+        // Add the entire list in one state update.
+        setCart(previousCart => {
+            let updatedCart = [...previousCart];
+
+            for (const item of list.items) {
+                const existingIndex = updatedCart.findIndex(
+                    cartItem =>
+                        cartItem.productId === item.productId
+                );
+
+                if (existingIndex >= 0) {
+                    updatedCart = updatedCart.map(
+                        (cartItem, index) =>
+                            index === existingIndex
+                                ? {
+                                    ...cartItem,
+                                    quantity:
+                                        cartItem.quantity +
+                                        item.quantity,
+                                }
+                                : cartItem
+                    );
+                } else {
+                    updatedCart.push({
+                        productId: item.productId,
+                        productName: item.productName,
+                        unitPrice: item.unitPrice,
+                        quantity: item.quantity,
+                    });
+                }
+            }
+
+            return updatedCart;
+        });
+
+        return true;
+    };
+
+
+
+    const cartQuantity = cart.reduce((sum, item) => sum + item.quantity, 0);
+
     return (
         <div className="home-container user-order-page">
-            <aside className="home-sidebar">
-                <UserOrderNavBar />
-            </aside>
-
             <main className="home-main">
+                <header className="user-order-topbar">
+                    <div className="user-order-brand">
+                        <img src={supermarketLogo} alt="" width={40} height={40} />
+                        <span>Supermarket</span>
+                    </div>
+                    <div className="user-order-account">
+                        <div className="user-order-profile">
+                            <span className="user-order-avatar"><UserRound size={19} aria-hidden="true" /></span>
+                            <div>
+                                <span className="user-order-account-label">Signed in as</span>
+                                <strong title={userLoading ? undefined : displayName}>
+                                    {userLoading ? "Loading…" : displayName}
+                                </strong>
+                            </div>
+                        </div>
+                        <button type="button" className="user-order-history-button" disabled={paying}
+                            onClick={() => setShowOrders(true)}>
+                            <ReceiptText size={16} aria-hidden="true" /><span>My orders</span>
+                        </button>
+                        <Link className="user-order-logout" to="/login">
+                            <LogOut size={16} aria-hidden="true" /><span>Logout</span>
+                        </Link>
+                    </div>
+                </header>
+
                 <div className="home-header">
-                    <h1>Start your shopping!</h1>
+                    <div>
+                        <p className="user-order-eyebrow">A LITTLE FRESHNESS, EVERY DAY</p>
+                        <h1>Let’s fill your basket.</h1>
+                        <p>Choose your favourites, pick a quantity, and we’ll keep track of the rest.</p>
+                    </div>
+                    <div className="user-order-basket-count" aria-live="polite">
+                        <ShoppingBag size={18} aria-hidden="true" />
+                        <span>{cartQuantity} {cartQuantity === 1 ? "item" : "items"} in your cart</span>
+                    </div>
                 </div>
 
                 <div className="home-content">
                     <div className="home-right-column">
-                        <section>
+                        <section className="user-order-catalog" aria-label="Browse products">
                             <Search onSearch={setSearch} />
-                        </section>
-
-                        <section className="home-table-section">
                             <UserOrderMenu
+                                key={productsRevision}
                                 search={search}
-                                onSelect={setSelectedProduct}
+                                onAddToCart={handleAddToCart}
                                 cart={cart}
+                                disabled={paying}
                             />
                         </section>
                     </div>
-
-                    <div className="home-left-column">
-                        <section className="home-form-section">
-                            <UserOrderForm
-                                selectedProduct={selectedProduct}
-                                availableStock={
-                                    selectedProduct
-                                        ? getAvailableStock(selectedProduct)
-                                        : 0
-                                }
-                                onAddToCart={handleAddToCart}
-                            />
-                        </section>
-
-                        <section className="home-table-section">
-                            <ShoppingList
-                                cart={cart}
-                                onRemove={handleRemoveFromCart}
-                                onPay={handlePay}
-                                paying={paying}
-                            />
-                            {paymentMessage && (
-                                <p role="status">{paymentMessage}</p>
-                            )}
-                        </section>
+                    <div className="home-left-column user-order-cart-column">
+                        <ShoppingList cart={cart} onRemove={handleRemoveFromCart}
+                            onPay={handlePay} paying={paying} />
+                        {paymentMessage && (
+                            <div className="user-order-feedback" role="status">
+                                <p>{paymentMessage}</p>
+                                {latestOrderId !== null && (
+                                    <button type="button" className="user-order-view-order" onClick={() => setShowOrders(true)}>
+                                        View my order
+                                    </button>
+                                )}
+                            </div>
+                        )}
                     </div>
                 </div>
             </main>
+            {showOrders && <MyOrdersDialog latestOrderId={latestOrderId} onClose={() => setShowOrders(false)} />}
+            <AiChat onAddToCart={handleAiAddToCart} onAddAllToCart={handleAiAddAllToCart} />
         </div>
     );
 }

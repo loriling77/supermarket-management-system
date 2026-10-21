@@ -77,6 +77,16 @@ namespace Supermarket.Api.Controllers
             return Ok(product);
         }
 
+        // [HttpGet("lowStock")]
+        // [Authorize("admin")]
+        // public async Task<IActionResult> GetLowStockProduct()
+        // {
+        //     const lowStockProduct = await _context.Products.
+        //     Where(p => p.Count < 10)
+
+
+        // }
+
 
         [HttpPost]
         [Authorize(Roles = "Admin")]

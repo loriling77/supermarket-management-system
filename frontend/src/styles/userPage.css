@@ -5,8 +5,6 @@
 
 /* User 页面右侧主区域 */
 .user-page .home-main {
-    margin-left: 20%;
-    width: 80%;
     min-width: 0;
     padding: 30px;
     box-sizing: border-box;
@@ -65,8 +63,6 @@
 
 @media (max-width: 768px) {
     .user-page .home-main {
-        margin-left: 180px;
-        width: calc(100% - 180px);
         padding: 20px;
     }
 

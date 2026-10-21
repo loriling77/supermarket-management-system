@@ -7,7 +7,7 @@ import type { Manufacture } from '../types/types'
 import { useState, useEffect } from 'react'
 import {
     getManufactures,
-    getManufacture,
+
     addManufacture,
     updateManufacture,
     deleteManufacture
@@ -15,6 +15,7 @@ import {
 
 
 import "../styles/home.css";
+import "../styles/admin.css";
 
 export default function Manufacture() {
 
@@ -34,7 +35,7 @@ export default function Manufacture() {
             }
         }
         loadManufactures()
-    })
+    }, [])
     const handleAddManufacture = async (newManufacture: Omit<Manufacture, "id">) => {
         try {
             setError("")
@@ -62,7 +63,7 @@ export default function Manufacture() {
                 prevManufactures.filter(manuafcture => manuafcture.id !== id)
             );
 
-            setSelectManufacture(null);
+            setSelectManufacture(previous => previous?.id === id ? null : previous);
 
 
         } catch (err) {
@@ -97,15 +98,16 @@ export default function Manufacture() {
 
 
     return (
-        <div className="home-container">
+        <div className="home-container admin-page">
             <aside className="home-sidebar">
                 <NavBar />
             </aside>
 
             <main className="home-main">
                 <div className="home-header">
-                    <h1>Dashboard</h1>
-                    <p>Manage your Manufactures</p>
+                    <span className="admin-eyebrow">STORE MANAGEMENT</span>
+                    <h1>Manufacturers</h1>
+                    <p>Manage your suppliers and product origins in one place.</p>
                 </div>
                 {error && (
                     <p role="alert" style={{ color: "red" }}>
@@ -116,12 +118,12 @@ export default function Manufacture() {
 
                 <div className="home-content">
                     <section className="home-form-section">
-                        <ManufactureForm onAddManufacture={handleAddManufacture} selectManufacture={selectManufacture} onSaveManufacture={handleSaveManufacture} onDeleteManufacture={handleDeleteManufacture} />
+                        <ManufactureForm key={selectManufacture?.id ?? "new"} onAddManufacture={handleAddManufacture} selectManufacture={selectManufacture} onSaveManufacture={handleSaveManufacture} />
                     </section>
 
                     <section className="home-table-section" >
                         <Search onSearch={setSearch}></Search>
-                        <ManufactureMenu manufactures={manufactures} onSelectManufacture={setSelectManufacture} search={search} />
+                        <ManufactureMenu onDeleteManufacture={handleDeleteManufacture} manufactures={manufactures} onSelectManufacture={setSelectManufacture} search={search} />
                     </section>
                 </div>
             </main>

@@ -1,86 +1,64 @@
 
-import { Routes, Route, Navigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Navigate, Outlet } from "react-router-dom";
+import { getCurrentUser } from "../api/authApi";
 
-import Login from "./pages/login";
-import Register from "./pages/register";
-import Home from "./pages/home";
-import User from "./pages/user";
-import Category from "./pages/category";
-import Manufacture from "./pages/manufacture";
-import UserOrder from "./pages/userOrder";
-
-import ProtectedRoute from "./components/ProtectedRoute";
-
-function App() {
-    return (
-        <Routes>
-            {/* Public pages */}
-            <Route
-                path="/"
-                element={<Navigate to="/login" replace />}
-            />
-
-            <Route
-                path="/login"
-                element={<Login />}
-            />
-
-            <Route
-                path="/register"
-                element={<Register />}
-            />
-
-            {/* Admin-only pages */}
-            <Route
-                element={
-                    <ProtectedRoute requiredRole="Admin" />
-                }
-            >
-                <Route
-                    path="/admin"
-                    element={<Navigate to="/home" replace />}
-                />
-
-                <Route
-                    path="/home"
-                    element={<Home />}
-                />
-
-                <Route
-                    path="/user"
-                    element={<User />}
-                />
-
-                <Route
-                    path="/category"
-                    element={<Category />}
-                />
-
-                <Route
-                    path="/manufacture"
-                    element={<Manufacture />}
-                />
-            </Route>
-
-            {/* User-only page */}
-            <Route
-                element={
-                    <ProtectedRoute requiredRole="User" />
-                }
-            >
-                <Route
-                    path="/userOrder"
-                    element={<UserOrder />}
-                />
-            </Route>
-
-            {/* Unknown pages */}
-            <Route
-                path="*"
-                element={<Navigate to="/" replace />}
-            />
-        </Routes>
-    );
+interface ProtectedRouteProps {
+    requiredRole: "Admin" | "User";
 }
 
-export default App;
+export default function ProtectedRoute({
+    requiredRole
+}: ProtectedRouteProps) {
+    const [loading, setLoading] = useState(true);
+    const [role, setRole] = useState<string | null>(null);
+
+    useEffect(() => {
+        let active = true;
+
+        const checkAuth = async () => {
+            try {
+                const user = await getCurrentUser();
+
+                if (active) {
+                    setRole(user?.roles?.includes("Admin")
+                        ? "Admin"
+                        : user?.roles?.includes("User")
+                            ? "User"
+                            : null
+                    );
+                }
+            } catch (error) {
+                console.error("Authentication check failed:", error);
+
+                if (active) {
+                    setRole(null);
+                }
+            } finally {
+                if (active) {
+                    setLoading(false);
+                }
+            }
+        };
+
+        void checkAuth();
+
+        return () => {
+            active = false;
+        };
+    }, []);
+
+    if (loading) {
+        return <p>Checking authentication...</p>;
+    }
+
+    if (!role) {
+        return <Navigate to="/login" replace />;
+    }
+
+    if (role !== requiredRole) {
+        return <Navigate to="/login" replace />;
+    }
+
+    return <Outlet />;
+}

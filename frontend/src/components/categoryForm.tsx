@@ -8,10 +8,9 @@ interface CategoryFormProps {
     onAddCategory: (category: Omit<Category, 'id'>) => Promise<void>
     selectCategory: Category | null
     onSaveCategory: (category: Category) => Promise<void>
-    onDeleteCategory: (id: number) => Promise<void>
 }
 
-export default function CategoryForm({ onAddCategory, selectCategory, onSaveCategory, onDeleteCategory }: CategoryFormProps) {
+export default function CategoryForm({ onAddCategory, selectCategory, onSaveCategory }: CategoryFormProps) {
 
     const [categoryName, setCategoryName] = useState("")
     const [detail, setDetail] = useState("")
@@ -40,32 +39,6 @@ export default function CategoryForm({ onAddCategory, selectCategory, onSaveCate
 
 
     }
-    const handleDelete = async () => {
-        if (!selectCategory) {
-            alert("Please select a category")
-            return
-        }
-
-        const confirmed = window.confirm(
-            "Are you sure to delete this category?"
-
-
-        )
-        if (!confirmed) {
-            return
-        }
-        try {
-            await onDeleteCategory(selectCategory.id)
-
-            setCategoryName("")
-            setDetail("")
-
-        } catch (error) { console.error(error) }
-
-
-
-    }
-
     const handleSave = async () => {
         if (!selectCategory) {
             alert("Please select a category first!")
@@ -103,7 +76,7 @@ export default function CategoryForm({ onAddCategory, selectCategory, onSaveCate
     return (
         <div className="product-form-container">
             <form className="product-form" onSubmit={handleSubmit}>
-                <h2>Category Management</h2>
+                <h2>Category details</h2>
                 <p className="form-subtitle">
                     Manage your category information
                 </p>
@@ -143,10 +116,6 @@ export default function CategoryForm({ onAddCategory, selectCategory, onSaveCate
 
                     <button type="button" className="Save-btn" onClick={handleSave}>
                         Save
-                    </button>
-
-                    <button type="button" className="Delete-btn" onClick={handleDelete}>
-                        Delete
                     </button>
                 </div>
             </form>

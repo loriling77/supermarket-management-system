@@ -105,6 +105,7 @@ public class AuthController : ControllerBase
         {
             message = "Login successful.",
             id = user.Id,
+            userName = user.UserName,
             email = user.Email,
             roles
         });
@@ -127,6 +128,7 @@ public class AuthController : ControllerBase
         return Ok(new
         {
             id = user.Id,
+            userName = user.UserName,
             email = user.Email,
             roles
         });

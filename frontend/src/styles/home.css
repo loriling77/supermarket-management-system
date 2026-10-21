@@ -1,5 +1,12 @@
+/* Reserve scrollbar space so switching pages does not shift the content. */
+html:has(.home-container) {
+    scrollbar-gutter: stable;
+}
+
 /* 整体页面 */
 .home-container {
+    --sidebar-width: 200px;
+    --sidebar-background: #e8f1eb;
     display: flex;
     width: 100%;
     min-height: 100vh;
@@ -12,9 +19,9 @@
     position: fixed;
     top: 0;
     left: 0;
-    width: 20%;
+    width: var(--sidebar-width);
     height: 100vh;
-    background-color: #14532d;
+    background-color: var(--sidebar-background);
     overflow-y: auto;
     box-sizing: border-box;
     z-index: 100;
@@ -22,10 +29,10 @@
 
 /* 右侧主内容 */
 .home-main {
-    width: 80%;
+    width: calc(100% - var(--sidebar-width));
     min-width: 0;
     min-height: 100vh;
-    margin-left: 20%;
+    margin-left: var(--sidebar-width);
     padding: 35px;
     box-sizing: border-box;
 }
@@ -77,13 +84,11 @@
 
 /* 小屏幕 */
 @media (max-width: 768px) {
-    .home-sidebar {
-        width: 180px;
+    .home-container {
+        --sidebar-width: 160px;
     }
 
     .home-main {
-        width: calc(100% - 180px);
-        margin-left: 180px;
         padding: 20px;
     }
 

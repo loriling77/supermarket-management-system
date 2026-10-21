@@ -5,6 +5,7 @@ import Search from "../components/search";
 import OrderModal from "../components/orderModal";
 
 import "../styles/home.css";
+import "../styles/admin.css";
 import "../styles/userPage.css";
 
 import { useEffect, useState } from "react";
@@ -79,15 +80,16 @@ export default function User() {
 
     return (
         <>
-            <div className="home-container user-page">
+            <div className="home-container admin-page user-page">
                 <aside className="home-sidebar">
                     <NavBar />
                 </aside>
 
                 <main className="home-main">
                     <div className="home-header">
-                        <h1>Dashboard</h1>
-                        <p>Manage your Users</p>
+                        <span className="admin-eyebrow">STORE MANAGEMENT</span>
+                        <h1>Customers</h1>
+                        <p>Find registered customers and review their orders.</p>
                     </div>
 
                     <div className="home-content">
@@ -101,10 +103,7 @@ export default function User() {
                             ) : (
                                 <UserMenu
                                     users={filteredUsers}
-                                    onViewOrder={(user) => {
-                                        console.log("Opening orders for:", user);
-                                        setSelectedUser(user);
-                                    }}
+                                    onViewOrder={handleViewOrder}
                                 />
                             )}
                         </section>

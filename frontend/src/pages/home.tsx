@@ -18,6 +18,7 @@ import {
 import { getCurrentUser } from "../api/authApi";
 
 import "../styles/home.css";
+import "../styles/admin.css";
 
 export default function Home() {
     const [products, setProducts] = useState<Product[]>([]);
@@ -118,7 +119,7 @@ export default function Home() {
                 )
             );
 
-            setSelectProduct(null);
+            setSelectProduct(previous => previous?.id === id ? null : previous);
 
         } catch (error) {
             console.error("Delete product failed:", error);
@@ -129,15 +130,16 @@ export default function Home() {
     };
 
     return (
-        <div className="home-container">
+        <div className="home-container admin-page">
             <aside className="home-sidebar">
                 <NavBar />
             </aside>
 
             <main className="home-main">
                 <div className="home-header">
-                    <h1>Dashboard</h1>
-                    <p>Manage your products and inventory</p>
+                    <span className="admin-eyebrow">STORE MANAGEMENT</span>
+                    <h1>Products</h1>
+                    <p>Keep your inventory organised and up to date.</p>
                 </div>
 
                 {error && (
@@ -148,9 +150,8 @@ export default function Home() {
 
                 <div className="home-content">
                     <section className="home-form-section">
-                        <ProductForm
+                        <ProductForm key={selectProduct?.id ?? "new"}
                             onAddProduct={handleAddProduct}
-                            onDeleteProduct={handleDeleteProduct}
                             selectProduct={selectProduct}
                             onSaveProduct={handleSaveProduct}
                         />
@@ -159,7 +160,7 @@ export default function Home() {
                     <section className="home-table-section">
                         <Search onSearch={setSearch} />
 
-                        <ProductMenu
+                        <ProductMenu onDeleteProduct={handleDeleteProduct}
                             products={products}
                             onSelectProduct={setSelectProduct}
                             search={search}

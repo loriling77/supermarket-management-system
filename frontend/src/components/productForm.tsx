@@ -17,14 +17,12 @@ interface ProductFormProps {
     onAddProduct: (product: Omit<Product, "id">) => Promise<void>;
     selectProduct: Product | null;
     onSaveProduct: (product: Product) => Promise<void>;
-    onDeleteProduct: (id: number) => Promise<void>;
 }
 
 export default function ProductForm({
     onAddProduct,
     selectProduct,
-    onSaveProduct,
-    onDeleteProduct
+    onSaveProduct
 }: ProductFormProps) {
 
     const [productName, setProductName] = useState("");
@@ -171,40 +169,6 @@ export default function ProductForm({
         }
     };
 
-    // Delete Product
-    const handleDelete = async () => {
-        setSubmitError("");
-
-        if (!selectProduct) {
-            setSubmitError("Please select a product first.");
-            return;
-        }
-
-        const confirmed = window.confirm(
-            "Are you sure you want to delete this product?"
-        );
-
-        if (!confirmed || isSubmitting) {
-            return;
-        }
-
-        setIsSubmitting(true);
-
-        try {
-            await onDeleteProduct(selectProduct.id);
-            clearForm();
-
-        } catch (error) {
-            setSubmitError(
-                error instanceof Error
-                    ? error.message
-                    : "Failed to delete product."
-            );
-        } finally {
-            setIsSubmitting(false);
-        }
-    };
-
     // Load dropdown data
     useEffect(() => {
         const loadDropdownData = async () => {
@@ -248,7 +212,7 @@ export default function ProductForm({
                 className="product-form"
                 onSubmit={handleSubmit}
             >
-                <h2>Product Management</h2>
+                <h2>Product details</h2>
 
                 <p className="form-subtitle">
                     Manage your product information
@@ -276,7 +240,7 @@ export default function ProductForm({
                 {/* Manufacture */}
                 <div className="input-group">
                     <label htmlFor="manufactureId">
-                        Manufacture Name
+                        Manufacturer
                     </label>
 
                     <select
@@ -444,15 +408,6 @@ export default function ProductForm({
                         disabled={isSubmitting}
                     >
                         Save
-                    </button>
-
-                    <button
-                        type="button"
-                        className="Delete-btn"
-                        onClick={handleDelete}
-                        disabled={isSubmitting}
-                    >
-                        Delete
                     </button>
 
                 </div>
