@@ -54,8 +54,6 @@ export default function User() {
 
     // Open View Order modal
     const handleViewOrder = (user: RegisteredUser) => {
-        console.log("View Order clicked:", user);
-
         setSelectedUser(user);
     };
 
@@ -79,9 +77,9 @@ export default function User() {
 
                 <main className="home-main">
                     <div className="home-header">
-                        <span className="admin-eyebrow">STORE MANAGEMENT</span>
+
                         <h1>Customers</h1>
-                        <p>Find registered customers and review their orders.</p>
+
                     </div>
 
                     <div className="home-content">

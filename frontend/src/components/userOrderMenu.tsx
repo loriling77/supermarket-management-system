@@ -63,7 +63,7 @@ export default function UserOrderMenu({
     return (
         <div className="product-menu-container">
             <div className="product-menu">
-                <div className="product-menu-header"><h2>Fresh picks</h2><p>{loading ? "Finding your favourites…" : `${filteredProducts.length} products to explore`}</p></div>
+                <div className="product-menu-header"><h2>Products</h2><p>{loading ? "Loading products…" : `${filteredProducts.length} products`}</p></div>
                 <div className="product-table-wrapper">
                     <table className="product-table">
                         <thead><tr>

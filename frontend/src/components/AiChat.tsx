@@ -1,7 +1,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import type { SubmitEventHandler } from "react";
-import { Bot, Send, ShoppingCart, Sparkles, X } from "lucide-react";
+import { MessageSquare, Send, ShoppingCart, X } from "lucide-react";
 
 import {
     sendAiMessage,
@@ -67,8 +67,7 @@ export default function AiChat({
         {
             role: "assistant",
             content:
-                "Hello! 👋 I'm your Supermarket Assistant. " +
-                "Ask me about products or request a shopping list!",
+                "Ask about products, prices or stock, or request a shopping list.",
         },
     ]);
 
@@ -183,8 +182,8 @@ export default function AiChat({
                 <section className="ai-chat-panel">
                     <div className="ai-chat-header">
                         <div>
-                            <strong><Sparkles size={18} aria-hidden="true" /> Supermarket Assistant</strong>
-                            <p>Product advice & shopping lists</p>
+                            <strong><MessageSquare size={18} aria-hidden="true" /> Shopping assistant</strong>
+                            <p>AI-generated product suggestions</p>
                         </div>
 
                         <button
@@ -325,7 +324,7 @@ export default function AiChat({
                         {loading && (
                             <div className="ai-message assistant">
                                 <span className="ai-loading">
-                                    Thinking...
+                                    Loading response...
                                 </span>
                             </div>
                         )}
@@ -375,7 +374,7 @@ export default function AiChat({
                 }
                 aria-expanded={open}
             >
-                {open ? <X size={24} aria-hidden="true" /> : <Bot size={26} aria-hidden="true" />}
+                {open ? <X size={24} aria-hidden="true" /> : <MessageSquare size={24} aria-hidden="true" />}
             </button>
         </div>
     );

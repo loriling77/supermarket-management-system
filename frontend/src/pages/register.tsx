@@ -2,7 +2,6 @@
 import "../styles/login.css";
 import "../styles/register.css";
 import AuthLayout from "../components/AuthLayout";
-import { ArrowRight } from "lucide-react";
 
 import { useState } from "react";
 import type { SubmitEventHandler } from "react";
@@ -86,9 +85,8 @@ export default function Register() {
         <AuthLayout register>
             <div className="login-card">
                 <div className="auth-form-heading">
-                    <span className="auth-form-kicker">SOMETHING GOOD STARTS HERE</span>
-                    <h1>Make yourself at home.</h1>
-                    <p>Create an account for your everyday shopping.</p>
+                    <h1>Create an account</h1>
+                    <p>Register to shop and view your orders.</p>
                 </div>
 
                 <form className="login-form" onSubmit={handleSubmit} noValidate>
@@ -223,7 +221,7 @@ export default function Register() {
                         className="register-btn"
                         disabled={loading}
                     >
-                        {loading ? "Creating account..." : "Create account"}<ArrowRight size={17} aria-hidden="true" />
+                        {loading ? "Creating account..." : "Create account"}
                     </button>
                 </form>
 

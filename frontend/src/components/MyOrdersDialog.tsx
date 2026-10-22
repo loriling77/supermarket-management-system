@@ -87,6 +87,12 @@ export default function MyOrdersDialog({ onClose, latestOrderId }: MyOrdersDialo
                                     <div className="my-orders-table-wrapper">
                                         <table>
                                             <caption className="my-orders-sr-only">Items in order #{order.id}</caption>
+                                            <colgroup>
+                                                <col className="my-orders-product-column" />
+                                                <col className="my-orders-price-column" />
+                                                <col className="my-orders-quantity-column" />
+                                                <col className="my-orders-subtotal-column" />
+                                            </colgroup>
                                             <thead><tr><th scope="col">Product</th><th scope="col">Unit price</th>
                                                 <th scope="col">Quantity</th><th scope="col">Subtotal</th></tr></thead>
                                             <tbody>{order.items.map(item => (

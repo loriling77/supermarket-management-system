@@ -19,15 +19,15 @@ export default function ShoppingList({cart, onRemove, onPay, paying}: ShoppingLi
                 <div className="product-menu-header user-order-cart-header">
                     <div>
                         <h2 id="shopping-cart-title">Your cart</h2>
-                        <p>A little of everything you love.</p>
+                        <p>Review your items before checkout.</p>
                     </div>
                     <span className="user-order-cart-badge">{itemCount}</span>
                 </div>
                 {cart.length === 0 ? (
                     <div className="user-order-empty-cart">
                         <span><ShoppingBag size={30} strokeWidth={1.5} aria-hidden="true" /></span>
-                        <strong>Your cart is waiting</strong>
-                        <p>Add a few favourites to get started.</p>
+                        <strong>Your cart is empty</strong>
+                        <p>Add products from the catalogue.</p>
                     </div>
                 ) : (
                     <ul className="user-order-cart-items" aria-label="Cart items">

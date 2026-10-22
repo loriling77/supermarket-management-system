@@ -37,8 +37,7 @@ export default function Home() {
     useEffect(() => {
         const checkAuth = async () => {
             try {
-                const user = await getCurrentUser();
-                console.log("Current user:", user);
+                await getCurrentUser();
             } catch (error) {
                 console.error("Auth check failed:", error);
             }
@@ -137,9 +136,9 @@ export default function Home() {
 
             <main className="home-main">
                 <div className="home-header">
-                    <span className="admin-eyebrow">STORE MANAGEMENT</span>
+
                     <h1>Products</h1>
-                    <p>Keep your inventory organised and up to date.</p>
+
                 </div>
 
                 {error && (

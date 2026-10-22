@@ -105,9 +105,9 @@ export default function Manufacture() {
 
             <main className="home-main">
                 <div className="home-header">
-                    <span className="admin-eyebrow">STORE MANAGEMENT</span>
+
                     <h1>Manufacturers</h1>
-                    <p>Manage your suppliers and product origins in one place.</p>
+
                 </div>
                 {error && (
                     <p role="alert" style={{ color: "red" }}>

@@ -35,7 +35,7 @@ export default function SearchProduct({ onSearch }: SearchProps) {
 
     return (
         <div className="search-product">
-            <h2>Search {pageName}</h2>
+
 
             <form className="search-bar" onSubmit={handleSearch}>
                 <div className="search-input-wrapper">

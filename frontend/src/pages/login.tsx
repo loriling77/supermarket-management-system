@@ -1,7 +1,6 @@
 
 import "../styles/login.css";
 import AuthLayout from "../components/AuthLayout";
-import { ArrowRight, LockKeyhole } from "lucide-react";
 
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
@@ -26,7 +25,6 @@ export default function Login() {
 
             try {
                 const user = await login(email, password);
-                console.log("Logged in user", user)
 
                 if (user.roles.includes("Admin")) {
                     navigate("/home", { replace: true });
@@ -53,9 +51,8 @@ export default function Login() {
             <div className="login-card">
 
                 <div className="auth-form-heading">
-                    <span className="auth-form-kicker">A FRESH START</span>
-                    <h1>Welcome back.</h1>
-                    <p>Sign in and pick up where you left off.</p>
+                    <h1>Sign in</h1>
+                    <p>Enter your email address and password.</p>
                 </div>
 
                 <form
@@ -109,7 +106,7 @@ export default function Login() {
                         className="login-btn"
                         disabled={loading}
                     >
-                        {loading ? "Signing in..." : "Sign in"}<ArrowRight size={17} aria-hidden="true" />
+                        {loading ? "Signing in..." : "Sign in"}
                     </button>
                 </form>
 
@@ -119,7 +116,6 @@ export default function Login() {
                         Create an account
                     </Link>
                 </div>
-                <p className="auth-form-note"><LockKeyhole size={13} aria-hidden="true" /> Your basket starts here.</p>
 
             </div>
         </AuthLayout>

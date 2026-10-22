@@ -98,9 +98,9 @@ export default function Category() {
 
             <main className="home-main">
                 <div className="home-header">
-                    <span className="admin-eyebrow">STORE MANAGEMENT</span>
+
                     <h1>Categories</h1>
-                    <p>Organise your catalogue with clear, useful categories.</p>
+
                 </div>
                 {error && (
                     <p role="alert" style={{ color: "red" }}>

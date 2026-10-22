@@ -40,10 +40,11 @@ button:disabled { cursor: not-allowed; }
 }
 .admin-page .home-sidebar { border-color: #dce8e0; }
 .sidebar { background: #f1f7f3; color: #42634f; }
+.admin-page .dashboard-card h2.dashboard-value-warning { color: #c53030; }
 .sidebar-logo { padding: 12px; background: #fff; border-radius: 14px; }
 .sidebar-menu .nav-label { color: #4d6958; font-weight: 500; border: 1px solid transparent; }
 .sidebar-menu .nav-label:hover { color: #244633; background: #e3efe8; }
-.sidebar-menu a.active .nav-label { color: #fff; background: #287548; border-color: #287548; box-shadow: inset 3px 0 #b5dcc5; }
+.sidebar-menu a.active .nav-label { color: #fff; background: #287548; border-color: #287548; }
 .sidebar .logout-btn a { background: #e3efe8; color: #42634f; font-size: 13px; border: 1px solid #d4e4db; }
 .sidebar .logout-btn a:hover { background: #d8eadd; color: #244633; }
 .logout-control { display: inline-flex; flex-direction: column; align-items: stretch; gap: 6px; }

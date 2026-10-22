@@ -1,6 +1,8 @@
 
 import "../styles/dashboard.css";
 import { useEffect, useState } from "react";
+import type { ReactNode } from "react";
+import { CirclePoundSterling, Package, ShoppingCart, TriangleAlert } from "lucide-react";
 import { getProducts } from "../api/productApi";
 import {
     getTotalOrders,
@@ -25,13 +27,15 @@ import {
 type DashboardStatCardProps = {
     title: string;
     value: string;
-    icon: string;
+    icon: ReactNode;
+    warning?: boolean;
 };
 
 function DashboardStatCard({
     title,
     value,
     icon,
+    warning = false,
 }: DashboardStatCardProps) {
     return (
         <div className="dashboard-card">
@@ -40,7 +44,7 @@ function DashboardStatCard({
                 <span className="dashboard-card-icon">{icon}</span>
             </div>
 
-            <h2>{value}</h2>
+            <h2 className={warning ? "dashboard-value-warning" : undefined}>{value}</h2>
         </div>
     );
 }
@@ -96,7 +100,6 @@ export default function DashboardCard() {
 
     useEffect(() => {
         const loadTotalSales = async () => {
-            console.log("Starting to load")
             try {
                 const amount = await getTotalSales();
                 setTotalSales(amount)
@@ -176,13 +179,13 @@ export default function DashboardCard() {
                         value={
                             salesError ? "Error" : totalSales === null ? "Loading..." : `${totalSales.toFixed(2)}`
                         }
-                        icon="£"
+                        icon={<CirclePoundSterling size={20} aria-hidden="true" />}
                     />
 
                     <DashboardStatCard
                         title="Total Orders"
                         value={ordersError ? "Error" : totalOrders === null ? "Loading..." : totalOrders.toString()}
-                        icon="🛒"
+                        icon={<ShoppingCart size={20} aria-hidden="true" />}
                     />
 
                     <DashboardStatCard
@@ -194,13 +197,14 @@ export default function DashboardCard() {
                                     ? "Loading..."
                                     : totalProducts.toString()
                         }
-                        icon="📦"
+                        icon={<Package size={20} aria-hidden="true" />}
                     />
 
                     <DashboardStatCard
                         title="Low Stock Products"
+                        warning={!productsError && lowStockProducts !== null && lowStockProducts > 0}
                         value={productsError ? "Error" : lowStockProducts === null ? "Loading" : lowStockProducts.toString()}
-                        icon="⚠️"
+                        icon={<TriangleAlert size={20} aria-hidden="true" />}
                     />
                 </div>
 

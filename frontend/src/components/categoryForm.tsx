@@ -86,6 +86,7 @@ export default function CategoryForm({ onAddCategory, selectCategory, onSaveCate
                     <input
                         id="productname"
                         type="text"
+                        placeholder="Enter category name"
                         value={categoryName}
 
                         required

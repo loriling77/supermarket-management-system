@@ -1,5 +1,4 @@
 import type { ReactNode } from "react";
-import { Leaf, ShoppingBasket, Sparkles } from "lucide-react";
 import supermarketLogo from "../assets/supermarket.svg";
 import "../styles/authLayout.css";
 
@@ -45,22 +44,16 @@ export default function AuthLayout({ children, register = false }: { children: R
         <div className={`auth-page${register ? " auth-page--register" : ""}`}>
             <header className="auth-brand">
                 <img src={supermarketLogo} alt="" width={38} height={38} />
-                <span>Supermarket<span className="auth-brand-dot">.</span></span>
+                <span>Supermarket</span>
             </header>
             <main className="auth-shell">
-                <aside className="auth-story" aria-label="Welcome to Supermarket">
-                    <span className="auth-eyebrow"><Leaf size={15} aria-hidden="true" /> YOUR EVERYDAY MARKET</span>
-                    <h2>Good food.<br /><span>Better days.</span></h2>
-                    <p>A few fresh favourites. Your everyday essentials.<br className="auth-desktop-break" /> A little less on your to-do list.</p>
+                <aside className="auth-story" aria-label="Shopping features">
+                    <h2>Online shopping</h2>
+                    <p>Browse products, place an order and manage your account.</p>
                     <GroceryIllustration />
-                    <div className="auth-story-footer">
-                        <span><ShoppingBasket size={17} aria-hidden="true" /> Fill your basket with good things.</span>
-                        <span className="auth-story-sparkle"><Sparkles size={19} aria-hidden="true" /></span>
-                    </div>
                 </aside>
                 <div className="auth-form-panel">{children}</div>
             </main>
-            <footer className="auth-page-footer"><span>A fresher way to shop.</span><span>Simple shopping. Everyday living.</span></footer>
         </div>
     );
 }

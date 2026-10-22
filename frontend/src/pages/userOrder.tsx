@@ -198,7 +198,7 @@ export default function UserOrder() {
                         <div className="user-order-profile">
                             <span className="user-order-avatar"><UserRound size={19} aria-hidden="true" /></span>
                             <div>
-                                <span className="user-order-account-label">Signed in as</span>
+
                                 <strong title={userLoading ? undefined : displayName}>
                                     {userLoading ? "Loading…" : displayName}
                                 </strong>
@@ -216,9 +216,8 @@ export default function UserOrder() {
 
                 <div className="home-header">
                     <div>
-                        <p className="user-order-eyebrow">A LITTLE FRESHNESS, EVERY DAY</p>
-                        <h1>Let’s fill your basket.</h1>
-                        <p>Choose your favourites, pick a quantity, and we’ll keep track of the rest.</p>
+                        <h1>Shop products</h1>
+
                     </div>
                     <div className="user-order-basket-count" aria-live="polite">
                         <ShoppingBag size={18} aria-hidden="true" />
