@@ -95,9 +95,10 @@ button:disabled { cursor: not-allowed; }
 
 /* Storefront and order history. */
 .user-order-topbar { border-color: var(--color-line); }
-.user-order-page :is(.user-order-avatar, .user-order-basket-count, .user-order-cart-badge, .user-order-history-button, .user-order-stock),
+.user-order-page :is(.user-order-avatar, .user-order-basket-count, .user-order-cart-badge, .user-order-history-button),
 .my-orders-dialog :is(.my-orders-icon, .my-orders-paid, .my-orders-retry) { background: var(--color-soft); color: var(--color-soft-ink); border-color: #d1e6d9; }
 .user-order-history-button:hover:not(:disabled) { background: #dff0e6; }
+.user-order-page .user-order-stock { background: transparent; color: var(--color-soft-ink); }
 .user-order-page :is(.user-order-account-label, .product-menu-header p, .user-order-empty-cart p, .user-order-cart-item-info > span, .user-order-cart-summary) { color: var(--color-muted); }
 .user-order-page :is(.user-order-product-name, .user-order-cart-line-total, .shopping-total strong, .user-order-empty-cart strong) { color: var(--color-ink); }
 .user-order-page .user-order-logout { color: var(--color-text); border-color: var(--color-line); border-radius: 7px; }
