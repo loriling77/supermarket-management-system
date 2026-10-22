@@ -66,7 +66,8 @@ button:disabled { cursor: not-allowed; }
 .user-order-page .user-order-quantity:focus { background: #fff; border-color: var(--color-primary); box-shadow: 0 0 0 3px var(--color-focus); outline: none; }
 .admin-page .input-group input.input-error { border-color: #dc6464; background: #fff8f8; }
 .admin-page .search-input-wrapper, .user-order-page .search-input-wrapper { background: var(--color-input); border-color: var(--color-input-border); }
-.admin-page .search-input-wrapper:focus-within, .user-order-page .search-input-wrapper:focus-within { border-color: var(--color-primary); box-shadow: 0 0 0 3px var(--color-focus); }
+.admin-page .search-input-wrapper:focus-within, .user-order-page .search-input-wrapper:focus-within { border-color: var(--color-input-border); box-shadow: none; }
+.search-input-wrapper input:focus-visible { outline: none; }
 .admin-page .search-icon, .user-order-page .search-icon { color: var(--color-muted); }
 .admin-page .search-input-wrapper input, .user-order-page .search-input-wrapper input { color: var(--color-ink); }
 .admin-page .search-btn, .user-order-page .search-btn,
