@@ -16,9 +16,9 @@ A graduate full-stack portfolio project combining customer shopping with a super
 Checkout is simulated; no money is collected.
 
 **Azure deployment target:** [Supermarket](https://supermarket-api-ll-ghgbdth2hsaqc3bh.denmarkeast-01.azurewebsites.net/).
-Availability could not be confirmed on 22 October 2026. Updates reach this site through the main-branch deployment workflow; check its result and database readiness before sharing the demo. See [Azure setup](docs/azure-deployment.md).
+Updates reach this site through the main-branch deployment workflow. See [Azure setup](docs/azure-deployment.md).
 
-**Demo access:** register a customer account, or use the local helper below. Shared administrator credentials are not included in the repository.
+Customers can register an account. Shared administrator credentials are not included in the repository.
 
 ## Architecture
 
@@ -74,7 +74,7 @@ Requirements: Node.js **22.16+**, **.NET 10 SDK**, SQL Server **2022** or Azure 
 
 Open [localhost:5173](http://localhost:5173). Check API/database readiness at [localhost:5252/health/ready](http://localhost:5252/health/ready).
 
-The initializer creates `Admin` and `User` roles after the database is ready. It does not apply schema migrations or automatically create an administrator. See [local admin setup](docs/demo-readiness.md).
+The initializer creates `Admin` and `User` roles after the database is ready. It does not apply schema migrations or automatically create an administrator.
 
 ### Optional AI configuration
 
@@ -87,25 +87,6 @@ Set these backend user secrets or environment variables:
 | `AzureAI:ApiKey` | `AzureAI__ApiKey` |
 
 Never put the API key in a frontend `VITE_` variable. Without these settings, shopping/management work and assistant requests show a failure message.
-
-### Local customer demo
-
-With the local API/database running, from the repository root:
-
-```powershell
-node scripts/prepare-local-demo.mjs
-node scripts/verify-local-demo.mjs
-```
-
-The helper creates/reuses a customer-only account and saves its generated email/password in `.demo-credentials.local.json`, which Git ignores. Use those credentials on the local sign-in page. The script refuses public hosts and does not grant administrator access.
-
-For an optional successful-purchase check:
-
-```powershell
-node scripts/verify-local-demo.mjs --checkout
-```
-
-This creates **one simulated local order and deducts one unit of stock**. A stocked product must already exist. The default check does not purchase anything.
 
 ## Test and build
 
@@ -126,7 +107,7 @@ dotnet test backend/Supermarket.Api.Tests/Supermarket.Api.Tests.csproj --configu
 
 Release tests use different output files from the normal Debug development server. If Windows still reports a locked build file, stop the local API before rerunning the tests.
 
-Tests cover cart limits, logout, order errors, dashboard states, AI quantity editing, order ownership, statistics, invalid checkout input and HTTP role authorization. Most backend tests use InMemory and do not prove SQL transaction/concurrency behavior. The optional local demo check exercises one real SQL checkout.
+Tests cover cart limits, logout, order errors, dashboard states, AI quantity editing, order ownership, statistics, invalid checkout input and HTTP role authorization. Most backend tests use InMemory and do not prove SQL transaction/concurrency behavior.
 
 GitHub Actions builds/tests the frontend/backend and smoke-tests the published app on PRs and main pushes. Only main outside a PR can deploy. Azure credentials, database networking and migrations still need to be configured.
 
@@ -151,6 +132,4 @@ GitHub Actions builds/tests the frontend/backend and smoke-tests the published a
 - AI requests send the current message and at most 100 in-stock products, without persistent conversation history.
 - Checkout has no idempotency key. An uncertain response must not be blindly retried as another purchase.
 - Real SQL concurrency, deadlock/retry behavior and load require dedicated verification.
-- Shared public admin access, automatic demo reset and AI usage quotas are not implemented.
-
-See [demo readiness](docs/demo-readiness.md) for the rehearsal checklist and verification record.
+- Shared public admin access and AI usage quotas are not implemented.
