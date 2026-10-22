@@ -86,7 +86,7 @@ export default function Register() {
             <div className="login-card">
                 <div className="auth-form-heading">
                     <h1>Create an account</h1>
-                    <p>Register to shop and view your orders.</p>
+
                 </div>
 
                 <form className="login-form" onSubmit={handleSubmit} noValidate>

@@ -15,6 +15,12 @@ export default function ManufactureForm({ onAddManufacture, selectManufacture, o
     const [productionLiscenseNumber, setProductionLiscenseNumber] = useState("")
     const [placeOfOrigin, setPlaceOfOrigin] = useState("")
 
+    const hasUnsavedChanges = selectManufacture !== null && (
+        manufactureName !== selectManufacture.manufactureName ||
+        productionLiscenseNumber !== selectManufacture.productionLiscenseNumber ||
+        placeOfOrigin !== selectManufacture.placeOfOrigin
+    );
+
     const handleAdd: SubmitEventHandler<HTMLElement> = async (e) => {
         e.preventDefault();
 
@@ -127,12 +133,12 @@ export default function ManufactureForm({ onAddManufacture, selectManufacture, o
 
 
                 <div className="form-actions">
-                    <button type="submit" className="Add-btn" >
+                    <button type="submit" className={`Add-btn${hasUnsavedChanges ? " Add-btn--muted" : ""}`} >
                         Add
                     </button>
 
 
-                    <button type="button" className="Save-btn" onClick={handleSave}>
+                    <button type="button" className={`Save-btn${hasUnsavedChanges ? " Save-btn--pending" : ""}`} onClick={handleSave}>
                         Save
                     </button>
                 </div>

@@ -15,6 +15,10 @@ export default function CategoryForm({ onAddCategory, selectCategory, onSaveCate
     const [categoryName, setCategoryName] = useState("")
     const [detail, setDetail] = useState("")
 
+    const hasUnsavedChanges = selectCategory !== null && (
+        categoryName !== selectCategory.categoryName || detail !== selectCategory.detail
+    );
+
 
     const handleSubmit: SubmitEventHandler<HTMLElement> = async (e) => {
         e.preventDefault()
@@ -110,12 +114,12 @@ export default function CategoryForm({ onAddCategory, selectCategory, onSaveCate
 
 
                 <div className="form-actions">
-                    <button type="submit" className="Add-btn">
+                    <button type="submit" className={`Add-btn${hasUnsavedChanges ? " Add-btn--muted" : ""}`}>
                         Add
                     </button>
 
 
-                    <button type="button" className="Save-btn" onClick={handleSave}>
+                    <button type="button" className={`Save-btn${hasUnsavedChanges ? " Save-btn--pending" : ""}`} onClick={handleSave}>
                         Save
                     </button>
                 </div>

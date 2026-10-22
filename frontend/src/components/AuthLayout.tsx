@@ -49,7 +49,7 @@ export default function AuthLayout({ children, register = false }: { children: R
             <main className="auth-shell">
                 <aside className="auth-story" aria-label="Shopping features">
                     <h2>Online shopping</h2>
-                    <p>Browse products, place an order and manage your account.</p>
+                    <p>Welcome back, we are ready for you!</p>
                     <GroceryIllustration />
                 </aside>
                 <div className="auth-form-panel">{children}</div>

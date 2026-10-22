@@ -52,7 +52,7 @@ export default function Login() {
 
                 <div className="auth-form-heading">
                     <h1>Sign in</h1>
-                    <p>Enter your email address and password.</p>
+
                 </div>
 
                 <form

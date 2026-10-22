@@ -57,6 +57,7 @@ export default function Category() {
         try {
             setError('')
             await updateCategory(updatedCategory)
+            setSelectCategory(updatedCategory)
 
             setCategories(prevCategories =>
                 prevCategories.map(category =>

@@ -78,6 +78,7 @@ export default function Manufacture() {
         try {
             setError("")
             await updateManufacture(updatedManufacture)
+            setSelectManufacture(updatedManufacture)
 
             setManufactures(prevManufactures =>
                 prevManufactures.map(manufacture =>
