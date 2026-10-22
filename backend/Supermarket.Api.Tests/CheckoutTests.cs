@@ -15,7 +15,7 @@ public class CheckoutTests
     [Fact]
     public async Task Checkout_EmptyCart_ReturnsBadRequest()
     {
-        // Arrange: 创建 DbContext 配置
+        // Arrange: configure the database context
         var options = new DbContextOptionsBuilder<AppDbContext>()
             .UseSqlServer(
                 "Server=127.0.0.1,1;Database=TestDb;" +
@@ -27,7 +27,7 @@ public class CheckoutTests
 
         var controller = new OrderController(context);
 
-        // 模拟已登录的普通用户
+        // Simulate an authenticated customer
         var user = new ClaimsPrincipal(
             new ClaimsIdentity(
                 new[]
@@ -47,16 +47,16 @@ public class CheckoutTests
             }
         };
 
-        // 创建空购物车
+        // Create an empty cart
         var request = new CheckoutRequestDto
         {
             Items = new()
         };
 
-        // Act: 调用真正的 Checkout 方法
+        // Act: call the actual checkout action
         var result = await controller.Checkout(request);
 
-        // Assert: 检查返回结果
+        // Assert: verify the returned result
         var badRequest =
             Assert.IsType<BadRequestObjectResult>(result);
 
@@ -70,7 +70,7 @@ public class CheckoutTests
     [Fact]
     public async Task Checkout_ZeroQuantity_ReturnsBadRequest()
     {
-        // Arrange: 创建测试用的 DbContext
+        // Arrange: create the test database context
         var options = new DbContextOptionsBuilder<AppDbContext>()
             .UseSqlServer(
                 "Server=127.0.0.1,1;Database=TestDb;" +
@@ -82,7 +82,7 @@ public class CheckoutTests
 
         var controller = new OrderController(context);
 
-        // 模拟已登录的普通用户
+        // Simulate an authenticated customer
         var user = new ClaimsPrincipal(
             new ClaimsIdentity(
                 new[]
@@ -102,7 +102,7 @@ public class CheckoutTests
             }
         };
 
-        // 创建包含无效数量的购物车
+        // Create a cart containing an invalid quantity
         var request = new CheckoutRequestDto
         {
             Items = new List<CheckoutItemDto>
@@ -115,10 +115,10 @@ public class CheckoutTests
         }
         };
 
-        // Act: 调用真正的 Checkout
+        // Act: call the actual checkout action
         var result = await controller.Checkout(request);
 
-        // Assert: 检查返回的错误
+        // Assert: verify the returned error
         var badRequest =
             Assert.IsType<BadRequestObjectResult>(result);
 
@@ -127,7 +127,7 @@ public class CheckoutTests
     [Fact]
     public async Task Checkout_InvalidProductId_ReturnsBadRequest()
     {
-        // Arrange: 创建测试用的 DbContext
+        // Arrange: create the test database context
         var options = new DbContextOptionsBuilder<AppDbContext>()
             .UseSqlServer(
                 "Server=127.0.0.1,1;Database=TestDb;" +
@@ -139,7 +139,7 @@ public class CheckoutTests
 
         var controller = new OrderController(context);
 
-        // 模拟已登录的普通用户
+        // Simulate an authenticated customer
         var user = new ClaimsPrincipal(
             new ClaimsIdentity(
                 new[]
@@ -159,7 +159,7 @@ public class CheckoutTests
             }
         };
 
-        // 创建包含无效数量的购物车
+        // Create a cart containing an invalid quantity
         var request = new CheckoutRequestDto
         {
             Items = new List<CheckoutItemDto>
@@ -172,10 +172,10 @@ public class CheckoutTests
     }
         };
 
-        // Act: 调用真正的 Checkout
+        // Act: call the actual checkout action
         var result = await controller.Checkout(request);
 
-        // Assert: 检查返回的错误
+        // Assert: verify the returned error
         var badRequest =
             Assert.IsType<BadRequestObjectResult>(result);
 
@@ -185,7 +185,7 @@ public class CheckoutTests
     [Fact]
     public async Task Checkout_UnauthenticatedUser_ReturnsUnauthorized()
     {
-        // Arrange: 创建测试用的 DbContext
+        // Arrange: create the test database context
         var options = new DbContextOptionsBuilder<AppDbContext>()
             .UseSqlServer(
                 "Server=127.0.0.1,1;Database=TestDb;" +
@@ -197,7 +197,7 @@ public class CheckoutTests
 
         var controller = new OrderController(context);
 
-        // 模拟未登录用户：没有任何身份信息
+        // Simulate an unauthenticated user without identity claims
         controller.ControllerContext = new ControllerContext
         {
             HttpContext = new DefaultHttpContext
@@ -208,7 +208,7 @@ public class CheckoutTests
             }
         };
 
-        // 即使购物车有商品，未登录也不能结账
+        // Reject checkout for an unauthenticated user even when the cart contains items
         var request = new CheckoutRequestDto
         {
             Items = new List<CheckoutItemDto>
@@ -221,17 +221,17 @@ public class CheckoutTests
         }
         };
 
-        // Act: 调用真正的 Checkout 方法
+        // Act: call the actual checkout action
         var result = await controller.Checkout(request);
 
-        // Assert: 检查是否返回 401 Unauthorized
+        // Assert: verify that the result is 401 Unauthorized
         Assert.IsType<UnauthorizedResult>(result);
     }
 
     [Fact]
     public async Task Checkout_AdminUser_ReturnsForbidden()
     {
-        // Arrange: 创建测试用 DbContext
+        // Arrange: create the test database context
         var options = new DbContextOptionsBuilder<AppDbContext>()
             .UseSqlServer(
                 "Server=127.0.0.1,1;Database=TestDb;" +
@@ -243,7 +243,7 @@ public class CheckoutTests
 
         var controller = new OrderController(context);
 
-        // 模拟已经登录的管理员
+        // Simulate an authenticated administrator
         var admin = new ClaimsPrincipal(
             new ClaimsIdentity(
                 new[]
@@ -263,7 +263,7 @@ public class CheckoutTests
             }
         };
 
-        // 准备购物车
+        // Prepare the cart
         var request = new CheckoutRequestDto
         {
             Items = new List<CheckoutItemDto>
@@ -276,10 +276,10 @@ public class CheckoutTests
         }
         };
 
-        // Act: 调用 Checkout
+        // Act: call the checkout action
         var result = await controller.Checkout(request);
 
-        // Assert: 检查是否返回 ForbidResult
+        // Assert: verify that the result is forbidden
         Assert.IsType<ForbidResult>(result);
     }
 

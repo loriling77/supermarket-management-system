@@ -12,7 +12,7 @@ public class OrderCountTests
     [Fact]
     public async Task GetTotalOrders_WithThreeOrders_ReturnsThree()
     {
-        // Arrange: 创建独立的内存数据库
+        // Arrange: create an isolated in-memory database
         var options = new DbContextOptionsBuilder<AppDbContext>()
             .UseInMemoryDatabase(
                 databaseName: Guid.NewGuid().ToString())
@@ -20,7 +20,7 @@ public class OrderCountTests
 
         await using var context = new AppDbContext(options);
 
-        // 添加 3 个测试订单
+        // Add three test orders
         context.Orders.AddRange(
             new Order
             {
@@ -46,13 +46,13 @@ public class OrderCountTests
 
         var controller = new OrderController(context);
 
-        // Act: 调用真正的订单统计 API 方法
+        // Act: call the actual order count action
         var result = await controller.GetTotalOrders();
 
-        // Assert: 检查是否返回 Ok
+        // Assert: verify that the result is OK
         var okResult = Assert.IsType<OkObjectResult>(result);
 
-        // 检查返回对象中的 totalOrders
+        // Verify totalOrders in the response object
         var totalOrdersProperty = okResult.Value!
             .GetType()
             .GetProperty("totalOrders");

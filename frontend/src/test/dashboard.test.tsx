@@ -10,7 +10,7 @@ import {
     getSalesOverview,
 } from '../api/orderApi'
 
-// 模拟 API，不访问真实数据库
+// Mock the API without accessing the real database
 vi.mock('../api/productApi', () => ({
     getProducts: vi.fn(),
 }))
@@ -22,7 +22,7 @@ vi.mock('../api/orderApi', () => ({
     getSalesOverview: vi.fn(),
 }))
 
-// Recharts 依赖容器尺寸，测试环境用简单组件代替
+// Replace Recharts with simple components because it depends on container dimensions
 vi.mock('recharts', () => ({
     ResponsiveContainer: ({ children }: any) => <div>{children} </div>,
     LineChart: ({ children }: any) => (
@@ -41,7 +41,7 @@ const mockedGetTotalSales = vi.mocked(getTotalSales)
 const mockedGetTopSellingProducts = vi.mocked(getTopSellingProducts)
 const mockedGetSalesOverview = vi.mocked(getSalesOverview)
 
-// 根据卡片标题找到对应的数值
+// Find the displayed value by its card title
 function getCardValue(title: string) {
     const heading = screen.getByText(title)
     const card = heading.closest('.dashboard-card')
@@ -112,7 +112,7 @@ describe('DashboardCard', () => {
         expect(screen.getByText('Out of Stock')).toBeInTheDocument()
         expect(screen.getByText('5 remaining')).toBeInTheDocument()
 
-        // count = 10 不属于低库存
+        // A stock count of 10 is not considered low stock
         expect(screen.queryByText('Rice')).not.toBeInTheDocument()
     })
 
@@ -176,7 +176,7 @@ describe('DashboardCard', () => {
             new Error('Products API unavailable')
         )
 
-        // 预期的错误会被 Dashboard 自己记录到 console
+        // The dashboard logs the expected error to the console
         const consoleSpy = vi
             .spyOn(console, 'error')
             .mockImplementation(() => { })

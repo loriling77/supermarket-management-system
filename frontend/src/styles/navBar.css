@@ -27,7 +27,7 @@
     object-fit: contain;
 }
 
-/* 导航菜单 */
+/* Navigation menu */
 .sidebar-menu {
     width: 100%;
     display: flex;
@@ -35,7 +35,7 @@
     gap: 8px;
 }
 
-/* 菜单文字 */
+/* Navigation labels */
 .sidebar-menu .nav-label {
     width: 100%;
     margin: 0;
@@ -51,19 +51,19 @@
     transition: background-color 0.15s ease, color 0.15s ease;
 }
 
-/* 鼠标悬停 */
+/* Hover state */
 .sidebar-menu .nav-label:hover {
     background-color: #d2e4d8;
     color: #234731;
 }
 
-/* 选中菜单 */
+/* Active navigation item */
 .sidebar-menu a.active .nav-label {
     background-color: #bed8c7;
     color: #1f422e;
 }
 
-/* 平板 */
+/* Tablet */
 @media (max-width: 768px) {
     .sidebar {
         padding: 25px 10px;
@@ -79,7 +79,7 @@
     }
 }
 
-/* 手机 */
+/* Mobile */
 @media (max-width: 520px) {
     .sidebar {
         padding: 15px;
@@ -120,7 +120,7 @@
     padding-top: 30px;
 }
 
-/* Logout 链接 */
+/* Logout link */
 .logout-btn a {
     display: inline-block;
     padding: 12px 24px;
@@ -136,7 +136,7 @@
     transition: background-color 0.15s ease, color 0.15s ease;
 }
 
-/* 鼠标悬停 */
+/* Hover state */
 .logout-btn a:hover {
     background-color: #ecd2cc;
 }

@@ -121,10 +121,10 @@ npm run build
 From the repository root:
 
 ```powershell
-dotnet test backend/Supermarket.Api.Tests/Supermarket.Api.Tests.csproj
+dotnet test backend/Supermarket.Api.Tests/Supermarket.Api.Tests.csproj --configuration Release
 ```
 
-If a running API locks Windows build output, stop it or add `-p:BaseOutputPath=bin/readiness-tests/` for a separate output directory.
+Release tests use different output files from the normal Debug development server. If Windows still reports a locked build file, stop the local API before rerunning the tests.
 
 Tests cover cart limits, logout, order errors, dashboard states, AI quantity editing, order ownership, statistics, invalid checkout input and HTTP role authorization. Most backend tests use InMemory and do not prove SQL transaction/concurrency behavior. The optional local demo check exercises one real SQL checkout.
 
@@ -153,4 +153,4 @@ GitHub Actions builds/tests the frontend/backend and smoke-tests the published a
 - Real SQL concurrency, deadlock/retry behavior and load require dedicated verification.
 - Shared public admin access, automatic demo reset and AI usage quotas are not implemented.
 
-See [demo readiness](docs/demo-readiness.md) for the rehearsal and verification record. The separate [Chinese code walkthrough and interview guide](docs/project-walkthrough.zh-CN.md) explains the code and distinguishes developer contributions from AI assistance.
+See [demo readiness](docs/demo-readiness.md) for the rehearsal checklist and verification record.

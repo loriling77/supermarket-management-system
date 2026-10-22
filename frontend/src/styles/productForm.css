@@ -1,4 +1,4 @@
-/* 表单外层 */
+/* Form wrapper */
 .product-form-container {
     width: 100%;
     min-width: 0;
@@ -11,7 +11,7 @@
     box-sizing: border-box;
 }
 
-/* 表单卡片 */
+/* Form card */
 .product-form {
     width: 100%;
     max-width: none;
@@ -23,7 +23,7 @@
     box-sizing: border-box;
 }
 
-/* 表单标题 */
+/* Form heading */
 .product-form h2 {
     margin: 0 0 8px;
     font-size: 24px;
@@ -31,14 +31,14 @@
     color: #166534;
 }
 
-/* 副标题 */
+/* Subtitle */
 .form-subtitle {
     margin: 0 0 28px;
     font-size: 14px;
     color: #64748b;
 }
 
-/* 输入框分组 */
+/* Input group */
 .input-group {
     display: flex;
     flex-direction: column;
@@ -46,7 +46,7 @@
     min-width: 0;
 }
 
-/* 输入框标签 */
+/* Input labels */
 .input-group label {
     margin-bottom: 8px;
     font-size: 14px;
@@ -54,7 +54,7 @@
     color: #166534;
 }
 
-/* 输入框 */
+/* Input field */
 .input-group input {
     width: 100%;
     padding: 12px 14px;
@@ -68,19 +68,19 @@
     transition: all 0.2s ease;
 }
 
-/* 输入框获得焦点 */
+/* Input focus state */
 .input-group input:focus {
     background-color: #ffffff;
     border-color: #16a34a;
     box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.12);
 }
 
-/* 占位文字 */
+/* Placeholder text */
 .input-group input::placeholder {
     color: #94a3b8;
 }
 
-/* Price 和 Count 上下排列 */
+/* Stack price and count fields vertically */
 .form-row {
     display: flex;
     flex-direction: column;
@@ -92,14 +92,14 @@
     min-width: 0;
 }
 
-/* 按钮区域：两列 */
+/* Two-column button layout */
 .form-actions {
     width: 100%;
     display: flex;
     justify-content: space-between
 }
 
-/* 所有按钮的共同样式 */
+/* Shared button styles */
 .form-actions button {
     width: 100%;
     min-width: 0;
@@ -114,53 +114,53 @@
     width: 130px
 }
 
-/* Add 按钮 */
+/* Add button */
 .Add-btn {
     background-color: #15803d;
 }
 
-/* Edit 按钮 */
+/* Edit button */
 .Edit-btn {
     background-color: #15803d;
 }
 
-/* Save 按钮 */
+/* Save button */
 .Save-btn {
     background-color: #15803d;
 }
 
-/* Delete 按钮 */
+/* Delete button */
 .Delete-btn {
     background-color: #dc2626;
 }
 
 
 
-/* 鼠标悬停 */
+/* Hover state */
 .form-actions button:hover {
     filter: brightness(0.92);
     transform: translateY(-2px);
 }
 
-/* 点击效果 */
+/* Active state */
 .form-actions button:active {
     transform: translateY(0);
 }
 
-/* 键盘焦点 */
+/* Keyboard focus */
 .form-actions button:focus-visible {
     outline: 3px solid #86efac;
     outline-offset: 2px;
 }
 
-/* 禁用状态 */
+/* Disabled state */
 .form-actions button:disabled {
     opacity: 0.5;
     cursor: not-allowed;
     transform: none;
 }
 
-/* 响应式 */
+/* Responsive layout */
 @media (max-width: 768px) {
     .product-form {
         padding: 22px;
@@ -187,7 +187,7 @@
 }
 
 
-/* Add to Cart 按钮 */
+/* Add to Cart button */
 .add-to-cart-btn {
     width: 100%;
     padding: 14px 20px;
@@ -203,20 +203,20 @@
     cursor: pointer;
 }
 
-/* 鼠标悬停 */
+/* Hover state */
 .add-to-cart-btn:hover {
     background: linear-gradient(135deg, #15803d, #166534);
     transform: translateY(-2px);
     box-shadow: 0 6px 16px rgba(22, 163, 74, 0.3);
 }
 
-/* 点击效果 */
+/* Active state */
 .add-to-cart-btn:active {
     transform: translateY(0);
     box-shadow: 0 2px 6px rgba(22, 163, 74, 0.2);
 }
 
-/* 键盘选中效果 */
+/* Keyboard focus state */
 .add-to-cart-btn:focus-visible {
     outline: 3px solid #86efac;
     outline-offset: 3px;

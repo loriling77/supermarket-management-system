@@ -1,4 +1,4 @@
-/* 商品列表外层 */
+/* Product list wrapper */
 .product-menu-container {
     width: 100%;
     min-width: 0;
@@ -8,7 +8,7 @@
     box-sizing: border-box;
 }
 
-/* 商品列表卡片 */
+/* Product list card */
 .product-menu {
     width: 100%;
     min-width: 0;
@@ -20,7 +20,7 @@
     box-sizing: border-box;
 }
 
-/* 标题区域 */
+/* Heading section */
 .product-menu-header {
     margin-bottom: 25px;
 }
@@ -38,7 +38,7 @@
     color: #64748b;
 }
 
-/* 表格滚动容器 */
+/* Scrollable table wrapper */
 .product-table-wrapper {
     width: 100%;
     max-width: 100%;
@@ -47,7 +47,7 @@
     border-radius: 10px;
 }
 
-/* 商品表格 */
+/* Product table */
 .product-table {
     width: 100%;
     min-width: 780px;
@@ -55,12 +55,12 @@
     text-align: left;
 }
 
-/* 表头 */
+/* Table header */
 .product-table thead {
     background-color: #166534;
 }
 
-/* 表头单元格 */
+/* Table header cells */
 .product-table th {
     padding: 16px 18px;
     color: #ffffff;
@@ -69,7 +69,7 @@
     white-space: nowrap;
 }
 
-/* 表格内容 */
+/* Table body */
 .product-table td {
     padding: 16px 18px;
     color: #334155;
@@ -78,29 +78,29 @@
     white-space: nowrap;
 }
 
-/* 隔行变色 */
+/* Alternating row backgrounds */
 .product-table tbody tr:nth-child(even) {
     background-color: #f0fdf4;
 }
 
-/* 鼠标悬停 */
+/* Hover state */
 .product-table tbody tr:hover {
     background-color: #ecfdf5;
     transition: background-color 0.2s ease;
 }
 
-/* 最后一行 */
+/* Last row */
 .product-table tbody tr:last-child td {
     border-bottom: none;
 }
 
-/* ID 列 */
+/* ID column */
 .product-table td:first-child {
     font-weight: 600;
     color: #166534;
 }
 
-/* Select 按钮 */
+/* Select button */
 .select-btn {
     padding: 9px 16px;
     background-color: #f0fdf4;
@@ -114,43 +114,43 @@
     transition: all 0.2s ease;
 }
 
-/* Select 悬停 */
+/* Select button hover state */
 .select-btn:hover {
     background-color: #16a34a;
     border-color: #16a34a;
     color: #ffffff;
 }
 
-/* 已选中按钮 */
+/* Active button */
 .select-btn.active {
     background-color: #16a34a;
     border-color: #16a34a;
     color: #ffffff;
 }
 
-/* 选中商品所在行 */
+/* Selected product row */
 .product-table tbody tr.selected-row {
     background-color: #dcfce7;
 }
 
-/* 选中行悬停 */
+/* Selected row hover state */
 .product-table tbody tr.selected-row:hover {
     background-color: #bbf7d0;
 }
 
-/* 键盘焦点 */
+/* Keyboard focus */
 .select-btn:focus-visible {
     outline: 3px solid #86efac;
     outline-offset: 2px;
 }
 
-/* 禁用状态 */
+/* Disabled state */
 .select-btn:disabled {
     opacity: 0.5;
     cursor: not-allowed;
 }
 
-/* 平板适配 */
+/* Tablet layout */
 @media (max-width: 768px) {
     .product-menu {
         padding: 20px;
@@ -161,7 +161,7 @@
     }
 }
 
-/* 手机适配 */
+/* Mobile layout */
 @media (max-width: 480px) {
     .product-menu {
         padding: 16px;
@@ -175,13 +175,13 @@
 }
 
 
-/* Shopping List 外层 */
+/* Shopping list wrapper */
 .shopping-list-container {
     width: 100%;
     min-width: 0;
 }
 
-/* Shopping List 卡片 */
+/* Shopping list card */
 .shopping-list {
     width: 100%;
     padding: 24px;
@@ -192,7 +192,7 @@
     box-shadow: 0 4px 16px rgba(22, 101, 52, 0.08);
 }
 
-/* 标题 */
+/* Heading */
 .shopping-list .product-menu-header {
     margin-bottom: 20px;
 }
@@ -203,7 +203,7 @@
     color: #166534;
 }
 
-/* 表格 */
+/* Table */
 .shopping-list .product-table-wrapper {
     width: 100%;
     overflow-x: auto;
@@ -216,7 +216,7 @@
     border-collapse: collapse;
 }
 
-/* 表头 */
+/* Table header */
 .shopping-list .product-table th {
     padding: 13px 12px;
     background-color: #166534;
@@ -226,7 +226,7 @@
     white-space: nowrap;
 }
 
-/* 表格内容 */
+/* Table body */
 .shopping-list .product-table td {
     padding: 14px 12px;
     font-size: 13px;
@@ -234,12 +234,12 @@
     border-bottom: 1px solid #dcfce7;
 }
 
-/* 鼠标悬停 */
+/* Hover state */
 .shopping-list .product-table tbody tr:hover {
     background-color: #f0fdf4;
 }
 
-/* 底部区域 */
+/* Footer section */
 .shopping-list-footer {
     display: flex;
     flex-direction: column;
@@ -249,7 +249,7 @@
     border-top: 1px solid #dcfce7;
 }
 
-/* 总金额 */
+/* Total amount */
 .shopping-total {
     display: flex;
     align-items: center;
@@ -269,7 +269,7 @@
     color: #166534;
 }
 
-/* Pay 按钮靠右 */
+/* Right-align the payment button */
 .shopping-pay-btn {
     align-self: flex-end;
     padding: 12px 32px;
@@ -288,7 +288,7 @@
     transform: translateY(-2px);
 }
 
-/* 小屏幕 */
+/* Small screens */
 @media (max-width: 480px) {
     .shopping-list {
         padding: 16px;

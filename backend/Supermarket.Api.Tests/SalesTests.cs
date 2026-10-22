@@ -12,7 +12,7 @@ public class SalesTests
     [Fact]
     public async Task GetTotalSales_OnlyCountsPaidOrders()
     {
-        // Arrange: 创建独立的内存数据库
+        // Arrange: create an isolated in-memory database
         var options = new DbContextOptionsBuilder<AppDbContext>()
             .UseInMemoryDatabase(
                 databaseName: Guid.NewGuid().ToString())
@@ -20,7 +20,7 @@ public class SalesTests
 
         await using var context = new AppDbContext(options);
 
-        // 添加三个测试订单
+        // Add three test orders
         context.Orders.AddRange(
             new Order
             {
@@ -46,13 +46,13 @@ public class SalesTests
 
         var controller = new OrderController(context);
 
-        // Act: 调用真正的 Total Sales 方法
+        // Act: call the actual total sales action
         var result = await controller.GetTotalSales();
 
-        // Assert: 检查 API 返回 Ok
+        // Assert: verify that the API returns OK
         var okResult = Assert.IsType<OkObjectResult>(result);
 
-        // 读取匿名对象中的 totalSales
+        // Read totalSales from the anonymous response object
         var totalSalesProperty = okResult.Value!
             .GetType()
             .GetProperty("totalSales");
@@ -61,7 +61,7 @@ public class SalesTests
 
         var totalSales = totalSalesProperty.GetValue(okResult.Value);
 
-        // 只计算 Paid 订单：10 + 20 = 30
+        // Count only paid orders: 10 + 20 = 30
         Assert.Equal(30.00m, totalSales);
     }
 }
