@@ -1,7 +1,8 @@
 
 import "../styles/login.css";
 import "../styles/register.css";
-import supermarketLogo from "../assets/supermarket.svg";
+import AuthLayout from "../components/AuthLayout";
+import { ArrowRight } from "lucide-react";
 
 import { useState } from "react";
 import type { SubmitEventHandler } from "react";
@@ -82,12 +83,12 @@ export default function Register() {
     };
 
     return (
-        <div className="login-container">
+        <AuthLayout register>
             <div className="login-card">
-                <div className="sm-logo">
-                    <img src={supermarketLogo} alt="Supermarket Logo" />
-                    <h1>Supermarket</h1>
-                    <p>Please Create a New Account.</p>
+                <div className="auth-form-heading">
+                    <span className="auth-form-kicker">SOMETHING GOOD STARTS HERE</span>
+                    <h1>Make yourself at home.</h1>
+                    <p>Create an account for your everyday shopping.</p>
                 </div>
 
                 <form className="login-form" onSubmit={handleSubmit} noValidate>
@@ -97,6 +98,7 @@ export default function Register() {
                         <input
                             id="username"
                             type="text"
+                            autoComplete="username"
                             value={userName}
                             placeholder="Enter username"
                             onChange={e => setUserName(e.target.value)}
@@ -121,6 +123,7 @@ export default function Register() {
                         <input
                             id="email"
                             type="email"
+                            autoComplete="email"
                             value={email}
                             placeholder="Enter email"
                             onChange={e => setEmail(e.target.value)}
@@ -146,6 +149,7 @@ export default function Register() {
                             <input
                                 id="password"
                                 type={showPassword ? "text" : "password"}
+                                autoComplete="new-password"
                                 value={password}
                                 placeholder="Enter password"
                                 onChange={e => setPassword(e.target.value)}
@@ -187,6 +191,7 @@ export default function Register() {
                         <input
                             id="confirm-password"
                             type="password"
+                            autoComplete="new-password"
                             value={confirmPassword}
                             placeholder="Confirm password"
                             onChange={e => setConfirmPassword(e.target.value)}
@@ -218,15 +223,15 @@ export default function Register() {
                         className="register-btn"
                         disabled={loading}
                     >
-                        {loading ? "Registering..." : "Register"}
+                        {loading ? "Creating account..." : "Create account"}<ArrowRight size={17} aria-hidden="true" />
                     </button>
                 </form>
 
                 <div className="register-link">
                     <span>Already have an account? </span>
-                    <Link to="/login">Login</Link>
+                    <Link to="/login">Sign in</Link>
                 </div>
             </div>
-        </div>
+        </AuthLayout>
     );
 }

@@ -53,5 +53,6 @@ export async function logout(): Promise<void> {
         credentials: "include"
     });
 
+    if (response.status === 401) return;
     await checkResponse(response);
 }

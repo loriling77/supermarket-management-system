@@ -5,11 +5,13 @@ using Supermarket.Api.Data;
 using Supermarket.Api.Dtos;
 using Supermarket.Api.Services;
 using System.Text.Json;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Supermarket.Api.Controllers;
 
 [ApiController]
 [Route("api/ai")]
+[Authorize(Roles = "User")]
 public class AiController : ControllerBase
 {
     private readonly AppDbContext _db;

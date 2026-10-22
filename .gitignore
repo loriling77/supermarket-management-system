@@ -15,6 +15,7 @@
 **/secrets.json
 *.pfx
 *.publishsettings
+.demo-credentials.local.json
 
 # IDE
 .vs/

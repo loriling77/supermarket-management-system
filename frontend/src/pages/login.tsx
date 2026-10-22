@@ -1,6 +1,7 @@
 
 import "../styles/login.css";
-import supermarketLogo from "../assets/supermarket.svg";
+import AuthLayout from "../components/AuthLayout";
+import { ArrowRight, LockKeyhole } from "lucide-react";
 
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
@@ -48,16 +49,13 @@ export default function Login() {
         };
 
     return (
-        <div className="login-container">
+        <AuthLayout>
             <div className="login-card">
 
-                <div className="sm-logo">
-                    <img
-                        src={supermarketLogo}
-                        alt="Supermarket Logo"
-                    />
-                    <h1>Supermarket</h1>
-                    <p>Welcome back! Please login.</p>
+                <div className="auth-form-heading">
+                    <span className="auth-form-kicker">A FRESH START</span>
+                    <h1>Welcome back.</h1>
+                    <p>Sign in and pick up where you left off.</p>
                 </div>
 
                 <form
@@ -66,13 +64,13 @@ export default function Login() {
                 >
                     <div className="input-group">
                         <label htmlFor="email">
-                            Email
+                            Email address
                         </label>
 
                         <input
                             id="email"
                             type="email"
-                            placeholder="Please enter your email"
+                            placeholder="you@example.com"
                             autoComplete="email"
                             required
                             value={email}
@@ -90,7 +88,7 @@ export default function Login() {
                         <input
                             id="password"
                             type="password"
-                            placeholder="Please enter your password"
+                            placeholder="Enter your password"
                             autoComplete="current-password"
                             required
                             value={password}
@@ -111,18 +109,19 @@ export default function Login() {
                         className="login-btn"
                         disabled={loading}
                     >
-                        {loading ? "Logging in..." : "Login"}
+                        {loading ? "Signing in..." : "Sign in"}<ArrowRight size={17} aria-hidden="true" />
                     </button>
                 </form>
 
                 <div className="register-link">
-                    <span>Are you new? </span>
+                    <span>New to Supermarket? </span>
                     <Link to="/register">
                         Create an account
                     </Link>
                 </div>
+                <p className="auth-form-note"><LockKeyhole size={13} aria-hidden="true" /> Your basket starts here.</p>
 
             </div>
-        </div>
+        </AuthLayout>
     );
 }

@@ -4,11 +4,13 @@ using Supermarket.Api.Data;
 using Supermarket.Api.Dtos;
 using Supermarket.Api.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Supermarket.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Roles = "Admin,User")]
     public class ManufactureController : ControllerBase
     {
         private readonly AppDbContext _context;
@@ -30,6 +32,7 @@ namespace Supermarket.Api.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<Manufacture>> AddManufacture(ManufactureRequestDto dto)
         {
             var manufacture = new Manufacture
@@ -49,6 +52,7 @@ namespace Supermarket.Api.Controllers
             );
         }
         [HttpPut("{id}")]
+        [Authorize(Roles = "Admin")]
 
         public async Task<ActionResult<Manufacture>> UpdateManufacture(int id, ManufactureRequestDto dto)
         {
@@ -66,6 +70,7 @@ namespace Supermarket.Api.Controllers
 
         }
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<Manufacture>> DeleteManufacture(int id)
         {
             var manufacture = await _context.Manufactures.FindAsync(id);

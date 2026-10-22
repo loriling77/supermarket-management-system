@@ -1,6 +1,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import type { SubmitEventHandler } from "react";
+import { Bot, Send, ShoppingCart, Sparkles, X } from "lucide-react";
 
 import {
     sendAiMessage,
@@ -15,12 +16,43 @@ type Message = {
     content: string;
     products?: AiProduct[];
     shoppingList?: AiShoppingList | null;
+    quantities?: Record<number, number>;
 };
 
 type AiChatProps = {
-    onAddToCart: (product: AiProduct) => boolean;
+    onAddToCart: (product: AiProduct, quantity: number) => boolean;
     onAddAllToCart: (list: AiShoppingList) => boolean;
 };
+
+function QuantityInput({ name, value, stock, onChange }: {
+    name: string;
+    value: number;
+    stock: number;
+    onChange: (quantity: number) => void;
+}) {
+    const [empty, setEmpty] = useState(false);
+
+    return (
+        <label className="ai-quantity-control">
+            Quantity
+            <input type="number" min={1} max={stock} step={1}
+                aria-label={`Quantity for ${name}`}
+                value={empty ? "" : value}
+                onBlur={() => setEmpty(false)}
+                onChange={event => {
+                    if (event.target.value === "") {
+                        setEmpty(true);
+                        return;
+                    }
+                    const quantity = event.target.valueAsNumber;
+                    setEmpty(false);
+                    if (Number.isSafeInteger(quantity) && quantity >= 1 && quantity <= stock) {
+                        onChange(quantity);
+                    }
+                }} />
+        </label>
+    );
+}
 
 export default function AiChat({
     onAddToCart,
@@ -48,7 +80,13 @@ export default function AiChat({
                 behavior: "smooth",
             });
         }
-    }, [messages, loading, cartMessage, open]);
+    }, [messages.length, loading, open]);
+
+    useEffect(() => {
+        if (open && cartMessage) {
+            messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+        }
+    }, [cartMessage, open]);
 
     const handleSubmit: SubmitEventHandler<HTMLFormElement> =
         async (event) => {
@@ -101,12 +139,30 @@ export default function AiChat({
             }
         };
 
-    const handleAddProduct = (product: AiProduct) => {
-        const success = onAddToCart(product);
+    const handleQuantityChange = (messageIndex: number, productId: number, quantity: number, stock: number) => {
+        if (!Number.isSafeInteger(quantity) || quantity < 1 || quantity > stock) return;
+        setCartMessage("");
+        setMessages(previous => previous.map((message, index) => {
+            if (index !== messageIndex) return message;
+            if (!message.shoppingList) {
+                return { ...message, quantities: { ...message.quantities, [productId]: quantity } };
+            }
+            const items = message.shoppingList.items.map(item => item.productId === productId
+                ? { ...item, quantity, totalPrice: Math.round(item.unitPrice * quantity * 100) / 100 }
+                : item);
+            return { ...message, shoppingList: {
+                ...message.shoppingList, items,
+                totalPrice: Math.round(items.reduce((sum, item) => sum + item.totalPrice, 0) * 100) / 100,
+            } };
+        }));
+    };
+
+    const handleAddProduct = (product: AiProduct, quantity: number) => {
+        const success = onAddToCart(product, quantity);
 
         setCartMessage(
             success
-                ? `${product.productName} added to cart!`
+                ? `${quantity} × ${product.productName} added to cart!`
                 : "Cannot add product. Stock may be exceeded."
         );
     };
@@ -127,8 +183,8 @@ export default function AiChat({
                 <section className="ai-chat-panel">
                     <div className="ai-chat-header">
                         <div>
-                            <strong>🛒 Supermarket AI</strong>
-                            <p>Your shopping assistant</p>
+                            <strong><Sparkles size={18} aria-hidden="true" /> Supermarket Assistant</strong>
+                            <p>Product advice & shopping lists</p>
                         </div>
 
                         <button
@@ -136,7 +192,7 @@ export default function AiChat({
                             onClick={() => setOpen(false)}
                             aria-label="Close chat"
                         >
-                            ✕
+                            <X size={20} aria-hidden="true" />
                         </button>
                     </div>
 
@@ -174,14 +230,18 @@ export default function AiChat({
                                                             Stock: {product.count}
                                                         </small>
 
+                                                        <QuantityInput name={product.productName}
+                                                            value={message.quantities?.[product.id] ?? 1} stock={product.count}
+                                                            onChange={quantity => handleQuantityChange(index, product.id, quantity, product.count)} />
+
                                                         <button
                                                             type="button"
                                                             className="ai-add-cart-btn"
                                                             onClick={() =>
-                                                                handleAddProduct(product)
+                                                                handleAddProduct(product, message.quantities?.[product.id] ?? 1)
                                                             }
                                                         >
-                                                            🛒 Add to Cart
+                                                            <ShoppingCart size={15} aria-hidden="true" /> Add to Cart
                                                         </button>
                                                     </div>
                                                 )
@@ -194,7 +254,7 @@ export default function AiChat({
                                     message.shoppingList &&
                                     message.shoppingList.items.length > 0 && (
                                         <div className="ai-shopping-list">
-                                            <h4>🛒 AI Shopping List</h4>
+                                            <h4>Suggested shopping list</h4>
 
                                             {message.shoppingList.items.map(
                                                 item => (
@@ -213,6 +273,9 @@ export default function AiChat({
                                                                 {" × "}
                                                                 {item.quantity}
                                                             </small>
+                                                            <QuantityInput name={item.productName}
+                                                                value={item.quantity} stock={item.availableStock}
+                                                                onChange={quantity => handleQuantityChange(index, item.productId, quantity, item.availableStock)} />
                                                         </div>
 
                                                         <strong>
@@ -239,6 +302,10 @@ export default function AiChat({
                                                 </p>
                                             )}
 
+                                            {message.shoppingList.budget !== null && message.shoppingList.totalPrice > message.shoppingList.budget && (
+                                                <p className="ai-budget-warning" role="status">This list is now over your budget.</p>
+                                            )}
+
                                             <button
                                                 type="button"
                                                 className="ai-add-all-btn"
@@ -248,7 +315,7 @@ export default function AiChat({
                                                     )
                                                 }
                                             >
-                                                🛒 Add All to Cart
+                                                <ShoppingCart size={15} aria-hidden="true" /> Add All to Cart
                                             </button>
                                         </div>
                                     )}
@@ -258,7 +325,7 @@ export default function AiChat({
                         {loading && (
                             <div className="ai-message assistant">
                                 <span className="ai-loading">
-                                    🤖 Thinking...
+                                    Thinking...
                                 </span>
                             </div>
                         )}
@@ -293,7 +360,7 @@ export default function AiChat({
                             type="submit"
                             disabled={loading || !input.trim()}
                         >
-                            {loading ? "..." : "Send"}
+                            <Send size={16} aria-hidden="true" /> {loading ? "..." : "Send"}
                         </button>
                     </form>
                 </section>
@@ -308,7 +375,7 @@ export default function AiChat({
                 }
                 aria-expanded={open}
             >
-                {open ? "✕" : "🤖"}
+                {open ? <X size={24} aria-hidden="true" /> : <Bot size={26} aria-hidden="true" />}
             </button>
         </div>
     );

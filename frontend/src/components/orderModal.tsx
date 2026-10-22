@@ -46,9 +46,9 @@ export default function OrderModal({
                 console.error(err);
 
                 if (!cancelled) {
-                    err instanceof Error
+                    setError(err instanceof Error
                         ? err.message
-                        : "Failed to load orders."
+                        : "Failed to load orders.");
                 }
             } finally {
                 if (!cancelled) {

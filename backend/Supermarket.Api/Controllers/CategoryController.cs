@@ -5,11 +5,13 @@ using Microsoft.AspNetCore.Mvc;
 using Supermarket.Api.Controllers;
 using System.Data;
 using Supermarket.Api.Dtos;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Supermarket.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Roles = "Admin,User")]
     public class CategoryController : ControllerBase
     {
         private readonly AppDbContext _context;
@@ -34,6 +36,7 @@ namespace Supermarket.Api.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<Category>> AddCategory(CategoryRequestDto dto)
         {
             var category = new Category
@@ -52,6 +55,7 @@ namespace Supermarket.Api.Controllers
             );
         }
         [HttpPut("{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<Category>> UpdateCategory(int id, CategoryRequestDto dto)
         {
 
@@ -70,6 +74,7 @@ namespace Supermarket.Api.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<Category>> DeleteCategory(int id)
         {
             var category = await _context.Categories.FindAsync(id);

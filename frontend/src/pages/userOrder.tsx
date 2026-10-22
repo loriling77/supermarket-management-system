@@ -6,7 +6,7 @@ import Search from "../components/search";
 import { checkout } from "../api/checkOutApi";
 import { useEffect, useState } from "react";
 import type { AuthUser, CartItem } from "../types/types";
-import { Link } from "react-router-dom";
+import LogoutButton from "../components/LogoutButton";
 import { getCurrentUser } from "../api/authApi";
 import { LogOut, ReceiptText, ShoppingBag, UserRound } from "lucide-react";
 import supermarketLogo from "../assets/supermarket.svg";
@@ -110,8 +110,8 @@ export default function UserOrder() {
         );
     };
 
-    const handleAiAddToCart = (product: AiProduct): boolean =>
-        handleAddToCart(product, 1);
+    const handleAiAddToCart = (product: AiProduct, quantity: number): boolean =>
+        handleAddToCart(product, quantity);
 
     const handleAiAddAllToCart = (
         list: AiShoppingList
@@ -208,9 +208,9 @@ export default function UserOrder() {
                             onClick={() => setShowOrders(true)}>
                             <ReceiptText size={16} aria-hidden="true" /><span>My orders</span>
                         </button>
-                        <Link className="user-order-logout" to="/login">
+                        <LogoutButton className="user-order-logout">
                             <LogOut size={16} aria-hidden="true" /><span>Logout</span>
-                        </Link>
+                        </LogoutButton>
                     </div>
                 </header>
 

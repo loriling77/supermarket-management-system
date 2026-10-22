@@ -106,7 +106,7 @@ export default function DashboardCard() {
             }
         }
         void loadTotalSales();
-    })
+    }, [])
 
     useEffect(() => {
         const loadTotalOrders = async () => {
@@ -121,7 +121,7 @@ export default function DashboardCard() {
 
         }
         void loadTotalOrders()
-    })
+    }, [])
     useEffect(() => {
         const loadDashboardProducts = async () => {
             try {

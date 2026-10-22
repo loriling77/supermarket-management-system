@@ -40,7 +40,14 @@
 .admin-page .form-actions { display: flex; flex-wrap: wrap; gap: 8px; padding-top: 18px; border-top: 1px solid var(--admin-line); }
 .admin-page .form-actions button { flex: 1 1 70px; width: auto; padding: 10px 8px; min-height: 40px; border: 1px solid transparent; font-size: 12px; transition: background-color .15s; }
 .admin-page .Add-btn { background: var(--admin-accent); }
+.admin-page .Add-btn.Add-btn--muted { background: #eaf0e5; color: #446040; border-color: #dce5d6; }
 .admin-page .Save-btn, .admin-page .Edit-btn { background: #eaf0e5; color: #446040; border-color: #dce5d6; }
+.admin-page .Save-btn.Save-btn--pending {
+    background: var(--admin-accent);
+    color: #fff;
+    border-color: var(--admin-accent);
+    box-shadow: 0 0 0 3px #6d8d6a30, 0 4px 12px #36543d26;
+}
 .admin-page .Delete-btn { background: #faeeea; color: #a15449; border-color: #f0d9d1; }
 .admin-page .form-actions button:hover { transform: none; filter: brightness(.97); }
 .admin-page .search-product { padding: 18px 22px; }

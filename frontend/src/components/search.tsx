@@ -28,7 +28,8 @@ export default function SearchProduct({ onSearch }: SearchProps) {
         onSearch(value.trim());
     };
 
-    const handleSearch = () => {
+    const handleSearch = (event: React.SubmitEvent<HTMLFormElement>) => {
+        event.preventDefault();
         onSearch(input.trim());
     };
 
@@ -36,7 +37,7 @@ export default function SearchProduct({ onSearch }: SearchProps) {
         <div className="search-product">
             <h2>Search {pageName}</h2>
 
-            <div className="search-bar">
+            <form className="search-bar" onSubmit={handleSearch}>
                 <div className="search-input-wrapper">
                     <span className="search-icon">⌕</span>
 
@@ -50,13 +51,12 @@ export default function SearchProduct({ onSearch }: SearchProps) {
                 </div>
 
                 <button
-                    type="button"
+                    type="submit"
                     className="search-btn"
-                    onClick={handleSearch}
                 >
                     Search
                 </button>
-            </div>
+            </form>
         </div>
     );
 }

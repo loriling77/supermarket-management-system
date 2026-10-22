@@ -1,5 +1,6 @@
 import "../styles/navBar.css";
-import { Link, NavLink } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
+import LogoutButton from "./LogoutButton";
 import { LayoutDashboard, Package, Factory, Tags, Users } from "lucide-react";
 import supermarketLogo from "../assets/supermarket.svg";
 
@@ -35,7 +36,7 @@ function Navbar() {
             </nav>
 
             <div className='logout-btn'>
-                <Link to='/login'>Logout</Link>
+                <LogoutButton />
             </div>
         </div>
     );

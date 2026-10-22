@@ -66,14 +66,6 @@ export default function User() {
         return (
             (user.userName ?? "")
                 .toLowerCase()
-                .includes(keyword) ||
-
-            (user.email ?? "")
-                .toLowerCase()
-                .includes(keyword) ||
-
-            (user.phoneNumber ?? "")
-                .toLowerCase()
                 .includes(keyword)
         );
     });

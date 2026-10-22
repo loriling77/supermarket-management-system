@@ -38,6 +38,14 @@ export default function ProductForm({
     const [submitError, setSubmitError] = useState("");
     const [isSubmitting, setIsSubmitting] = useState(false);
 
+    const hasUnsavedChanges = selectProduct !== null && (
+        productName.trim() !== selectProduct.productName ||
+        Number(manufactureId) !== selectProduct.manufactureId ||
+        Number(categoryId) !== selectProduct.categoryId ||
+        Number(price) !== selectProduct.price ||
+        Number(count) !== selectProduct.count
+    );
+
     // Price validation
     const priceError = (() => {
         if (price.trim() === "") {
@@ -395,7 +403,7 @@ export default function ProductForm({
 
                     <button
                         type="submit"
-                        className="Add-btn"
+                        className={`Add-btn${hasUnsavedChanges ? " Add-btn--muted" : ""}`}
                         disabled={isSubmitting}
                     >
                         Add
@@ -403,7 +411,7 @@ export default function ProductForm({
 
                     <button
                         type="button"
-                        className="Save-btn"
+                        className={`Save-btn${hasUnsavedChanges ? " Save-btn--pending" : ""}`}
                         onClick={handleSave}
                         disabled={isSubmitting}
                     >
