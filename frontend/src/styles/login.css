@@ -99,6 +99,46 @@ body,
     background-color: #15803d;
 }
 
+.admin-login-info {
+    margin-top: 24px;
+    padding: 16px;
+    border: 1px solid #c9dfd1;
+    border-radius: 9px;
+    background: #f2faf5;
+    color: #244232;
+    font-size: 13px;
+}
+
+.admin-login-info h2 {
+    margin: 0 0 12px;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.admin-login-info dl {
+    margin: 0;
+}
+
+.admin-login-info p {
+    margin: 0 0 14px;
+    line-height: 1.5;
+}
+
+.admin-login-info dl > div + div {
+    margin-top: 10px;
+}
+
+.admin-login-info dt {
+    margin-bottom: 3px;
+    font-weight: 600;
+}
+
+.admin-login-info dd {
+    margin: 0;
+    overflow-wrap: anywhere;
+    user-select: all;
+}
+
 .register-link {
     margin-top: 20px;
     text-align: center;

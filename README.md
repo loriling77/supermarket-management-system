@@ -18,7 +18,7 @@ Checkout is simulated; no money is collected.
 **Azure deployment target:** [Supermarket](https://supermarket-api-ll-ghgbdth2hsaqc3bh.denmarkeast-01.azurewebsites.net/).
 Updates reach this site through the main-branch deployment workflow. See [Azure setup](docs/azure-deployment.md).
 
-Customers can register an account. Shared administrator credentials are not included in the repository.
+Customers can register an account. The sign-in page displays demo administrator credentials for exploring the management dashboard.
 
 ## Architecture
 

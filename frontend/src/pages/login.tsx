@@ -110,6 +110,21 @@ export default function Login() {
                     </button>
                 </form>
 
+                <section className="admin-login-info" aria-labelledby="admin-login-heading">
+                    <h2 id="admin-login-heading">Demo administrator account</h2>
+                    <p>Use this account to explore the management dashboard.</p>
+                    <dl>
+                        <div>
+                            <dt>Email</dt>
+                            <dd>admin@example.com</dd>
+                        </div>
+                        <div>
+                            <dt>Password</dt>
+                            <dd>Admin2026,</dd>
+                        </div>
+                    </dl>
+                </section>
+
                 <div className="register-link">
                     <span>New to Supermarket? </span>
                     <Link to="/register">
